@@ -2,7 +2,6 @@
 {
     public class Funcionario : Pessoa
     {
-
         public string Endereco
         {
             get;
@@ -19,11 +18,20 @@
             }
         }
 
-        public Funcionario(string? id, string nome, string telefone, string cpf, string email, string endereco) : base(id, nome, telefone, cpf, email)
+        public Funcionario(
+            string? id,
+            string nome,
+            string telefone,
+            string cpf,
+            string email,
+            string endereco
+        )
+            : base(id, nome, telefone, cpf, email)
         {
             Endereco = endereco;
         }
 
-        public Funcionario(string nome, string telefone, string cpf, string email, string endereco) : this(null, nome, telefone, cpf, email, endereco) { }
+        public Funcionario(string nome, string telefone, string cpf, string email, string endereco)
+            : this(null, nome, telefone, cpf, email, endereco) { }
     }
 }

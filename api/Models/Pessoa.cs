@@ -7,7 +7,6 @@ namespace api.Models
         public string Id
         {
             get;
-
             init
             {
                 ArgumentNullException.ThrowIfNull(value);
@@ -46,7 +45,9 @@ namespace api.Models
 
                 if (!Validators.IsValidPhoneNumber(value))
                 {
-                    throw new ArgumentException("Telefone inválido! Deve conter 11 dígitos (sem o código do país) ou 13 dígitos (com o código do país '55').");
+                    throw new ArgumentException(
+                        "Telefone inválido! Deve conter 11 dígitos (sem o código do país) ou 13 dígitos (com o código do país '55')."
+                    );
                 }
 
                 field = value;
@@ -112,8 +113,10 @@ namespace api.Models
             Email = email;
         }
 
-        public Pessoa(string nome, string telefone) : this(null, nome, telefone, null, null) { }
+        public Pessoa(string nome, string telefone)
+            : this(null, nome, telefone, null, null) { }
 
-        public Pessoa(string nome, string telefone, string cpf, string email) : this(null, nome, telefone, cpf, email) { }
+        public Pessoa(string nome, string telefone, string cpf, string email)
+            : this(null, nome, telefone, cpf, email) { }
     }
 }

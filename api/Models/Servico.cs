@@ -5,14 +5,15 @@
         public string Nome
         {
             get;
-
             set
             {
                 ArgumentNullException.ThrowIfNull(value);
 
                 if (value.Length < 3)
                 {
-                    throw new ArgumentException("Nome do serviço deve conter pelo menos 3 caracteres!");
+                    throw new ArgumentException(
+                        "Nome do serviço deve conter pelo menos 3 caracteres!"
+                    );
                 }
 
                 field = value;
@@ -57,6 +58,7 @@
             Preco = preco;
         }
 
-        public Servico(string nome, double preco) : this(nome, null, preco) { }
+        public Servico(string nome, double preco)
+            : this(nome, null, preco) { }
     }
 }
