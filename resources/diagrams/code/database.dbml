@@ -1,0 +1,62 @@
+// Veja https://dbdiagram.io
+
+Project pim03 {
+  database_type: 'PostgreSQL'
+}
+
+Table tb_cliente {
+  id integer [pk, increment, not null]
+  nome varchar [not null]
+  telefone varchar(13) [not null]
+  email varchar
+  cpf varchar(11) [unique]
+  dt_nasc date
+}
+
+Table tb_funcionario {
+  id integer [pk, increment, not null]
+  nome varchar [not null]
+  cpf varchar(11) [not null, unique]
+  email varchar [not null, unique]
+  endereco varchar [not null]
+}
+
+Table tb_agendamento {
+  id integer [pk, increment, not null]
+  id_cliente integer [not null]
+  id_funcionario integer [not null]
+  dt_agendamento timestamptz [not null]
+  dt_conclusao timestamptz
+  status varchar(9) [not null, note: 'agendado, concluido, cancelado']
+  total numeric(6,2)
+}
+
+Table tb_usuario {
+  id_funcionario integer [pk, not null]
+  login varchar [not null, unique]
+  senha varchar [not null, note: 'Tipo deveria ser bytes, mas será alterado posteriormente.']
+}
+
+
+Table tb_servico {
+  id integer [pk, increment, not null]
+  nome varchar [not null, unique]
+  descricao varchar
+  valor numeric(6,2) [not null]
+}
+
+Table tb_servico_realizado {
+  id_agendamento integer [not null]
+  id_servico integer [not null]
+  valor numeric(6,2) [not null]
+
+  indexes {
+    (id_servico, id_agendamento) [pk]
+  }
+}
+
+Ref tb_agendamento_fk01: tb_agendamento.id_cliente > tb_cliente.id [update: cascade, delete: restrict]
+Ref tb_agendamento_fk02: tb_agendamento.id_funcionario > tb_funcionario.id [update: cascade, delete: restrict]
+Ref tb_usuario_fk01: tb_usuario.id_funcionario - tb_funcionario.id [update: cascade, delete: cascade]
+Ref tb_servico_realizado_fk01: tb_servico_realizado.id_agendamento > tb_agendamento.id [update: cascade, delete: cascade]
+Ref tb_servico_realizado_fk02: tb_servico_realizado.id_servico > tb_servico.id [update: cascade, delete: restrict]
