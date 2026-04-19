@@ -1,15 +1,11 @@
-﻿using System.Diagnostics.CodeAnalysis;
-
-namespace api.Models
+﻿namespace api.Models
 {
     public class Funcionario : Pessoa
     {
-        private string _endereco;
 
         public string Endereco
         {
-            get { return _endereco; }
-            [MemberNotNull(nameof(_endereco))]
+            get;
             set
             {
                 ArgumentNullException.ThrowIfNull(value);
@@ -19,13 +15,15 @@ namespace api.Models
                     throw new ArgumentException("Endereço deve conter pelo menos 5 caracteres!");
                 }
 
-                _endereco = value;
+                field = value;
             }
         }
 
-        public Funcionario(string nome, string telefone, string cpf, string email, string endereco) : base(nome, telefone, cpf, email)
+        public Funcionario(string? id, string nome, string telefone, string cpf, string email, string endereco) : base(id, nome, telefone, cpf, email)
         {
             Endereco = endereco;
         }
+
+        public Funcionario(string nome, string telefone, string cpf, string email, string endereco) : this(null, nome, telefone, cpf, email, endereco) { }
     }
 }

@@ -2,16 +2,14 @@
 {
     public class Cliente : Pessoa
     {
-        private DateOnly? _dt_nasc;
-
         public DateOnly? DtNascimento
         {
-            get { return _dt_nasc; }
+            get;
             set
             {
                 if (value == null)
                 {
-                    _dt_nasc = null;
+                    field = null;
                     return;
                 }
 
@@ -26,13 +24,17 @@
                 }
 
                 // TODO: Impor idade mínima (ex: 14 anos)
-                _dt_nasc = value;
+                field = value;
             }
         }
 
+        public Cliente(string? id, string nome, string telefone, string? cpf, string? email, DateOnly? dtNascimento) : base(id, nome, telefone, cpf, email)
+        {
+            DtNascimento = dtNascimento;
+        }
 
-        public Cliente(string nome, string telefone, string? cpf, string? email, DateOnly? dtNascimento) : base(nome, telefone, cpf, email) { DtNascimento = dtNascimento; }
+        public Cliente(string nome, string telefone, string cpf, string email, DateOnly dtNascimento) : this(null, nome, telefone, cpf, email, dtNascimento) { }
 
-        public Cliente(string nome, string telefone) : this(nome, telefone, null, null, null) { }
+        public Cliente(string nome, string telefone) : this(null, nome, telefone, null, null, null) { }
     }
 }

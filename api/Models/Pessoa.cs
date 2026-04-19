@@ -1,21 +1,29 @@
 ﻿using api.Utilities;
-using System.Diagnostics.CodeAnalysis;
 
 namespace api.Models
 {
     public abstract class Pessoa
     {
-        private string _nome;
-        private string _telefone;
-        private string? _cpf;
-        private string? _email;
+        public string Id
+        {
+            get;
+
+            init
+            {
+                ArgumentNullException.ThrowIfNull(value);
+
+                if (!Validators.IsValidUUID(value))
+                {
+                    throw new ArgumentException("ID deve ser um UUID válido!");
+                }
+
+                field = value;
+            }
+        }
 
         public string Nome
         {
-            get { return _nome; }
-
-            // https://stackoverflow.com/a/71702779
-            [MemberNotNull(nameof(_nome))]
+            get;
             set
             {
                 ArgumentNullException.ThrowIfNull(value);
@@ -25,15 +33,13 @@ namespace api.Models
                     throw new ArgumentException("Nome deve conter pelo menos 3 caracteres!");
                 }
 
-                _nome = value;
+                field = value;
             }
         }
 
         public string Telefone
         {
-            get { return _telefone; }
-
-            [MemberNotNull(nameof(_telefone))]
+            get;
             set
             {
                 ArgumentNullException.ThrowIfNull(value);
@@ -43,18 +49,18 @@ namespace api.Models
                     throw new ArgumentException("Telefone inválido! Deve conter 11 dígitos (sem o código do país) ou 13 dígitos (com o código do país '55').");
                 }
 
-                _telefone = value;
+                field = value;
             }
         }
 
         public string? CPF
         {
-            get { return _cpf; }
+            get;
             set
             {
                 if (value == null)
                 {
-                    _cpf = null;
+                    field = null;
                     return;
                 }
 
@@ -66,18 +72,18 @@ namespace api.Models
                     throw new ArgumentException("CPF inválido!");
                 }
 
-                _cpf = value;
+                field = value;
             }
         }
 
         public string? Email
         {
-            get { return _email; }
+            get;
             set
             {
                 if (value == null)
                 {
-                    _email = null;
+                    field = null;
                     return;
                 }
 
@@ -86,17 +92,28 @@ namespace api.Models
                     throw new ArgumentException("Email inválido!");
                 }
 
-                _email = value;
+                field = value;
             }
         }
 
-        public Pessoa(string nome, string telefone, string? cpf, string? email)
+        public Pessoa(string? id, string nome, string telefone, string? cpf, string? email)
         {
+            if (id == null)
+            {
+                Id = Guid.NewGuid().ToString();
+            }
+            else
+            {
+                Id = id;
+            }
             Nome = nome;
             Telefone = telefone;
             CPF = cpf;
             Email = email;
         }
-        public Pessoa(string nome, string telefone) : this(nome, telefone, null, null) { }
+
+        public Pessoa(string nome, string telefone) : this(null, nome, telefone, null, null) { }
+
+        public Pessoa(string nome, string telefone, string cpf, string email) : this(null, nome, telefone, cpf, email) { }
     }
 }
