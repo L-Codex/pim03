@@ -103,7 +103,7 @@ namespace api.Utilities
     }
 
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field, AllowMultiple = false)]
-    public class DateAttribute : ValidationAttribute
+    public class DateTimeAttribute : ValidationAttribute
     {
         public bool AllowPast { get; set; } = true;
         public bool AllowFuture { get; set; } = true;
