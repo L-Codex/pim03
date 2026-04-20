@@ -101,4 +101,33 @@ namespace api.Utilities
             return new ValidationResult($"{validationContext.DisplayName} deve ser do tipo DateOnly.");
         }
     }
+
+    [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field, AllowMultiple = false)]
+    public class DateAttribute : ValidationAttribute
+    {
+        public bool AllowPast { get; set; } = true;
+        public bool AllowFuture { get; set; } = true;
+        protected override ValidationResult? IsValid(object? value, ValidationContext validationContext)
+        {
+            if (value == null)
+            {
+                return ValidationResult.Success;
+            }
+            if (value is DateTime date)
+            {
+                var today = DateTime.Now;
+                if (!AllowPast && date < today)
+                {
+                    return new ValidationResult($"{validationContext.DisplayName} não pode ser uma data passada.");
+                }
+                if (!AllowFuture && date > today)
+                {
+                    return new ValidationResult($"{validationContext.DisplayName} não pode ser uma data futura.");
+                }
+                return ValidationResult.Success;
+            }
+
+            return new ValidationResult($"{validationContext.DisplayName} deve ser do tipo DateTime.");
+        }
+    }
 }

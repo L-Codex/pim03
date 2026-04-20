@@ -32,5 +32,20 @@ classDiagram
         + Servico(nome: string, preco: double)
     }
 
+    class Agendamento {
+        - Id: string
+        - IdCliente: string
+        - IdFuncionario: string
+        - DataAgendamento: DateTime
+        - DataConclusao: DateTime?
+        - IdServicos: string[]
+        - Status: string
+        - ValorTotal: double
+        + Agendamento(id: string, idCliente: string, idFuncionario: string, dataAgendamento: DateTime, dataConclusao: DateTime?, idServicos: string[], status: string, valorTotal: double)
+    }
+
     Pessoa <|-- Cliente
     Pessoa <|-- Funcionario
+    Agendamento --> "1" Cliente
+    Agendamento --> "1" Funcionario
+    Agendamento --> "*" Servico
