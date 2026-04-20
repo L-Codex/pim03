@@ -37,7 +37,6 @@ Table tb_usuario {
   senha varchar [not null, note: 'Tipo deveria ser bytes, mas será alterado posteriormente.']
 }
 
-
 Table tb_servico {
   id integer [pk, increment, not null]
   nome varchar [not null, unique]
