@@ -1,55 +1,19 @@
-﻿namespace api.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace api.Models
 {
     public class Servico
     {
-        public string Nome
-        {
-            get;
-            set
-            {
-                ArgumentNullException.ThrowIfNull(value);
+        [Required]
+        [MinLength(3, ErrorMessage = "{0} deve conter pelo menos {1} caracteres!")]
+        public string Nome { get; set; }
 
-                if (value.Length < 3)
-                {
-                    throw new ArgumentException(
-                        "Nome do serviço deve conter pelo menos 3 caracteres!"
-                    );
-                }
+        [MinLength(5, ErrorMessage = "{0} deve conter pelo menos {1} caracteres!")]
+        public string? Descricao { get; set; }
 
-                field = value;
-            }
-        }
-
-        public string? Descricao
-        {
-            get;
-            set
-            {
-                if (value == null)
-                {
-                    field = null;
-                    return;
-                }
-
-                if (value.Length < 5)
-                {
-                    throw new ArgumentException("Descrição deve conter pelo menos 5 caracteres!");
-                }
-
-                field = value;
-            }
-        }
-
-        public double Preco
-        {
-            get;
-            set
-            {
-                ArgumentOutOfRangeException.ThrowIfNegativeOrZero(value);
-
-                field = value;
-            }
-        }
+        [Required]
+        [Range(0.01, double.MaxValue, ErrorMessage = "{0} deve ser um valor positivo!")]
+        public double Preco { get; set; }
 
         public Servico(string nome, string? descricao, double preco)
         {

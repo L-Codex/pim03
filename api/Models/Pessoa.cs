@@ -1,101 +1,30 @@
-﻿using api.Utilities;
+﻿using System.ComponentModel.DataAnnotations;
+using api.Utilities;
 
 namespace api.Models
 {
     public abstract class Pessoa
     {
-        public string Id
-        {
-            get;
-            init
-            {
-                ArgumentNullException.ThrowIfNull(value);
+        [Required]
+        [Guid]
+        public string Id { get; init; }
 
-                if (!Validators.IsValidUUID(value))
-                {
-                    throw new ArgumentException("ID deve ser um UUID válido!");
-                }
+        [Required]
+        [MinLength(3, ErrorMessage = "{0} deve conter pelo menos {1} caracteres!")]
+        public string Nome { get; set; }
 
-                field = value;
-            }
-        }
+        [Required]
+        [RegularExpression(
+            @"55\d{11}",
+            ErrorMessage = "{0} deve conter 13 dígitos, incluindo o código do país '55'."
+        )]
+        public string Telefone { get; set; }
 
-        public string Nome
-        {
-            get;
-            set
-            {
-                ArgumentNullException.ThrowIfNull(value);
+        [CPF(AllowPunctuation = false)]
+        public string? CPF { get; set; }
 
-                if (value.Length < 3)
-                {
-                    throw new ArgumentException("Nome deve conter pelo menos 3 caracteres!");
-                }
-
-                field = value;
-            }
-        }
-
-        public string Telefone
-        {
-            get;
-            set
-            {
-                ArgumentNullException.ThrowIfNull(value);
-
-                if (!Validators.IsValidPhoneNumber(value))
-                {
-                    throw new ArgumentException(
-                        "Telefone inválido! Deve conter 11 dígitos (sem o código do país) ou 13 dígitos (com o código do país '55')."
-                    );
-                }
-
-                field = value;
-            }
-        }
-
-        public string? CPF
-        {
-            get;
-            set
-            {
-                if (value == null)
-                {
-                    field = null;
-                    return;
-                }
-
-                // Remover pontuação
-                value = value.Replace(".", "").Replace("-", "");
-
-                if (!Validators.IsValidCPF(value))
-                {
-                    throw new ArgumentException("CPF inválido!");
-                }
-
-                field = value;
-            }
-        }
-
-        public string? Email
-        {
-            get;
-            set
-            {
-                if (value == null)
-                {
-                    field = null;
-                    return;
-                }
-
-                if (!Validators.IsValidEmail(value))
-                {
-                    throw new ArgumentException("Email inválido!");
-                }
-
-                field = value;
-            }
-        }
+        [EmailAddress(ErrorMessage = "{0} deve ser um endereço de email válido!")]
+        public string? Email { get; set; }
 
         public Pessoa(string? id, string nome, string telefone, string? cpf, string? email)
         {

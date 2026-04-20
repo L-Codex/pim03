@@ -1,22 +1,12 @@
-﻿namespace api.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace api.Models
 {
     public class Funcionario : Pessoa
     {
-        public string Endereco
-        {
-            get;
-            set
-            {
-                ArgumentNullException.ThrowIfNull(value);
-
-                if (value.Length < 5)
-                {
-                    throw new ArgumentException("Endereço deve conter pelo menos 5 caracteres!");
-                }
-
-                field = value;
-            }
-        }
+        [Required]
+        [MinLength(5)]
+        public string Endereco { get; set; }
 
         public Funcionario(
             string? id,

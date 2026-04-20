@@ -1,34 +1,11 @@
-﻿namespace api.Models
+﻿using api.Utilities;
+
+namespace api.Models
 {
     public class Cliente : Pessoa
     {
-        public DateOnly? DtNascimento
-        {
-            get;
-            set
-            {
-                if (value == null)
-                {
-                    field = null;
-                    return;
-                }
-
-                if (value >= DateOnly.FromDateTime(DateTime.Now))
-                {
-                    throw new ArgumentException("Data de nascimento deve ser uma data passada!");
-                }
-
-                if (value <= DateOnly.FromDateTime(DateTime.Now).AddYears(-120))
-                {
-                    throw new ArgumentException(
-                        "Data de nascimento deve ser uma data recente (menos de 120 anos atrás)!"
-                    );
-                }
-
-                // TODO: Impor idade mínima (ex: 14 anos)
-                field = value;
-            }
-        }
+        [BirthDate(MaximumAge = 120)]
+        public DateOnly? DtNascimento { get; set; }
 
         public Cliente(
             string? id,

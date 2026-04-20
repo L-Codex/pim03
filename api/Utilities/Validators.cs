@@ -1,41 +1,7 @@
-﻿using System.Net.Mail;
-
-namespace api.Utilities
+﻿namespace api.Utilities
 {
     public class Validators
     {
-        public static bool IsValidPhoneNumber(string phoneNumber)
-        {
-            if (phoneNumber.Length == 11 && phoneNumber.All(char.IsDigit))
-            {
-                return true;
-            }
-
-            if (
-                phoneNumber.Length == 13
-                && phoneNumber.StartsWith("55")
-                && phoneNumber.All(char.IsDigit)
-            )
-            {
-                return true;
-            }
-
-            return false;
-        }
-
-        public static bool IsValidEmail(string email)
-        {
-            try
-            {
-                var addr = new MailAddress(email);
-                return addr.Address == email;
-            }
-            catch
-            {
-                return false;
-            }
-        }
-
         public static bool IsValidCPF(string cpf)
         {
             // Source: https://www.geradorcpf.com/algoritmo_do_cpf.htm
