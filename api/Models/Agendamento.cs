@@ -52,7 +52,7 @@ namespace api.Models
         public string Status { get; set; }
 
         [Range(0.01, double.MaxValue, ErrorMessage = "{0} deve ser um valor positivo!")]
-        public double ValorTotal { get; set; }
+        public double? ValorTotal { get; set; }
 
         public Agendamento(
             string id,
@@ -60,8 +60,9 @@ namespace api.Models
             string idFuncionario,
             DateTime dataAgendamento,
             DateTime? dataConclusao,
+            string[] idServicos,
             string status,
-            double valorTotal
+            double? valorTotal
         )
         {
             Id = id;
@@ -70,9 +71,10 @@ namespace api.Models
             DataAgendamento = dataAgendamento;
             DataConclusao = dataConclusao;
             Status = status;
+            IdServicos = idServicos;
             ValorTotal = valorTotal;
         }
 
-        // Aqui vamos utilizar sobrecargas para deixar explícita a criação de um agendamento sem data de conclusão e valor total, já que isso é algo comum.
+        // Aqui não vamos utilizar sobrecargas para deixar explícita a criação de um agendamento sem data de conclusão e valor total, já que isso é algo comum.
     }
 }

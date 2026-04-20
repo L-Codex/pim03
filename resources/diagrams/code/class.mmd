@@ -40,8 +40,8 @@ classDiagram
         - DataConclusao: DateTime?
         - IdServicos: string[]
         - Status: string
-        - ValorTotal: double
-        + Agendamento(id: string, idCliente: string, idFuncionario: string, dataAgendamento: DateTime, dataConclusao: DateTime?, idServicos: string[], status: string, valorTotal: double)
+        - ValorTotal: double?
+        + Agendamento(id: string, idCliente: string, idFuncionario: string, dataAgendamento: DateTime, dataConclusao: DateTime?, idServicos: string[], status: string, valorTotal: double?)
     }
 
     Pessoa <|-- Cliente
