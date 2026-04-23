@@ -1,0 +1,33 @@
+sequenceDiagram
+  actor Usuario
+  participant Frontend
+  participant Backend
+  participant BancoDeDados
+
+  Usuario->>Frontend: Acessa a tela de agendamento
+  Usuario->>Frontend: Solicita lista de serviços
+
+  Frontend->>Backend: GET /servicos
+  Backend->>BancoDeDados: SELECT * FROM tb_servico
+  BancoDeDados-->>Backend: Lista de serviços
+  Backend-->>Frontend: Retorna serviços
+  Frontend-->>Usuario: Exibe opções de corte
+
+  Usuario->>Frontend: Seleciona o serviço desejado
+  Usuario->>Frontend: Solicita horários disponíveis
+
+  Frontend->>Backend: GET /horarios
+  Backend->>BancoDeDados: SELECT horários livres FROM tb_agendamento
+  BancoDeDados-->>Backend: Lista de horários disponíveis
+  Backend-->>Frontend: Retorna horários
+  Frontend-->>Usuario: Exibe horários disponíveis
+
+  Usuario->>Frontend: Seleciona o horário
+  Usuario->>Frontend: Confirma agendamento
+
+  Frontend->>Backend: POST /agendamento
+  Backend->>BancoDeDados: INSERT INTO tb_agendamento
+  Backend->>BancoDeDados: INSERT INTO tb_servico_realizado
+  BancoDeDados-->>Backend: Agendamento registrado
+  Backend-->>Frontend: Agendamento confirmado
+  Frontend-->>Usuario: Exibe confirmação do agendamento
