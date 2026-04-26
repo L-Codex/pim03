@@ -8,14 +8,22 @@ namespace api.Utilities
     {
         public bool AllowPunctuation { get; set; } = true;
 
-        protected override ValidationResult? IsValid(object? value, ValidationContext validationContext)
+        protected override ValidationResult? IsValid(
+            object? value,
+            ValidationContext validationContext
+        )
         {
             if (value == null)
             {
                 return ValidationResult.Success;
             }
 
-            if (value is not string) { return new ValidationResult($"{validationContext.DisplayName} deve ser uma string!") }
+            if (value is not string)
+            {
+                return new ValidationResult(
+                    $"{validationContext.DisplayName} deve ser uma string!"
+                );
+            }
 
             string cpf = value.ToString() ?? "";
 
@@ -26,7 +34,9 @@ namespace api.Utilities
             }
             else if (cpf.Contains('.') || cpf.Contains('-'))
             {
-                return new ValidationResult($"{validationContext.DisplayName} não deve conter pontuação!");
+                return new ValidationResult(
+                    $"{validationContext.DisplayName} não deve conter pontuação!"
+                );
             }
 
             if (!Validators.IsValidCPF(cpf))
@@ -41,7 +51,10 @@ namespace api.Utilities
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field, AllowMultiple = false)]
     public class GuidAttribute : ValidationAttribute
     {
-        protected override ValidationResult? IsValid(object? value, ValidationContext validationContext)
+        protected override ValidationResult? IsValid(
+            object? value,
+            ValidationContext validationContext
+        )
         {
             if (value == null)
             {
@@ -58,7 +71,9 @@ namespace api.Utilities
                 return ValidationResult.Success;
             }
 
-            return new ValidationResult($"O campo {validationContext.DisplayName} deve ser um GUID válido!");
+            return new ValidationResult(
+                $"O campo {validationContext.DisplayName} deve ser um GUID válido!"
+            );
         }
     }
 
@@ -68,7 +83,10 @@ namespace api.Utilities
         public int MinimumAge { get; set; } = 0;
         public int MaximumAge { get; set; } = -1;
 
-        protected override ValidationResult? IsValid(object? value, ValidationContext validationContext)
+        protected override ValidationResult? IsValid(
+            object? value,
+            ValidationContext validationContext
+        )
         {
             if (value == null)
             {
@@ -87,18 +105,24 @@ namespace api.Utilities
 
                 if (age < MinimumAge)
                 {
-                    return new ValidationResult($"A idade mínima para {validationContext.DisplayName} é {MinimumAge} anos.");
+                    return new ValidationResult(
+                        $"A idade mínima para {validationContext.DisplayName} é {MinimumAge} anos."
+                    );
                 }
 
                 if (MaximumAge > 0 && age > MaximumAge)
                 {
-                    return new ValidationResult($"A idade máxima para {validationContext.DisplayName} é {MaximumAge} anos.");
+                    return new ValidationResult(
+                        $"A idade máxima para {validationContext.DisplayName} é {MaximumAge} anos."
+                    );
                 }
 
                 return ValidationResult.Success;
             }
 
-            return new ValidationResult($"{validationContext.DisplayName} deve ser do tipo DateOnly.");
+            return new ValidationResult(
+                $"{validationContext.DisplayName} deve ser do tipo DateOnly."
+            );
         }
     }
 
@@ -107,7 +131,11 @@ namespace api.Utilities
     {
         public bool AllowPast { get; set; } = true;
         public bool AllowFuture { get; set; } = true;
-        protected override ValidationResult? IsValid(object? value, ValidationContext validationContext)
+
+        protected override ValidationResult? IsValid(
+            object? value,
+            ValidationContext validationContext
+        )
         {
             if (value == null)
             {
@@ -118,16 +146,22 @@ namespace api.Utilities
                 var today = DateTime.Now;
                 if (!AllowPast && date < today)
                 {
-                    return new ValidationResult($"{validationContext.DisplayName} não pode ser uma data passada.");
+                    return new ValidationResult(
+                        $"{validationContext.DisplayName} não pode ser uma data passada."
+                    );
                 }
                 if (!AllowFuture && date > today)
                 {
-                    return new ValidationResult($"{validationContext.DisplayName} não pode ser uma data futura.");
+                    return new ValidationResult(
+                        $"{validationContext.DisplayName} não pode ser uma data futura."
+                    );
                 }
                 return ValidationResult.Success;
             }
 
-            return new ValidationResult($"{validationContext.DisplayName} deve ser do tipo DateTime.");
+            return new ValidationResult(
+                $"{validationContext.DisplayName} deve ser do tipo DateTime."
+            );
         }
     }
 }
