@@ -1,3 +1,5 @@
+using Npgsql;
+
 namespace api
 {
     public class Program
@@ -6,7 +8,19 @@ namespace api
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
+            var dbConnString =
+                builder.Configuration.GetConnectionString("DefaultConnection")
+                ?? throw new InvalidOperationException(
+                    "Connection string 'DefaultConnection' not found."
+                );
+
+            builder.Services.AddSingleton(sp =>
+            {
+                return NpgsqlDataSource.Create(dbConnString);
+            });
+
+            builder.Services.AddScoped<Repositories.ServicosRepository>();
+            builder.Services.AddScoped<Services.ServicosService>();
 
             builder.Services.AddControllers();
 
