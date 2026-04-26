@@ -34,14 +34,14 @@ classDiagram
 
     class Agendamento {
         - Id: string
-        - IdCliente: string
-        - IdFuncionario: string
+        - Cliente: Cliente
+        - Funcionario: Funcionario
         - DataAgendamento: DateTime
         - DataConclusao: DateTime?
-        - IdServicos: string[]
+        - Servicos: Servico[]
         - Status: string
         - ValorTotal: double?
-        + Agendamento(id: string, idCliente: string, idFuncionario: string, dataAgendamento: DateTime, dataConclusao: DateTime?, idServicos: string[], status: string, valorTotal: double?)
+        + Agendamento(id: string, cliente: Cliente, funcionario: Funcionario, dataAgendamento: DateTime, dataConclusao: DateTime?, servicos: Servico[], status: string, valorTotal: double?)
     }
 
     Pessoa <|-- Cliente

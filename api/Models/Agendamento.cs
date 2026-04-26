@@ -11,12 +11,11 @@ namespace api.Models
         public string Id { get; init; }
 
         [Required]
-        [Guid]
-        public string IdCliente { get; set; }
+        public Cliente Cliente { get; set; }
 
         [Required]
         [Guid]
-        public string IdFuncionario { get; set; }
+        public Funcionario Funcionario { get; set; }
 
         [Required]
         [DateTime]
@@ -45,7 +44,7 @@ namespace api.Models
         }
 
         [Required]
-        public string[] IdServicos { get; set; }
+        public Servico[] Servicos { get; set; }
 
         [Required]
         [AllowedValues("agendado", "concluido", "cancelado")]
@@ -56,22 +55,22 @@ namespace api.Models
 
         public Agendamento(
             string id,
-            string idCliente,
-            string idFuncionario,
+            Cliente cliente,
+            Funcionario funcionario,
             DateTime dataAgendamento,
             DateTime? dataConclusao,
-            string[] idServicos,
+            Servico[] servicos,
             string status,
             double? valorTotal
         )
         {
             Id = id;
-            IdCliente = idCliente;
-            IdFuncionario = idFuncionario;
+            Cliente = cliente;
+            Funcionario = funcionario;
             DataAgendamento = dataAgendamento;
             DataConclusao = dataConclusao;
             Status = status;
-            IdServicos = idServicos;
+            Servicos = servicos;
             ValorTotal = valorTotal;
         }
 
