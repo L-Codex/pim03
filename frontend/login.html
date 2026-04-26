@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Navalha & Estilo — Gestão</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="login-page">
+
+    <div class="bg-texture"></div>
+    <div class="bg-glow"></div>
+    <div class="bg-glow2"></div>
+
+    <div class="login-container">
+        <div class="left-panel">
+            <div class="scissors-bg">✂</div>
+            <div class="brand">
+                <span class="brand-tag">Sistema de Gestão</span>
+                <div class="brand-name">Navalha<span>&</span><br>Estilo</div>
+                <div class="brand-sub">Barbearia</div>
+                <div class="divider"></div>
+                <p class="tagline">Gerencie sua barbearia<br>com <em>precisão e estilo</em>.</p>
+            </div>
+            <div class="features">
+                <div class="feature">
+                    <div class="feature-dot"></div>Agendamentos online
+                </div>
+                <div class="feature">
+                    <div class="feature-dot"></div>Controle de atendimentos
+                </div>
+                <div class="feature">
+                    <div class="feature-dot"></div>Gestão de funcionários
+                </div>
+                <div class="feature">
+                    <div class="feature-dot"></div>Relatórios financeiros
+                </div>
+            </div>
+        </div>
+
+        <div class="right-panel">
+            <div class="login-title">Bem-vindo</div>
+            <div class="login-sub">Acesse o painel de gestão</div>
+
+            <div class="alert" id="alert">Login ou senha incorretos.</div>
+
+            <div class="role-wrapper">
+                <div class="role-label">Perfil de acesso</div>
+                <div class="role-selector">
+                    <button class="role-btn active" onclick="setRole(this)">Gerente</button>
+                    <button class="role-btn" onclick="setRole(this)">Barbeiro</button>
+                </div>
+            </div>
+
+            <div class="field">
+                <label for="login">Login</label>
+                <input type="text" id="login" placeholder="seu.login" autocomplete="username">
+                <div class="error-msg" id="login-err">Preencha o login</div>
+            </div>
+
+            <div class="field">
+                <label for="senha">Senha</label>
+                <input type="password" id="senha" placeholder="••••••••" autocomplete="current-password">
+                <div class="error-msg" id="senha-err">Preencha a senha</div>
+            </div>
+
+            <div class="forgot"><a href="#">Esqueci minha senha</a></div>
+
+            <button class="btn-login" id="btn" onclick="handleLogin()">Entrar</button>
+
+            <div class="bottom-note">
+                <a href="index.html">← Voltar ao site</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function setRole(el) {
+            document.querySelectorAll('.role-btn').forEach(b => b.classList.remove('active'));
+            el.classList.add('active');
+        }
+
+        function handleLogin() {
+            const login = document.getElementById('login');
+            const senha = document.getElementById('senha');
+            const loginErr = document.getElementById('login-err');
+            const senhaErr = document.getElementById('senha-err');
+            const alertEl = document.getElementById('alert');
+            const btn = document.getElementById('btn');
+
+            let valid = true;
+            alertEl.style.display = 'none';
+            login.classList.remove('input-error');
+            senha.classList.remove('input-error');
+            loginErr.style.display = 'none';
+            senhaErr.style.display = 'none';
+
+            if (!login.value.trim()) {
+                login.classList.add('input-error');
+                loginErr.style.display = 'block';
+                valid = false;
+            }
+            if (!senha.value.trim()) {
+                senha.classList.add('input-error');
+                senhaErr.style.display = 'block';
+                valid = false;
+            }
+            if (!valid) return;
+
+            btn.classList.add('loading');
+            btn.textContent = 'Verificando...';
+
+            setTimeout(() => {
+                btn.classList.remove('loading');
+                btn.textContent = 'Entrar';
+                alertEl.style.display = 'block';
+                login.classList.add('input-error');
+                senha.classList.add('input-error');
+            }, 1200);
+        }
+
+        document.addEventListener('keydown', e => {
+            if (e.key === 'Enter') handleLogin();
+        });
+    </script>
+
+</body>
+
+</html>
