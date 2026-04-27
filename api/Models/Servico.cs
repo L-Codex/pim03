@@ -17,7 +17,7 @@ namespace api.Models
         public string? Descricao { get; set; }
 
         [Required]
-        [Range(0.01, double.MaxValue, ErrorMessage = "{0} deve ser um valor positivo!")]
+        [Range(0.01, 9999.99, ErrorMessage = "{0} deve ser um valor positivo!")]
         public double Preco { get; set; }
 
         public Servico(string? id, string nome, string? descricao, double preco)
