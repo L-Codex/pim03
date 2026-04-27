@@ -29,7 +29,7 @@ namespace api.Repositories
             {
                 servicos.Add(
                     new ServicoDTO(
-                        reader.GetString(0),
+                        reader.GetGuid(0).ToString(),
                         reader.GetString(1),
                         reader.IsDBNull(2) ? null : reader.GetString(2),
                         reader.GetDouble(3)
