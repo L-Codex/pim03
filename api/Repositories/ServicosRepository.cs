@@ -96,5 +96,23 @@ namespace api.Repositories
 
             return new Maybe<bool>(true);
         }
+
+        public async Task<bool> CreateOne(ServicoDTO dto)
+        {
+            await using var connection = await _ds.OpenConnectionAsync();
+
+            await using var command = new NpgsqlCommand(
+                "INSERT INTO tb_servico (id, nome, descricao, valor) VALUES ($1, $2, $3, $4) RETURNING id",
+                connection
+            );
+            command.Parameters.AddWithValue(dto.Id);
+            command.Parameters.AddWithValue(dto.Nome);
+            command.Parameters.AddWithValue((object?)dto.Descricao ?? DBNull.Value);
+            command.Parameters.AddWithValue(dto.Preco);
+
+            var id = await command.ExecuteScalarAsync();
+
+            return true;
+        }
     }
 }

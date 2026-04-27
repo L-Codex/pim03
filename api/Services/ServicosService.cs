@@ -40,5 +40,27 @@ namespace api.Services
         {
             return await _repo.DeleteOne(id);
         }
+
+        public async Task<Servico> CreateOne(ServicoCreateDTO dto)
+        {
+            var newServico = new Servico(null, dto.Nome, dto.Descricao, dto.Preco);
+
+            var created = await _repo.CreateOne(
+                new ServicoDTO(
+                    newServico.Id,
+                    newServico.Nome,
+                    newServico.Descricao,
+                    newServico.Preco
+                )
+            );
+
+            if (created)
+            {
+                return newServico;
+            }
+
+            // TODO: Lidar com erros
+            throw new Exception("Erro ao criar serviço.");
+        }
     }
 }

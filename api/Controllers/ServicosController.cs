@@ -36,7 +36,10 @@ namespace api.Controllers
 
         // POST api/<ServicosController>
         [HttpPost]
-        public void Post([FromBody] string value) { }
+        public async Task<ActionResult<Servico>> Post([FromBody] ServicoCreateDTO value)
+        {
+            return await _service.CreateOne(value);
+        }
 
         // PUT api/<ServicosController>/5
         [HttpPut("{id}")]
