@@ -14,7 +14,11 @@ namespace api.Services
 
         public async Task<Servico[]> Listar()
         {
-            return await _repo.ListarTodos();
+            var dbServicos = await _repo.ListarTodos();
+
+            return dbServicos
+                .Select(s => new Servico(s.Id, s.Nome, s.Descricao, s.Preco))
+                .ToArray();
         }
     }
 }

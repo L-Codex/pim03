@@ -12,14 +12,14 @@ namespace api.Repositories
             _ds = ds;
         }
 
-        public async Task<Servico[]> ListarTodos()
+        public async Task<ServicoDTO[]> ListarTodos()
         {
-            var servicos = new List<Servico>();
+            var servicos = new List<ServicoDTO>();
 
             await using var connection = await _ds.OpenConnectionAsync();
 
             await using var command = new NpgsqlCommand(
-                "SELECT nome, descricao, valor FROM tb_servico",
+                "SELECT id, nome, descricao, valor FROM tb_servico",
                 connection
             );
 
@@ -28,10 +28,11 @@ namespace api.Repositories
             while (await reader.ReadAsync())
             {
                 servicos.Add(
-                    new Servico(
+                    new ServicoDTO(
                         reader.GetString(0),
-                        reader.IsDBNull(1) ? null : reader.GetString(1),
-                        reader.GetDouble(2)
+                        reader.GetString(1),
+                        reader.IsDBNull(2) ? null : reader.GetString(2),
+                        reader.GetDouble(3)
                     )
                 );
             }

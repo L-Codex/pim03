@@ -3,6 +3,22 @@ using api.Utilities;
 
 namespace api.Models
 {
+    public sealed class ServicoDTO
+    {
+        public string Id { get; init; }
+        public string Nome { get; set; }
+        public string? Descricao { get; set; }
+        public double Preco { get; set; }
+
+        public ServicoDTO(string id, string nome, string? descricao, double preco)
+        {
+            Id = id;
+            Nome = nome;
+            Descricao = descricao;
+            Preco = preco;
+        }
+    }
+
     public class Servico
     {
         [Required]
