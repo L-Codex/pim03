@@ -1,4 +1,5 @@
 ﻿using api.Models;
+using api.Utilities;
 using Npgsql;
 
 namespace api.Repositories
@@ -40,7 +41,7 @@ namespace api.Repositories
             return servicos.ToArray();
         }
 
-        public async Task<ServicoDTO?> GetOne(Guid id)
+        public async Task<Maybe<ServicoDTO>> GetOne(Guid id)
         {
             await using var connection = await _ds.OpenConnectionAsync();
 
@@ -54,15 +55,17 @@ namespace api.Repositories
 
             if (await reader.ReadAsync())
             {
-                return new ServicoDTO(
-                    reader.GetGuid(0),
-                    reader.GetString(1),
-                    reader.IsDBNull(2) ? null : reader.GetString(2),
-                    reader.GetDouble(3)
+                return new Maybe<ServicoDTO>(
+                    new ServicoDTO(
+                        reader.GetGuid(0),
+                        reader.GetString(1),
+                        reader.IsDBNull(2) ? null : reader.GetString(2),
+                        reader.GetDouble(3)
+                    )
                 );
             }
 
-            return null;
+            return new Maybe<ServicoDTO>(RepoError.NotFound);
         }
     }
 }

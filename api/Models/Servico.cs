@@ -3,12 +3,12 @@ using api.Utilities;
 
 namespace api.Models
 {
-    public sealed class ServicoDTO
+    public struct ServicoDTO
     {
-        public Guid Id { get; init; }
-        public string Nome { get; set; }
-        public string? Descricao { get; set; }
-        public double Preco { get; set; }
+        public Guid Id;
+        public string Nome;
+        public string? Descricao;
+        public double Preco;
 
         public ServicoDTO(Guid id, string nome, string? descricao, double preco)
         {

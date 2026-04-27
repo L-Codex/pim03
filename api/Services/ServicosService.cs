@@ -23,14 +23,16 @@ namespace api.Services
 
         public async Task<Servico?> GetOne(Guid id)
         {
-            var found = await _repo.GetOne(id);
+            var result = await _repo.GetOne(id);
 
-            if (found == null)
+            if (!result.HasValue)
             {
                 return null;
             }
 
-            return new Servico(found.Id, found.Nome, found.Descricao, found.Preco);
+            var service = result.Value;
+
+            return new Servico(service.Id, service.Nome, service.Descricao, service.Preco);
         }
     }
 }
