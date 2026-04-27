@@ -20,5 +20,17 @@ namespace api.Services
                 .Select(s => new Servico(s.Id, s.Nome, s.Descricao, s.Preco))
                 .ToArray();
         }
+
+        public async Task<Servico?> GetOne(string id)
+        {
+            var found = await _repo.GetOne(id);
+
+            if (found == null)
+            {
+                return null;
+            }
+
+            return new Servico(found.Id, found.Nome, found.Descricao, found.Preco);
+        }
     }
 }

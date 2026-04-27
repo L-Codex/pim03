@@ -39,5 +39,31 @@ namespace api.Repositories
 
             return servicos.ToArray();
         }
+
+        public async Task<ServicoDTO?> GetOne(string id)
+        {
+            await using var connection = await _ds.OpenConnectionAsync();
+
+            await using var command = new NpgsqlCommand(
+                "SELECT id, nome, descricao, valor FROM tb_servico WHERE id = @id",
+                connection
+            );
+
+            command.Parameters.AddWithValue("id", Guid.Parse(id));
+
+            await using var reader = await command.ExecuteReaderAsync();
+
+            if (await reader.ReadAsync())
+            {
+                return new ServicoDTO(
+                    reader.GetGuid(0).ToString(),
+                    reader.GetString(1),
+                    reader.IsDBNull(2) ? null : reader.GetString(2),
+                    reader.GetDouble(3)
+                );
+            }
+
+            return null;
+        }
     }
 }

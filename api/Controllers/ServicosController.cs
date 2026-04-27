@@ -26,9 +26,14 @@ namespace api.Controllers
 
         // GET api/<ServicosController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public async Task<ActionResult<Servico>> Get(string id)
         {
-            return "value";
+            var serv = await _service.GetOne(id);
+            if (serv == null)
+            {
+                return NotFound();
+            }
+            return Ok(serv);
         }
 
         // POST api/<ServicosController>
