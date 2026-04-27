@@ -2,8 +2,6 @@
 using api.Services;
 using Microsoft.AspNetCore.Mvc;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace api.Controllers
 {
     [Route("api/[controller]")]
@@ -46,6 +44,24 @@ namespace api.Controllers
 
         // DELETE api/<ServicosController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id) { }
+        public async Task<ActionResult> Delete(Guid id)
+        {
+            var result = await _service.DeleteOne(id);
+
+            if (result.HasError)
+            {
+                switch (result.Error)
+                {
+                    case Utilities.ErrorCodes.NotFound:
+                        return NotFound();
+                    case Utilities.ErrorCodes.CantModify:
+                        return Conflict("Não é possível modificar este recurso.");
+                    default:
+                        return StatusCode(500, "Erro desconhecido.");
+                }
+            }
+
+            return Ok();
+        }
     }
 }

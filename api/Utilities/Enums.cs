@@ -1,7 +1,8 @@
 namespace api.Utilities
 {
-    public enum RepoError
+    public enum ErrorCodes
     {
         NotFound,
+        CantModify,
     }
 }

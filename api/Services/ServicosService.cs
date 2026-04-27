@@ -1,5 +1,6 @@
 using api.Models;
 using api.Repositories;
+using api.Utilities;
 
 namespace api.Services
 {
@@ -33,6 +34,11 @@ namespace api.Services
             var service = result.Value;
 
             return new Servico(service.Id, service.Nome, service.Descricao, service.Preco);
+        }
+
+        public async Task<Maybe<bool>> DeleteOne(Guid id)
+        {
+            return await _repo.DeleteOne(id);
         }
     }
 }

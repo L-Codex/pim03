@@ -4,7 +4,7 @@ namespace api.Utilities
     {
         public bool HasError { get; }
         public bool HasValue { get; }
-        public RepoError? Error { get; }
+        public ErrorCodes? Error { get; }
         public T Value { get; }
 
         public Maybe(T value)
@@ -15,7 +15,7 @@ namespace api.Utilities
             Value = value;
         }
 
-        public Maybe(RepoError error)
+        public Maybe(ErrorCodes error)
         {
             HasError = true;
             HasValue = false;

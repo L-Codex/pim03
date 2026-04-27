@@ -65,7 +65,36 @@ namespace api.Repositories
                 );
             }
 
-            return new Maybe<ServicoDTO>(RepoError.NotFound);
+            return new Maybe<ServicoDTO>(ErrorCodes.NotFound);
+        }
+
+        public async Task<Maybe<bool>> DeleteOne(Guid id)
+        {
+            await using var connection = await _ds.OpenConnectionAsync();
+
+            await using var command = new NpgsqlCommand(
+                "DELETE FROM tb_servico WHERE id = $1",
+                connection
+            );
+            command.Parameters.AddWithValue(id);
+
+            int affectedRows;
+
+            try
+            {
+                affectedRows = await command.ExecuteNonQueryAsync();
+            }
+            catch (PostgresException ex) when (ex.SqlState == "23001")
+            {
+                // restrict_violation: O serviço está sendo referenciado por um agendamento.
+                return new Maybe<bool>(ErrorCodes.CantModify);
+            }
+            if (affectedRows == 0)
+            {
+                return new Maybe<bool>(ErrorCodes.NotFound);
+            }
+
+            return new Maybe<bool>(true);
         }
     }
 }
