@@ -12,7 +12,7 @@ namespace api.Repositories
             _ds = ds;
         }
 
-        public async Task<ServicoDTO[]> ListarTodos()
+        public async Task<ServicoDTO[]> GetAll()
         {
             var servicos = new List<ServicoDTO>();
 

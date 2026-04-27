@@ -21,7 +21,7 @@ namespace api.Controllers
         [HttpGet]
         public async Task<IEnumerable<Servico>> Get()
         {
-            return await _service.Listar();
+            return await _service.GetAll();
         }
 
         // GET api/<ServicosController>/5

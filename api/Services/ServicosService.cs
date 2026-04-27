@@ -1,4 +1,4 @@
-﻿using api.Models;
+using api.Models;
 using api.Repositories;
 
 namespace api.Services
@@ -12,9 +12,9 @@ namespace api.Services
             _repo = repo;
         }
 
-        public async Task<Servico[]> Listar()
+        public async Task<Servico[]> GetAll()
         {
-            var dbServicos = await _repo.ListarTodos();
+            var dbServicos = await _repo.GetAll();
 
             return dbServicos
                 .Select(s => new Servico(s.Id, s.Nome, s.Descricao, s.Preco))
