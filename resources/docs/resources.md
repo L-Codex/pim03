@@ -14,11 +14,10 @@ Para desenvolvimento foram utilizadas diversas ferramentas:
 
 Para criação de diagramas, foram utilizados:
 
-- **[draw.io](https://draw.io)**: criação do diagrama de casos de uso
+- **[draw.io](https://draw.io)**: criação do diagrama de casos de uso e impressão dos diagramas Mermaid.
 - **[dbdiagram.io](https://dbdiagram.io)**: criação diagrama de banco de dados (veja [database.dbml])
 - **Cisco Packet Tracer**: criação do diagrama de redes
 - **[svgviewer.dev](https://www.svgviewer.dev/svg-to-png)**: conversão de SVG para PNG.
-- **[mermaid.ink](https://mermaid.ink)**: geração da imagem do diagrama de classes.
 
 ## Escrita
 
