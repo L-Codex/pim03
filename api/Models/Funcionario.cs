@@ -9,7 +9,7 @@ namespace api.Models
         public string Endereco { get; set; }
 
         public Funcionario(
-            string? id,
+            Guid? id,
             string nome,
             string telefone,
             string cpf,

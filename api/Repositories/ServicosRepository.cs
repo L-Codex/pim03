@@ -29,7 +29,7 @@ namespace api.Repositories
             {
                 servicos.Add(
                     new ServicoDTO(
-                        reader.GetGuid(0).ToString(),
+                        reader.GetGuid(0),
                         reader.GetString(1),
                         reader.IsDBNull(2) ? null : reader.GetString(2),
                         reader.GetDouble(3)
@@ -40,7 +40,7 @@ namespace api.Repositories
             return servicos.ToArray();
         }
 
-        public async Task<ServicoDTO?> GetOne(string id)
+        public async Task<ServicoDTO?> GetOne(Guid id)
         {
             await using var connection = await _ds.OpenConnectionAsync();
 
@@ -55,7 +55,7 @@ namespace api.Repositories
             if (await reader.ReadAsync())
             {
                 return new ServicoDTO(
-                    reader.GetGuid(0).ToString(),
+                    reader.GetGuid(0),
                     reader.GetString(1),
                     reader.IsDBNull(2) ? null : reader.GetString(2),
                     reader.GetDouble(3)

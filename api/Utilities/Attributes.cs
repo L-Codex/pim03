@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.Reflection.Metadata.Ecma335;
 
 namespace api.Utilities
 {
@@ -57,11 +56,6 @@ namespace api.Utilities
         )
         {
             if (value == null)
-            {
-                return ValidationResult.Success;
-            }
-
-            if (value is string str && Guid.TryParse(str, out _))
             {
                 return ValidationResult.Success;
             }

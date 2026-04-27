@@ -5,12 +5,12 @@ namespace api.Models
 {
     public sealed class ServicoDTO
     {
-        public string Id { get; init; }
+        public Guid Id { get; init; }
         public string Nome { get; set; }
         public string? Descricao { get; set; }
         public double Preco { get; set; }
 
-        public ServicoDTO(string id, string nome, string? descricao, double preco)
+        public ServicoDTO(Guid id, string nome, string? descricao, double preco)
         {
             Id = id;
             Nome = nome;
@@ -23,7 +23,7 @@ namespace api.Models
     {
         [Required]
         [Guid]
-        public string Id { get; init; }
+        public Guid Id { get; init; }
 
         [Required]
         [MinLength(3, ErrorMessage = "{0} deve conter pelo menos {1} caracteres!")]
@@ -36,22 +36,22 @@ namespace api.Models
         [Range(0.01, 9999.99, ErrorMessage = "{0} deve ser um valor positivo!")]
         public double Preco { get; set; }
 
-        public Servico(string? id, string nome, string? descricao, double preco)
+        public Servico(Guid? id, string nome, string? descricao, double preco)
         {
             if (id == null)
             {
-                Id = Guid.NewGuid().ToString();
+                Id = Guid.NewGuid();
             }
             else
             {
-                Id = id;
+                Id = id.Value;
             }
             Nome = nome;
             Descricao = descricao;
             Preco = preco;
         }
 
-        public Servico(string id, string nome, double preco)
+        public Servico(Guid id, string nome, double preco)
             : this(id, nome, null, preco) { }
 
         public Servico(string nome, double preco)

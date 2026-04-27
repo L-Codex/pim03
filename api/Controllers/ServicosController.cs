@@ -26,7 +26,7 @@ namespace api.Controllers
 
         // GET api/<ServicosController>/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Servico>> Get(string id)
+        public async Task<ActionResult<Servico>> Get(Guid id)
         {
             var serv = await _service.GetOne(id);
             if (serv == null)

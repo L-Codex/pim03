@@ -8,7 +8,7 @@ namespace api.Models
     {
         [Required]
         [Guid]
-        public string Id { get; init; }
+        public Guid Id { get; init; }
 
         [Required]
         public Cliente Cliente { get; set; }
@@ -54,7 +54,7 @@ namespace api.Models
         public double? ValorTotal { get; set; }
 
         public Agendamento(
-            string id,
+            Guid id,
             Cliente cliente,
             Funcionario funcionario,
             DateTime dataAgendamento,

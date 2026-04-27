@@ -21,7 +21,7 @@ namespace api.Services
                 .ToArray();
         }
 
-        public async Task<Servico?> GetOne(string id)
+        public async Task<Servico?> GetOne(Guid id)
         {
             var found = await _repo.GetOne(id);
 

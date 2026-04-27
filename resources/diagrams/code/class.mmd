@@ -1,39 +1,40 @@
 classDiagram
     class Pessoa {
         <<abstract>>
-        - Id: string
+        - Id: Guid
         - Nome: string
         - Telefone: string
         - CPF: string?
         - Email: string?
-        + Pessoa(id: string?, nome: string, telefone: string, cpf: string?, email: string?)
+        + Pessoa(id: Guid?, nome: string, telefone: string, cpf: string?, email: string?)
         + Pessoa(nome: string, telefone: string)
         + Pessoa(nome: string, telefone: string, cpf: string, email: string)
     }
 
     class Cliente {
         - DtNascimento: DateOnly?
-        + Cliente(id: string?, nome: string, telefone: string, cpf: string?, email: string?, dtNascimento: DateOnly?)
+        + Cliente(id: Guid?, nome: string, telefone: string, cpf: string?, email: string?, dtNascimento: DateOnly?)
         + Cliente(nome: string, telefone: string, cpf: string, email: string, dtNascimento: DateOnly)
         + Cliente(nome: string, telefone: string)
     }
 
     class Funcionario {
         - Endereco: string
-        + Funcionario(id: string?, nome: string, telefone: string, cpf: string, email: string, endereco: string)
+        + Funcionario(id: Guid?, nome: string, telefone: string, cpf: string, email: string, endereco: string)
         + Funcionario(nome: string, telefone: string, cpf: string, email: string, endereco: string)
     }
 
     class Servico {
+        - Id: Guid
         - Nome: string
         - Descricao: string?
         - Preco: double
-        + Servico(nome: string, descricao: string?, preco: double)
-        + Servico(nome: string, preco: double)
+        + Servico(id: Guid?, nome: string, descricao: string?, preco: double)
+        + Servico(id: Guid?, nome: string, preco: double)
     }
 
     class Agendamento {
-        - Id: string
+        - Id: Guid
         - Cliente: Cliente
         - Funcionario: Funcionario
         - DataAgendamento: DateTime
@@ -41,7 +42,7 @@ classDiagram
         - Servicos: Servico[]
         - Status: string
         - ValorTotal: double?
-        + Agendamento(id: string, cliente: Cliente, funcionario: Funcionario, dataAgendamento: DateTime, dataConclusao: DateTime?, servicos: Servico[], status: string, valorTotal: double?)
+        + Agendamento(id: Guid?, cliente: Cliente, funcionario: Funcionario, dataAgendamento: DateTime, dataConclusao: DateTime?, servicos: Servico[], status: string, valorTotal: double?)
     }
 
     Pessoa <|-- Cliente

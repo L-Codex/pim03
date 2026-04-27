@@ -8,7 +8,7 @@ namespace api.Models
         public DateOnly? DtNascimento { get; set; }
 
         public Cliente(
-            string? id,
+            Guid? id,
             string nome,
             string telefone,
             string? cpf,

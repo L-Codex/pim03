@@ -7,7 +7,7 @@ namespace api.Models
     {
         [Required]
         [Guid]
-        public string Id { get; init; }
+        public Guid Id { get; init; }
 
         [Required]
         [MinLength(3, ErrorMessage = "{0} deve conter pelo menos {1} caracteres!")]
@@ -26,15 +26,15 @@ namespace api.Models
         [EmailAddress(ErrorMessage = "{0} deve ser um endereço de email válido!")]
         public string? Email { get; set; }
 
-        public Pessoa(string? id, string nome, string telefone, string? cpf, string? email)
+        public Pessoa(Guid? id, string nome, string telefone, string? cpf, string? email)
         {
             if (id == null)
             {
-                Id = Guid.NewGuid().ToString();
+                Id = Guid.NewGuid();
             }
             else
             {
-                Id = id;
+                Id = id.Value;
             }
             Nome = nome;
             Telefone = telefone;
