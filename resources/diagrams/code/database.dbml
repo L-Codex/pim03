@@ -5,7 +5,7 @@ Project pim03 {
 }
 
 Table tb_cliente {
-  id integer [pk, increment, not null]
+  id uuid [pk, increment, not null]
   nome varchar [not null]
   telefone varchar(13) [not null]
   email varchar
@@ -14,7 +14,7 @@ Table tb_cliente {
 }
 
 Table tb_funcionario {
-  id integer [pk, increment, not null]
+  id uuid [pk, increment, not null]
   nome varchar [not null]
   cpf varchar(11) [not null, unique]
   email varchar [not null, unique]
@@ -22,9 +22,9 @@ Table tb_funcionario {
 }
 
 Table tb_agendamento {
-  id integer [pk, increment, not null]
-  id_cliente integer [not null]
-  id_funcionario integer [not null]
+  id uuid [pk, increment, not null]
+  id_cliente uuid [not null]
+  id_funcionario uuid [not null]
   dt_agendamento timestamptz [not null]
   dt_conclusao timestamptz
   status varchar(9) [not null, note: 'agendado, concluido, cancelado']
@@ -32,21 +32,21 @@ Table tb_agendamento {
 }
 
 Table tb_usuario {
-  id_funcionario integer [pk, not null]
+  id_funcionario uuid [pk, not null]
   login varchar [not null, unique]
   senha varchar [not null, note: 'Tipo deveria ser bytes, mas será alterado posteriormente.']
 }
 
 Table tb_servico {
-  id integer [pk, increment, not null]
+  id uuid [pk, increment, not null]
   nome varchar [not null, unique]
   descricao varchar
   valor numeric(6,2) [not null]
 }
 
 Table tb_servico_realizado {
-  id_agendamento integer [not null]
-  id_servico integer [not null]
+  id_agendamento uuid [not null]
+  id_servico uuid [not null]
   valor numeric(6,2) [not null]
 
   indexes {
