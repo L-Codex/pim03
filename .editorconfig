@@ -10,7 +10,7 @@ tab_width = 4
 trim_trailing_whitespace = true
 max_line_length = 100
 
-[*.{html,css,js,jsx,mjs}]
+[*.{html,css,js,jsx,mjs,json}]
 indent_size = 2
 
 [*.{config,csproj,props,slnx,targets,xaml,xml}]
