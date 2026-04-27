@@ -45,11 +45,10 @@ namespace api.Repositories
             await using var connection = await _ds.OpenConnectionAsync();
 
             await using var command = new NpgsqlCommand(
-                "SELECT id, nome, descricao, valor FROM tb_servico WHERE id = @id",
+                "SELECT id, nome, descricao, valor FROM tb_servico WHERE id = $1",
                 connection
             );
-
-            command.Parameters.AddWithValue("id", Guid.Parse(id));
+            command.Parameters.AddWithValue(id);
 
             await using var reader = await command.ExecuteReaderAsync();
 
