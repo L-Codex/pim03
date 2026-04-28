@@ -36,9 +36,14 @@ namespace api.Controllers
 
         // POST api/<ServicosController>
         [HttpPost]
-        public async Task<ActionResult<Servico>> Post([FromBody] ServicoCreateDTO value)
+        public async Task<ActionResult> Post([FromBody] ServicoCreateDTO value)
         {
-            return await _service.CreateOne(value);
+            var created = await _service.CreateOne(value);
+            if (created)
+            {
+                return NoContent();
+            }
+            return BadRequest("Erro ao criar o serviço.");
         }
 
         // PUT api/<ServicosController>/5

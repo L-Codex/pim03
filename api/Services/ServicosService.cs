@@ -41,7 +41,7 @@ namespace api.Services
             return await _repo.DeleteOne(id);
         }
 
-        public async Task<Servico> CreateOne(ServicoCreateDTO dto)
+        public async Task<bool> CreateOne(ServicoCreateDTO dto)
         {
             var newServico = new Servico(null, dto.Nome, dto.Descricao, dto.Preco);
 
@@ -56,7 +56,7 @@ namespace api.Services
 
             if (created)
             {
-                return newServico;
+                return true;
             }
 
             // TODO: Lidar com erros
