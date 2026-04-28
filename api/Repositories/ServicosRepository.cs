@@ -105,6 +105,7 @@ namespace api.Repositories
                 "INSERT INTO tb_servico (id, nome, descricao, valor) VALUES ($1, $2, $3, $4) RETURNING id",
                 connection
             );
+
             command.Parameters.AddWithValue(dto.Id);
             command.Parameters.AddWithValue(dto.Nome);
             command.Parameters.AddWithValue((object?)dto.Descricao ?? DBNull.Value);
@@ -113,6 +114,47 @@ namespace api.Repositories
             await command.ExecuteNonQueryAsync();
 
             return true;
+        }
+
+        public async Task<bool> UpdateOne(ServicoDTO dto, bool upsert = false)
+        {
+            await using var connection = await _ds.OpenConnectionAsync();
+
+            string query;
+            if (upsert)
+            {
+                query =
+                    @"INSERT INTO tb_servico (id, nome, descricao, valor)
+                    VALUES ($1, $2, $3, $4)
+                    ON CONFLICT (id) DO UPDATE
+                    SET
+                        nome = EXCLUDED.nome,
+                        descricao = EXCLUDED.descricao,
+                        valor = EXCLUDED.valor
+                    WHERE
+                        nome IS DISTINCT FROM EXCLUDED.nome
+                        OR descricao IS DISTINCT FROM EXCLUDED.descricao
+                        OR valor IS DISTINCT FROM EXCLUDED.valor";
+            }
+            else
+            {
+                query =
+                    @"UPDATE tb_servico SET nome=$2, descricao=$3, valor=$4
+                    WHERE id = $1
+                    AND (
+                        nome IS DISTINCT FROM $2
+                        OR descricao IS DISTINCT FROM $3
+                        OR valor IS DISTINCT FROM $4
+                    )";
+            }
+            await using var command = new NpgsqlCommand(query, connection);
+            command.Parameters.AddWithValue(dto.Id);
+            command.Parameters.AddWithValue(dto.Nome);
+            command.Parameters.AddWithValue((object?)dto.Descricao ?? DBNull.Value);
+            command.Parameters.AddWithValue(dto.Preco);
+
+            var affectedRows = await command.ExecuteNonQueryAsync();
+            return affectedRows > 0;
         }
     }
 }

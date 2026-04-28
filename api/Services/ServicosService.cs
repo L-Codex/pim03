@@ -62,5 +62,48 @@ namespace api.Services
             // TODO: Lidar com erros
             throw new Exception("Erro ao criar serviço.");
         }
+
+        public async Task<Maybe<bool>> UpdateOne(Guid id, ServicoUpdateDTO dto)
+        {
+            var existingResult = await _repo.GetOne(id);
+
+            if (!existingResult.HasValue)
+            {
+                return new Maybe<bool>(ErrorCodes.NotFound);
+            }
+
+            var existing = existingResult.Value;
+
+            var updatedServico = new ServicoDTO(
+                id,
+                dto.Nome ?? existing.Nome,
+                dto.Descricao ?? existing.Descricao,
+                dto.Preco ?? existing.Preco
+            );
+
+            var updateResult = await _repo.UpdateOne(updatedServico);
+
+            if (!updateResult)
+            {
+                return new Maybe<bool>(ErrorCodes.NotFound);
+            }
+
+            return new Maybe<bool>(true);
+        }
+
+        public async Task<bool> ReplaceOne(Guid id, ServicoCreateDTO dto)
+        {
+            var updated = await _repo.UpdateOne(
+                new ServicoDTO(id, dto.Nome, dto.Descricao, dto.Preco)
+            );
+
+            if (updated)
+            {
+                return true;
+            }
+
+            // TODO: Lidar com erros.
+            throw new Exception("Erro ao atualizar serviço.");
+        }
     }
 }

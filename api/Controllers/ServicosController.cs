@@ -48,7 +48,36 @@ namespace api.Controllers
 
         // PUT api/<ServicosController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value) { }
+        public async Task<ActionResult> Put(Guid id, [FromBody] ServicoCreateDTO value)
+        {
+            var updated = await _service.ReplaceOne(id, value);
+            if (updated)
+            {
+                return NoContent();
+            }
+            return BadRequest("Erro ao atualizar o serviço.");
+        }
+
+        [HttpPatch("{id}")]
+        public async Task<ActionResult> Patch(Guid id, [FromBody] ServicoUpdateDTO value)
+        {
+            var updated = await _service.UpdateOne(id, value);
+            if (updated.HasValue)
+            {
+                return NoContent();
+            }
+            if (updated.HasError)
+            {
+                switch (updated.Error)
+                {
+                    case Utilities.ErrorCodes.NotFound:
+                        return NotFound();
+                    default:
+                        throw new Exception("Erro desconhecido.");
+                }
+            }
+            return BadRequest("Erro ao atualizar o serviço.");
+        }
 
         // DELETE api/<ServicosController>/5
         [HttpDelete("{id}")]
