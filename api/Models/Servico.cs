@@ -76,11 +76,5 @@ namespace api.Models
             Descricao = descricao;
             Preco = preco;
         }
-
-        public Servico(Guid id, string nome, double preco)
-            : this(id, nome, null, preco) { }
-
-        public Servico(string nome, double preco)
-            : this(null, nome, null, preco) { }
     }
 }

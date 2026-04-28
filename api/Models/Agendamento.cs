@@ -73,7 +73,5 @@ namespace api.Models
             Servicos = servicos;
             ValorTotal = valorTotal;
         }
-
-        // Aqui não vamos utilizar sobrecargas para deixar explícita a criação de um agendamento sem data de conclusão e valor total, já que isso é algo comum.
     }
 }

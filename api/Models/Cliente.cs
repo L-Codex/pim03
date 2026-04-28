@@ -19,17 +19,5 @@ namespace api.Models
         {
             DtNascimento = dtNascimento;
         }
-
-        public Cliente(
-            string nome,
-            string telefone,
-            string cpf,
-            string email,
-            DateOnly dtNascimento
-        )
-            : this(null, nome, telefone, cpf, email, dtNascimento) { }
-
-        public Cliente(string nome, string telefone)
-            : this(null, nome, telefone, null, null, null) { }
     }
 }

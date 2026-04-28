@@ -41,11 +41,5 @@ namespace api.Models
             CPF = cpf;
             Email = email;
         }
-
-        public Pessoa(string nome, string telefone)
-            : this(null, nome, telefone, null, null) { }
-
-        public Pessoa(string nome, string telefone, string cpf, string email)
-            : this(null, nome, telefone, cpf, email) { }
     }
 }

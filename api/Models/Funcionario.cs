@@ -20,8 +20,5 @@ namespace api.Models
         {
             Endereco = endereco;
         }
-
-        public Funcionario(string nome, string telefone, string cpf, string email, string endereco)
-            : this(null, nome, telefone, cpf, email, endereco) { }
     }
 }
