@@ -21,14 +21,14 @@ namespace api.Models
 
     public struct ServicoCreateDTO
     {
-        [Required]
+        [Required(ErrorMessage = "{0} é obrigatório!")]
         [MinLength(3, ErrorMessage = "{0} deve conter pelo menos {1} caracteres!")]
         public string Nome { get; set; }
 
         [MinLength(5, ErrorMessage = "{0} deve conter pelo menos {1} caracteres!")]
         public string? Descricao { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "{0} é obrigatório!")]
         [Range(0.01, 9999.99, ErrorMessage = "{0} deve ser um valor positivo!")]
         public double Preco { get; set; }
     }
@@ -52,14 +52,14 @@ namespace api.Models
         public Guid Id { get; init; }
 
         [Required]
-        [MinLength(3, ErrorMessage = "{0} deve conter pelo menos {1} caracteres!")]
+        [MinLength(3)]
         public string Nome { get; set; }
 
-        [MinLength(5, ErrorMessage = "{0} deve conter pelo menos {1} caracteres!")]
+        [MinLength(5)]
         public string? Descricao { get; set; }
 
         [Required]
-        [Range(0.01, 9999.99, ErrorMessage = "{0} deve ser um valor positivo!")]
+        [Range(0.01, 9999.99)]
         public double Preco { get; set; }
 
         public Servico(Guid? id, string nome, string? descricao, double preco)

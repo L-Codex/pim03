@@ -50,7 +50,7 @@ namespace api.Models
         [AllowedValues("agendado", "concluido", "cancelado")]
         public string Status { get; set; }
 
-        [Range(0.01, 9999.99, ErrorMessage = "{0} deve ser um valor positivo!")]
+        [Range(0.01, 9999.99)]
         public double? ValorTotal { get; set; }
 
         public Agendamento(

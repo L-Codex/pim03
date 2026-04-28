@@ -23,7 +23,7 @@ namespace api.Models
         [CPF(AllowPunctuation = false)]
         public string? CPF { get; set; }
 
-        [EmailAddress(ErrorMessage = "{0} deve ser um endereço de email válido!")]
+        [EmailAddress]
         public string? Email { get; set; }
 
         public Pessoa(Guid? id, string nome, string telefone, string? cpf, string? email)
