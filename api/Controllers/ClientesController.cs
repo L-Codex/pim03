@@ -1,3 +1,5 @@
+using api.Models;
+using api.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace api.Controllers
@@ -6,9 +8,19 @@ namespace api.Controllers
     [ApiController]
     public class ClientesController : ControllerBase
     {
+        private readonly ClientesService _service;
+
+        public ClientesController(ClientesService service)
+        {
+            _service = service;
+        }
+
         // GET: /api/clientes
         [HttpGet]
-        public async void Get() { }
+        public async Task<IEnumerable<Cliente>> Get()
+        {
+            return await _service.GetAll();
+        }
 
         // GET api/clientes/3fa85f64-5717-4562-b3fc-2c963f66afa6
         [HttpGet("{id}")]

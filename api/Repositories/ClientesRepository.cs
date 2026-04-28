@@ -1,9 +1,40 @@
-﻿using Npgsql;
+﻿using api.Models;
+using Npgsql;
 
 namespace api.Repositories
 {
     public class ClientesRepository(NpgsqlDataSource ds)
     {
         private readonly NpgsqlDataSource _ds = ds;
+
+        public async Task<ClienteDTO[]> GetAll()
+        {
+            var clientes = new List<ClienteDTO>();
+
+            await using var connection = await _ds.OpenConnectionAsync();
+
+            await using var command = new NpgsqlCommand(
+                "SELECT id, nome, telefone, email, cpf, dt_nasc FROM tb_cliente",
+                connection
+            );
+
+            await using var reader = await command.ExecuteReaderAsync();
+
+            while (await reader.ReadAsync())
+            {
+                clientes.Add(
+                    new ClienteDTO(
+                        reader.GetGuid(0),
+                        reader.GetString(1),
+                        reader.GetString(2),
+                        reader.IsDBNull(3) ? null : reader.GetString(3),
+                        reader.IsDBNull(4) ? null : reader.GetString(4),
+                        reader.IsDBNull(5) ? null : reader.GetDateTime(5)
+                    )
+                );
+            }
+
+            return [.. clientes];
+        }
     }
 }
