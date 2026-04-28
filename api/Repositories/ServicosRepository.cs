@@ -110,7 +110,7 @@ namespace api.Repositories
             command.Parameters.AddWithValue((object?)dto.Descricao ?? DBNull.Value);
             command.Parameters.AddWithValue(dto.Preco);
 
-            var id = await command.ExecuteScalarAsync();
+            await command.ExecuteNonQueryAsync();
 
             return true;
         }
