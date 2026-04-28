@@ -12,9 +12,11 @@ max_line_length = 100
 
 [*.{html,css,js,jsx,mjs,json}]
 indent_size = 2
+tab_width=2
 
 [*.{config,csproj,props,slnx,targets,xaml,xml}]
 indent_size = 2
+tab_width=2
 
 [*.{cs,csx}]
 dotnet_sort_system_directives_first = true
