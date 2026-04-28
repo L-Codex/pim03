@@ -3,7 +3,7 @@
   position: fixed;
   top: 0;
   left: 0;
-  right: 0;
+  width: 100vw;
   z-index: 100;
   background: rgba(10, 10, 10, 0.95);
   border-bottom: 1px solid var(--border);
@@ -111,7 +111,7 @@
   background: linear-gradient(160deg, #0d0d0d 0%, var(--black) 100%);
 }
 
-.hero::before {
+.header::before {
   content: '';
   position: absolute;
   top: 0;
