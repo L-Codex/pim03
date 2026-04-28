@@ -1,6 +1,6 @@
 ﻿namespace api.Utilities
 {
-    public class Validators
+    public static class Validators
     {
         public static bool IsValidCPF(string cpf)
         {

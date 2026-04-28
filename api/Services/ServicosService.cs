@@ -4,22 +4,15 @@ using api.Utilities;
 
 namespace api.Services
 {
-    public class ServicosService
+    public class ServicosService(ServicosRepository repo)
     {
-        private readonly ServicosRepository _repo;
-
-        public ServicosService(ServicosRepository repo)
-        {
-            _repo = repo;
-        }
+        private readonly ServicosRepository _repo = repo;
 
         public async Task<Servico[]> GetAll()
         {
             var dbServicos = await _repo.GetAll();
 
-            return dbServicos
-                .Select(s => new Servico(s.Id, s.Nome, s.Descricao, s.Preco))
-                .ToArray();
+            return [.. dbServicos.Select(s => new Servico(s.Id, s.Nome, s.Descricao, s.Preco))];
         }
 
         public async Task<Servico?> GetOne(Guid id)

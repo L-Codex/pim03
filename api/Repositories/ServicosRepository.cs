@@ -4,14 +4,9 @@ using Npgsql;
 
 namespace api.Repositories
 {
-    public class ServicosRepository
+    public class ServicosRepository(NpgsqlDataSource ds)
     {
-        private readonly NpgsqlDataSource _ds;
-
-        public ServicosRepository(NpgsqlDataSource ds)
-        {
-            _ds = ds;
-        }
+        private readonly NpgsqlDataSource _ds = ds;
 
         public async Task<ServicoDTO[]> GetAll()
         {
@@ -38,7 +33,7 @@ namespace api.Repositories
                 );
             }
 
-            return servicos.ToArray();
+            return [.. servicos];
         }
 
         public async Task<Maybe<ServicoDTO>> GetOne(Guid id)
