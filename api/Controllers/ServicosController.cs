@@ -69,13 +69,11 @@ namespace api.Controllers
             }
             if (updated.HasError)
             {
-                switch (updated.Error)
+                return updated.Error switch
                 {
-                    case Utilities.ErrorCodes.NotFound:
-                        return NotFound();
-                    default:
-                        throw new Exception("Erro desconhecido.");
-                }
+                    Utilities.ErrorCodes.NotFound => NotFound(),
+                    _ => throw new Exception("Erro desconhecido."),
+                };
             }
             return BadRequest("Erro ao atualizar o serviço.");
         }
@@ -88,15 +86,14 @@ namespace api.Controllers
 
             if (result.HasError)
             {
-                switch (result.Error)
+                return result.Error switch
                 {
-                    case Utilities.ErrorCodes.NotFound:
-                        return NotFound();
-                    case Utilities.ErrorCodes.CantModify:
-                        return Conflict("Não é possível modificar este recurso.");
-                    default:
-                        return StatusCode(500, "Erro desconhecido.");
-                }
+                    Utilities.ErrorCodes.NotFound => NotFound(),
+                    Utilities.ErrorCodes.CantModify => Conflict(
+                        "Não é possível modificar este recurso."
+                    ),
+                    _ => StatusCode(500, "Erro desconhecido."),
+                };
             }
 
             return Ok();
