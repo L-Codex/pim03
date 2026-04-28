@@ -1,0 +1,370 @@
+/* =============================================
+   Navalha & Estilo — agendamento.css
+   Estilos exclusivos da tela de Agendamento
+   ============================================= */
+
+body {
+  min-height: 100vh;
+  background: var(--black);
+}
+
+/* --- Header --- */
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background: rgba(10, 10, 10, 0.95);
+  border-bottom: 1px solid var(--border);
+}
+
+.header-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 32px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo { display: flex; flex-direction: column; line-height: 1.1; }
+
+.logo-name {
+  font-family: var(--font-serif);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.logo-name span { color: var(--gold); }
+
+.logo-sub {
+  font-size: 9px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.header-back {
+  font-size: 13px;
+  color: var(--muted);
+  transition: color 0.2s;
+}
+
+.header-back:hover { color: var(--gold); }
+
+/* --- Container principal --- */
+.agendamento-wrap {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 100px 32px 60px;
+}
+
+/* --- Título da página --- */
+.page-tag {
+  font-size: 10px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--gold);
+  display: block;
+  margin-bottom: 12px;
+}
+
+.page-title {
+  font-family: var(--font-serif);
+  font-size: 36px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 48px;
+}
+
+/* --- Steps --- */
+.steps {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  margin-bottom: 48px;
+}
+
+.step {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+}
+
+.step-num {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  color: var(--muted);
+  flex-shrink: 0;
+  transition: all 0.3s;
+}
+
+.step-label {
+  font-size: 12px;
+  color: var(--muted);
+  letter-spacing: 0.5px;
+  transition: color 0.3s;
+}
+
+.step-line {
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+  margin: 0 12px;
+  transition: background 0.3s;
+}
+
+.step.active .step-num {
+  border-color: var(--gold);
+  background: var(--gold-dim);
+  color: var(--gold);
+}
+
+.step.active .step-label { color: var(--gold); }
+
+.step.done .step-num {
+  border-color: var(--success);
+  background: rgba(76, 175, 125, 0.12);
+  color: var(--success);
+}
+
+.step.done .step-label { color: var(--success); }
+
+.step-line.done { background: var(--success); }
+
+/* --- Painel de etapa --- */
+.step-panel {
+  display: none;
+  animation: fadeUp 0.4s ease forwards;
+  opacity: 0;
+  transform: translateY(12px);
+}
+
+.step-panel.active { display: block; }
+
+.step-panel-title {
+  font-family: var(--font-serif);
+  font-size: 22px;
+  color: var(--text);
+  margin-bottom: 24px;
+}
+
+/* --- Grid de serviços --- */
+.servicos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.servico-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  padding: 24px 20px;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+  text-align: center;
+}
+
+.servico-card:hover { border-color: var(--gold); }
+
+.servico-card.selected {
+  border-color: var(--gold);
+  background: var(--gold-dim);
+}
+
+.servico-icon { font-size: 28px; margin-bottom: 12px; }
+
+.servico-nome {
+  font-family: var(--font-serif);
+  font-size: 15px;
+  color: var(--text);
+  margin-bottom: 6px;
+}
+
+.servico-preco {
+  font-size: 13px;
+  color: var(--gold);
+  font-weight: 600;
+}
+
+/* --- Grid de horários --- */
+.horarios-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+  gap: 12px;
+  margin-bottom: 32px;
+}
+
+.horario-btn {
+  padding: 12px 8px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  color: var(--text);
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: center;
+}
+
+.horario-btn:hover { border-color: var(--gold); }
+
+.horario-btn.selected {
+  border-color: var(--gold);
+  background: var(--gold-dim);
+  color: var(--gold);
+}
+
+.horario-btn.indisponivel {
+  opacity: 0.3;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* --- Formulário de dados --- */
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-bottom: 32px;
+}
+
+.field { margin-bottom: 0; }
+
+.field.full { grid-column: 1 / -1; }
+
+label {
+  display: block;
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+
+input, select {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  padding: 13px 16px;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  color: var(--text);
+  outline: none;
+  transition: border-color 0.2s, background 0.2s;
+  appearance: none;
+}
+
+input::placeholder { color: #3a3a3a; }
+
+input:focus, select:focus {
+  border-color: var(--gold);
+  background: var(--gold-dim);
+}
+
+.input-error { border-color: var(--danger) !important; }
+
+.error-msg {
+  font-size: 12px;
+  color: var(--danger);
+  margin-top: 6px;
+  display: none;
+}
+
+/* --- Resumo --- */
+.resumo-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  padding: 32px;
+  margin-bottom: 32px;
+}
+
+.resumo-linha {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 14px;
+}
+
+.resumo-linha:last-child { border-bottom: none; }
+
+.resumo-label { color: var(--muted); }
+.resumo-valor { color: var(--text); font-weight: 500; }
+.resumo-total .resumo-label { font-weight: 600; color: var(--text); }
+.resumo-total .resumo-valor { color: var(--gold); font-size: 18px; font-weight: 700; }
+
+/* --- Sucesso --- */
+.sucesso {
+  text-align: center;
+  padding: 60px 32px;
+  display: none;
+}
+
+.sucesso.active { display: block; }
+
+.sucesso-icon { font-size: 56px; margin-bottom: 24px; }
+
+.sucesso-titulo {
+  font-family: var(--font-serif);
+  font-size: 28px;
+  color: var(--text);
+  margin-bottom: 12px;
+}
+
+.sucesso-desc {
+  font-size: 15px;
+  color: var(--muted);
+  margin-bottom: 36px;
+  line-height: 1.6;
+}
+
+/* --- Navegação entre steps --- */
+.step-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 8px;
+}
+
+.btn-voltar {
+  padding: 12px 28px;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  color: var(--muted);
+  cursor: pointer;
+  transition: all 0.2s;
+  letter-spacing: 1px;
+}
+
+.btn-voltar:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
+/* --- Responsivo --- */
+@media (max-width: 768px) {
+  .agendamento-wrap { padding: 90px 20px 40px; }
+  .form-grid { grid-template-columns: 1fr; }
+  .step-label { display: none; }
+  .steps { gap: 4px; }
+}
