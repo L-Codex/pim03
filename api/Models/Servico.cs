@@ -3,20 +3,12 @@ using api.Utilities;
 
 namespace api.Models
 {
-    public struct ServicoDTO
+    public struct ServicoDTO(Guid id, string nome, string? descricao, double preco)
     {
-        public Guid Id;
-        public string Nome;
-        public string? Descricao;
-        public double Preco;
-
-        public ServicoDTO(Guid id, string nome, string? descricao, double preco)
-        {
-            Id = id;
-            Nome = nome;
-            Descricao = descricao;
-            Preco = preco;
-        }
+        public Guid Id = id;
+        public string Nome = nome;
+        public string? Descricao = descricao;
+        public double Preco = preco;
     }
 
     public struct ServicoCreateDTO
