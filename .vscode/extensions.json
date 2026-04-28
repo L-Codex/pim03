@@ -1,0 +1,10 @@
+{
+  "recommendations": [
+    "ms-dotnettools.csharp",
+    "ms-dotnettools.csdevkit",
+    "csharpier.csharpier-vscode",
+    "EditorConfig.EditorConfig",
+    "tutcugil.vscode-extension-inline-sql",
+    "esbenp.prettier-vscode"
+  ]
+}
