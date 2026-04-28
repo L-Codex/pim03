@@ -1,0 +1,4 @@
+{
+  "inlineSql.formatting.dialect": "postgresql",
+  "inlineSql.validation.dialect": "postgresql"
+}
