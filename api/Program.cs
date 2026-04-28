@@ -22,6 +22,9 @@ namespace api
             builder.Services.AddScoped<Repositories.ServicosRepository>();
             builder.Services.AddScoped<Services.ServicosService>();
 
+            builder.Services.AddScoped<Repositories.ClientesRepository>();
+            builder.Services.AddScoped<Services.ClientesService>();
+
             builder.Services.AddControllers();
 
             builder.Services.AddEndpointsApiExplorer();
