@@ -1,18 +1,16 @@
 // --- Máscara de telefone ---
-document.addEventListener('DOMContentLoaded', () => {
-  const tel = document.getElementById('telefone');
-  if (tel) {
-    tel.addEventListener('input', () => {
-      let v = tel.value.replace(/\D/g, '').slice(0, 11);
-      if (v.length <= 10) {
-        v = v.replace(/^(\d{2})(\d{4})(\d{0,4})/, '($1) $2-$3');
-      } else {
-        v = v.replace(/^(\d{2})(\d{5})(\d{0,4})/, '($1) $2-$3');
-      }
-      tel.value = v;
-    });
-  }
-});
+const tel = document.getElementById('telefone');
+if (tel) {
+  tel.addEventListener('input', () => {
+    let v = tel.value.replace(/\D/g, '').slice(0, 11);
+    if (v.length <= 10) {
+      v = v.replace(/^(\d{2})(\d{4})(\d{0,4})/, '($1) $2-$3');
+    } else {
+      v = v.replace(/^(\d{2})(\d{5})(\d{0,4})/, '($1) $2-$3');
+    }
+    tel.value = v;
+  });
+}
 
 const estado = {
   servicoNome: null,
@@ -38,12 +36,12 @@ function selecionarHorario(el, horario) {
 // --- Navegar entre steps ---
 function irParaStep(step) {
   // Validações
-  if (step === 2 && !estado.servicoNome) {
+  if (step === 3 && !estado.servicoNome) {
     alert('Selecione um serviço para continuar.');
     return;
   }
 
-  if (step === 3 && !estado.horario) {
+  if (step === 4 && !estado.horario) {
     alert('Selecione um horário para continuar.');
     return;
   }

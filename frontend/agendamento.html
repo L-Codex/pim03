@@ -28,17 +28,17 @@
       <div class="steps">
         <div class="step active" id="step-ind-1">
           <div class="step-num">1</div>
-          <div class="step-label">Serviço</div>
+          <div class="step-label">Seus dados</div>
         </div>
         <div class="step-line" id="line-1"></div>
         <div class="step" id="step-ind-2">
           <div class="step-num">2</div>
-          <div class="step-label">Horário</div>
+          <div class="step-label">Serviço</div>
         </div>
         <div class="step-line" id="line-2"></div>
         <div class="step" id="step-ind-3">
           <div class="step-num">3</div>
-          <div class="step-label">Seus dados</div>
+          <div class="step-label">Horário</div>
         </div>
         <div class="step-line" id="line-3"></div>
         <div class="step" id="step-ind-4">
@@ -47,8 +47,36 @@
         </div>
       </div>
 
-      <!-- ETAPA 1: SERVIÇO -->
+      <!-- ETAPA 1: DADOS DO CLIENTE -->
       <div class="step-panel active" id="panel-1">
+        <h2 class="step-panel-title">Seus dados</h2>
+        <div class="form-grid">
+          <div class="field">
+            <label for="nome">Nome completo</label>
+            <input type="text" id="nome" placeholder="Seu nome" />
+            <div class="error-msg" id="nome-err">Preencha seu nome</div>
+          </div>
+          <div class="field">
+            <label for="telefone">Telefone</label>
+            <input type="tel" id="telefone" placeholder="(11) 99999-9999" />
+            <div class="error-msg" id="tel-err">Preencha seu telefone</div>
+          </div>
+          <div class="field full">
+            <label for="email">E-mail</label>
+            <input type="email" id="email" placeholder="seu@email.com" />
+          </div>
+          <div class="field full">
+            <label for="obs">Observações (opcional)</label>
+            <input type="text" id="obs" placeholder="Alguma preferência ou informação adicional?" />
+          </div>
+        </div>
+        <div class="step-nav">
+          <button class="btn-primary" onclick="irParaStep(2)">Próximo</button>
+        </div>
+      </div>
+
+      <!-- ETAPA 2: SERVIÇO -->
+      <div class="step-panel" id="panel-2">
         <h2 class="step-panel-title">Escolha o serviço</h2>
         <div class="servicos-grid" id="servicos-grid">
           <div class="servico-card" onclick="selecionarServico(this, 'Corte de Cabelo', 35)">
@@ -73,13 +101,13 @@
           </div>
         </div>
         <div class="step-nav">
-          <span></span>
-          <button class="btn-primary" onclick="irParaStep(2)">Próximo</button>
+          <button class="btn-voltar" onclick="irParaStep(1)">Voltar</button>
+          <button class="btn-primary" onclick="irParaStep(3)">Próximo</button>
         </div>
       </div>
 
-      <!-- ETAPA 2: HORÁRIO -->
-      <div class="step-panel" id="panel-2">
+      <!-- ETAPA 3: HORÁRIO -->
+      <div class="step-panel" id="panel-3">
         <h2 class="step-panel-title">Escolha o horário</h2>
         <div class="horarios-grid">
           <button class="horario-btn" onclick="selecionarHorario(this, '08:00')">08:00</button>
@@ -100,35 +128,6 @@
           <button class="horario-btn" onclick="selecionarHorario(this, '16:30')">16:30</button>
           <button class="horario-btn" onclick="selecionarHorario(this, '17:00')">17:00</button>
           <button class="horario-btn" onclick="selecionarHorario(this, '17:30')">17:30</button>
-        </div>
-        <div class="step-nav">
-          <button class="btn-voltar" onclick="irParaStep(1)">Voltar</button>
-          <button class="btn-primary" onclick="irParaStep(3)">Próximo</button>
-        </div>
-      </div>
-
-      <!-- ETAPA 3: DADOS DO CLIENTE -->
-      <div class="step-panel" id="panel-3">
-        <h2 class="step-panel-title">Seus dados</h2>
-        <div class="form-grid">
-          <div class="field">
-            <label for="nome">Nome completo</label>
-            <input type="text" id="nome" placeholder="Seu nome" />
-            <div class="error-msg" id="nome-err">Preencha seu nome</div>
-          </div>
-          <div class="field">
-            <label for="telefone">Telefone</label>
-            <input type="tel" id="telefone" placeholder="(11) 99999-9999" />
-            <div class="error-msg" id="tel-err">Preencha seu telefone</div>
-          </div>
-          <div class="field full">
-            <label for="email">E-mail</label>
-            <input type="email" id="email" placeholder="seu@email.com" />
-          </div>
-          <div class="field full">
-            <label for="obs">Observações (opcional)</label>
-            <input type="text" id="obs" placeholder="Alguma preferência ou informação adicional?" />
-          </div>
         </div>
         <div class="step-nav">
           <button class="btn-voltar" onclick="irParaStep(2)">Voltar</button>
