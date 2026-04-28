@@ -29,7 +29,11 @@ body {
   justify-content: space-between;
 }
 
-.logo { display: flex; flex-direction: column; line-height: 1.1; }
+.logo {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
 
 .logo-name {
   font-family: var(--font-serif);
@@ -38,7 +42,9 @@ body {
   color: var(--text);
 }
 
-.logo-name span { color: var(--gold); }
+.logo-name span {
+  color: var(--gold);
+}
 
 .logo-sub {
   font-size: 9px;
@@ -53,7 +59,9 @@ body {
   transition: color 0.2s;
 }
 
-.header-back:hover { color: var(--gold); }
+.header-back:hover {
+  color: var(--gold);
+}
 
 /* --- Container principal --- */
 .agendamento-wrap {
@@ -130,7 +138,9 @@ body {
   color: var(--gold);
 }
 
-.step.active .step-label { color: var(--gold); }
+.step.active .step-label {
+  color: var(--gold);
+}
 
 .step.done .step-num {
   border-color: var(--success);
@@ -138,9 +148,13 @@ body {
   color: var(--success);
 }
 
-.step.done .step-label { color: var(--success); }
+.step.done .step-label {
+  color: var(--success);
+}
 
-.step-line.done { background: var(--success); }
+.step-line.done {
+  background: var(--success);
+}
 
 /* --- Painel de etapa --- */
 .step-panel {
@@ -150,7 +164,9 @@ body {
   transform: translateY(12px);
 }
 
-.step-panel.active { display: block; }
+.step-panel.active {
+  display: block;
+}
 
 .step-panel-title {
   font-family: var(--font-serif);
@@ -173,18 +189,25 @@ body {
   border-radius: 2px;
   padding: 24px 20px;
   cursor: pointer;
-  transition: border-color 0.2s, background 0.2s;
+  transition:
+    border-color 0.2s,
+    background 0.2s;
   text-align: center;
 }
 
-.servico-card:hover { border-color: var(--gold); }
+.servico-card:hover {
+  border-color: var(--gold);
+}
 
 .servico-card.selected {
   border-color: var(--gold);
   background: var(--gold-dim);
 }
 
-.servico-icon { font-size: 28px; margin-bottom: 12px; }
+.servico-icon {
+  font-size: 28px;
+  margin-bottom: 12px;
+}
 
 .servico-nome {
   font-family: var(--font-serif);
@@ -220,7 +243,9 @@ body {
   text-align: center;
 }
 
-.horario-btn:hover { border-color: var(--gold); }
+.horario-btn:hover {
+  border-color: var(--gold);
+}
 
 .horario-btn.selected {
   border-color: var(--gold);
@@ -242,9 +267,13 @@ body {
   margin-bottom: 32px;
 }
 
-.field { margin-bottom: 0; }
+.field {
+  margin-bottom: 0;
+}
 
-.field.full { grid-column: 1 / -1; }
+.field.full {
+  grid-column: 1 / -1;
+}
 
 label {
   display: block;
@@ -255,7 +284,8 @@ label {
   margin-bottom: 8px;
 }
 
-input, select {
+input,
+select {
   width: 100%;
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid var(--border);
@@ -265,18 +295,25 @@ input, select {
   font-size: 14px;
   color: var(--text);
   outline: none;
-  transition: border-color 0.2s, background 0.2s;
+  transition:
+    border-color 0.2s,
+    background 0.2s;
   appearance: none;
 }
 
-input::placeholder { color: #3a3a3a; }
+input::placeholder {
+  color: #3a3a3a;
+}
 
-input:focus, select:focus {
+input:focus,
+select:focus {
   border-color: var(--gold);
   background: var(--gold-dim);
 }
 
-.input-error { border-color: var(--danger) !important; }
+.input-error {
+  border-color: var(--danger) !important;
+}
 
 .error-msg {
   font-size: 12px;
@@ -303,12 +340,26 @@ input:focus, select:focus {
   font-size: 14px;
 }
 
-.resumo-linha:last-child { border-bottom: none; }
+.resumo-linha:last-child {
+  border-bottom: none;
+}
 
-.resumo-label { color: var(--muted); }
-.resumo-valor { color: var(--text); font-weight: 500; }
-.resumo-total .resumo-label { font-weight: 600; color: var(--text); }
-.resumo-total .resumo-valor { color: var(--gold); font-size: 18px; font-weight: 700; }
+.resumo-label {
+  color: var(--muted);
+}
+.resumo-valor {
+  color: var(--text);
+  font-weight: 500;
+}
+.resumo-total .resumo-label {
+  font-weight: 600;
+  color: var(--text);
+}
+.resumo-total .resumo-valor {
+  color: var(--gold);
+  font-size: 18px;
+  font-weight: 700;
+}
 
 /* --- Sucesso --- */
 .sucesso {
@@ -317,9 +368,14 @@ input:focus, select:focus {
   display: none;
 }
 
-.sucesso.active { display: block; }
+.sucesso.active {
+  display: block;
+}
 
-.sucesso-icon { font-size: 56px; margin-bottom: 24px; }
+.sucesso-icon {
+  font-size: 56px;
+  margin-bottom: 24px;
+}
 
 .sucesso-titulo {
   font-family: var(--font-serif);
@@ -363,8 +419,16 @@ input:focus, select:focus {
 
 /* --- Responsivo --- */
 @media (max-width: 768px) {
-  .agendamento-wrap { padding: 90px 20px 40px; }
-  .form-grid { grid-template-columns: 1fr; }
-  .step-label { display: none; }
-  .steps { gap: 4px; }
+  .agendamento-wrap {
+    padding: 90px 20px 40px;
+  }
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+  .step-label {
+    display: none;
+  }
+  .steps {
+    gap: 4px;
+  }
 }

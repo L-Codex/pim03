@@ -1,151 +1,153 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Navalha & Estilo — Barbearia</title>
-  <link rel="stylesheet" href="css/global.css">
-  <link rel="stylesheet" href="css/index.css">
-</head>
-<body class="home">
-
-  <!-- HEADER -->
-  <header class="header">
-    <div class="header-inner">
-      <div class="logo">
-        <span class="logo-name">Navalha<span>&</span>Estilo</span>
-        <span class="logo-sub">Barbearia</span>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Navalha & Estilo — Barbearia</title>
+    <link rel="stylesheet" href="css/global.css" />
+    <link rel="stylesheet" href="css/index.css" />
+  </head>
+  <body class="home">
+    <!-- HEADER -->
+    <header class="header">
+      <div class="header-inner">
+        <div class="logo">
+          <span class="logo-name">Navalha<span>&</span>Estilo</span>
+          <span class="logo-sub">Barbearia</span>
+        </div>
+        <nav class="nav">
+          <a href="#servicos">Serviços</a>
+          <a href="#sobre">Sobre</a>
+          <a href="#contato">Contato</a>
+          <a href="login.html" class="nav-btn">Área da Gestão</a>
+        </nav>
+        <button class="menu-toggle" onclick="toggleMenu()">&#9776;</button>
       </div>
-      <nav class="nav">
-        <a href="#servicos">Serviços</a>
-        <a href="#sobre">Sobre</a>
-        <a href="#contato">Contato</a>
+      <div class="nav-mobile" id="nav-mobile">
+        <a href="#servicos" onclick="toggleMenu()">Serviços</a>
+        <a href="#sobre" onclick="toggleMenu()">Sobre</a>
+        <a href="#contato" onclick="toggleMenu()">Contato</a>
         <a href="login.html" class="nav-btn">Área da Gestão</a>
-      </nav>
-      <button class="menu-toggle" onclick="toggleMenu()">&#9776;</button>
-    </div>
-    <div class="nav-mobile" id="nav-mobile">
-      <a href="#servicos" onclick="toggleMenu()">Serviços</a>
-      <a href="#sobre" onclick="toggleMenu()">Sobre</a>
-      <a href="#contato" onclick="toggleMenu()">Contato</a>
-      <a href="login.html" class="nav-btn">Área da Gestão</a>
-    </div>
-  </header>
-
-  <!-- HERO -->
-  <section class="hero">
-    <div class="hero-content">
-      <span class="hero-tag">Bem-vindo à</span>
-      <h1 class="hero-title">Navalha <span>&</span> Estilo</h1>
-      <p class="hero-desc">Cortes precisos, atendimento de qualidade.<br>Agende o seu horário agora mesmo.</p>
-      <a href="agendamento.html" class="btn-primary">Agendar Horário</a>
-    </div>
-    <div class="hero-deco">✂</div>
-  </section>
-
-  <!-- SERVIÇOS -->
-  <section class="section" id="servicos">
-    <div class="section-inner">
-      <span class="section-tag">O que oferecemos</span>
-      <h2 class="section-title">Nossos Serviços</h2>
-      <div class="cards">
-        <div class="card">
-          <div class="card-icon">✂</div>
-          <div class="card-title">Corte de Cabelo</div>
-          <div class="card-desc">Cortes modernos e clássicos executados com precisão.</div>
-          <div class="card-price">A partir de R$ 35,00</div>
-        </div>
-        <div class="card">
-          <div class="card-icon">🪒</div>
-          <div class="card-title">Barba</div>
-          <div class="card-desc">Modelagem e acabamento com navalha para um visual impecável.</div>
-          <div class="card-price">A partir de R$ 25,00</div>
-        </div>
-        <div class="card">
-          <div class="card-icon">💆</div>
-          <div class="card-title">Corte + Barba</div>
-          <div class="card-desc">O combo completo para quem quer sair renovado.</div>
-          <div class="card-price">A partir de R$ 55,00</div>
-        </div>
       </div>
-      <div class="section-cta">
-        <a href="agendamento.html" class="btn-primary">Agendar Agora</a>
-      </div>
-    </div>
-  </section>
+    </header>
 
-  <!-- SOBRE -->
-  <section class="section section-dark" id="sobre">
-    <div class="section-inner">
-      <span class="section-tag">Quem somos</span>
-      <h2 class="section-title">Sobre a Barbearia</h2>
-      <p class="section-text">
-        A Navalha & Estilo é uma barbearia focada em oferecer um atendimento de qualidade,
-        com profissionais experientes e um ambiente aconchegante. Nosso sistema de agendamento
-        online foi criado para facilitar a sua vida — sem filas, sem espera.
-      </p>
-      <div class="stats">
-        <div class="stat">
-          <div class="stat-num">500+</div>
-          <div class="stat-label">Clientes atendidos</div>
-        </div>
-        <div class="stat">
-          <div class="stat-num">3</div>
-          <div class="stat-label">Profissionais</div>
-        </div>
-        <div class="stat">
-          <div class="stat-num">5★</div>
-          <div class="stat-label">Avaliação média</div>
-        </div>
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-content">
+        <span class="hero-tag">Bem-vindo à</span>
+        <h1 class="hero-title">Navalha <span>&</span> Estilo</h1>
+        <p class="hero-desc">
+          Cortes precisos, atendimento de qualidade.<br />Agende o seu horário agora mesmo.
+        </p>
+        <a href="agendamento.html" class="btn-primary">Agendar Horário</a>
       </div>
-    </div>
-  </section>
+      <div class="hero-deco">✂</div>
+    </section>
 
-  <!-- CONTATO -->
-  <section class="section" id="contato">
-    <div class="section-inner">
-      <span class="section-tag">Onde estamos</span>
-      <h2 class="section-title">Contato</h2>
-      <div class="contato-grid">
-        <div class="contato-item">
-          <div class="contato-icon">📍</div>
-          <div>
-            <div class="contato-label">Endereço</div>
-            <div class="contato-val">Rua das Navalhas, 123 — Centro</div>
+    <!-- SERVIÇOS -->
+    <section class="section" id="servicos">
+      <div class="section-inner">
+        <span class="section-tag">O que oferecemos</span>
+        <h2 class="section-title">Nossos Serviços</h2>
+        <div class="cards">
+          <div class="card">
+            <div class="card-icon">✂</div>
+            <div class="card-title">Corte de Cabelo</div>
+            <div class="card-desc">Cortes modernos e clássicos executados com precisão.</div>
+            <div class="card-price">A partir de R$ 35,00</div>
+          </div>
+          <div class="card">
+            <div class="card-icon">🪒</div>
+            <div class="card-title">Barba</div>
+            <div class="card-desc">
+              Modelagem e acabamento com navalha para um visual impecável.
+            </div>
+            <div class="card-price">A partir de R$ 25,00</div>
+          </div>
+          <div class="card">
+            <div class="card-icon">💆</div>
+            <div class="card-title">Corte + Barba</div>
+            <div class="card-desc">O combo completo para quem quer sair renovado.</div>
+            <div class="card-price">A partir de R$ 55,00</div>
           </div>
         </div>
-        <div class="contato-item">
-          <div class="contato-icon">📞</div>
-          <div>
-            <div class="contato-label">Telefone</div>
-            <div class="contato-val">(11) 99999-9999</div>
-          </div>
+        <div class="section-cta">
+          <a href="agendamento.html" class="btn-primary">Agendar Agora</a>
         </div>
-        <div class="contato-item">
-          <div class="contato-icon">🕐</div>
-          <div>
-            <div class="contato-label">Horário</div>
-            <div class="contato-val">Seg–Sáb: 9h às 20h</div>
+      </div>
+    </section>
+
+    <!-- SOBRE -->
+    <section class="section section-dark" id="sobre">
+      <div class="section-inner">
+        <span class="section-tag">Quem somos</span>
+        <h2 class="section-title">Sobre a Barbearia</h2>
+        <p class="section-text">
+          A Navalha & Estilo é uma barbearia focada em oferecer um atendimento de qualidade, com
+          profissionais experientes e um ambiente aconchegante. Nosso sistema de agendamento online
+          foi criado para facilitar a sua vida — sem filas, sem espera.
+        </p>
+        <div class="stats">
+          <div class="stat">
+            <div class="stat-num">500+</div>
+            <div class="stat-label">Clientes atendidos</div>
+          </div>
+          <div class="stat">
+            <div class="stat-num">3</div>
+            <div class="stat-label">Profissionais</div>
+          </div>
+          <div class="stat">
+            <div class="stat-num">5★</div>
+            <div class="stat-label">Avaliação média</div>
           </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- FOOTER -->
-  <footer class="footer">
-    <div class="footer-inner">
-      <span>Navalha & Estilo © 2026</span>
-      <a href="login.html">Área da Gestão</a>
-    </div>
-  </footer>
+    <!-- CONTATO -->
+    <section class="section" id="contato">
+      <div class="section-inner">
+        <span class="section-tag">Onde estamos</span>
+        <h2 class="section-title">Contato</h2>
+        <div class="contato-grid">
+          <div class="contato-item">
+            <div class="contato-icon">📍</div>
+            <div>
+              <div class="contato-label">Endereço</div>
+              <div class="contato-val">Rua das Navalhas, 123 — Centro</div>
+            </div>
+          </div>
+          <div class="contato-item">
+            <div class="contato-icon">📞</div>
+            <div>
+              <div class="contato-label">Telefone</div>
+              <div class="contato-val">(11) 99999-9999</div>
+            </div>
+          </div>
+          <div class="contato-item">
+            <div class="contato-icon">🕐</div>
+            <div>
+              <div class="contato-label">Horário</div>
+              <div class="contato-val">Seg–Sáb: 9h às 20h</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-  <script>
-    function toggleMenu() {
-      const nav = document.getElementById('nav-mobile');
-      nav.classList.toggle('open');
-    }
-  </script>
+    <!-- FOOTER -->
+    <footer class="footer">
+      <div class="footer-inner">
+        <span>Navalha & Estilo © 2026</span>
+        <a href="login.html">Área da Gestão</a>
+      </div>
+    </footer>
 
-</body>
+    <script>
+      function toggleMenu() {
+        const nav = document.getElementById('nav-mobile')
+        nav.classList.toggle('open')
+      }
+    </script>
+  </body>
 </html>

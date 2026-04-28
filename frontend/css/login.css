@@ -73,7 +73,9 @@ body {
 .left-panel::before {
   content: '';
   position: absolute;
-  top: 0; left: 0; right: 0;
+  top: 0;
+  left: 0;
+  right: 0;
   height: 3px;
   background: linear-gradient(90deg, transparent, var(--gold), transparent);
 }
@@ -89,7 +91,9 @@ body {
   user-select: none;
 }
 
-.brand { position: relative; }
+.brand {
+  position: relative;
+}
 
 .brand-tag {
   font-size: 10px;
@@ -109,7 +113,9 @@ body {
   letter-spacing: -1px;
 }
 
-.brand-name span { color: var(--gold); }
+.brand-name span {
+  color: var(--gold);
+}
 
 .brand-sub {
   font-size: 12px;
@@ -136,9 +142,16 @@ body {
   opacity: 0.85;
 }
 
-.tagline em { font-style: italic; color: var(--gold-light); }
+.tagline em {
+  font-style: italic;
+  color: var(--gold-light);
+}
 
-.features { display: flex; flex-direction: column; gap: 12px; }
+.features {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
 
 .feature {
   display: flex;
@@ -193,7 +206,9 @@ body {
 }
 
 /* --- Seletor de perfil --- */
-.role-wrapper { margin-bottom: 24px; }
+.role-wrapper {
+  margin-bottom: 24px;
+}
 
 .role-label {
   font-size: 11px;
@@ -203,7 +218,10 @@ body {
   margin-bottom: 8px;
 }
 
-.role-selector { display: flex; gap: 8px; }
+.role-selector {
+  display: flex;
+  gap: 8px;
+}
 
 .role-btn {
   flex: 1;
@@ -227,7 +245,9 @@ body {
 }
 
 /* --- Campos --- */
-.field { margin-bottom: 20px; }
+.field {
+  margin-bottom: 20px;
+}
 
 label {
   display: block;
@@ -248,17 +268,23 @@ input {
   font-size: 14px;
   color: var(--text);
   outline: none;
-  transition: border-color 0.2s, background 0.2s;
+  transition:
+    border-color 0.2s,
+    background 0.2s;
 }
 
-input::placeholder { color: #3a3a3a; }
+input::placeholder {
+  color: #3a3a3a;
+}
 
 input:focus {
   border-color: var(--gold);
   background: var(--gold-dim);
 }
 
-.input-error { border-color: var(--danger) !important; }
+.input-error {
+  border-color: var(--danger) !important;
+}
 
 .error-msg {
   font-size: 12px;
@@ -266,8 +292,6 @@ input:focus {
   margin-top: 6px;
   display: none;
 }
-
-
 
 /* --- Botão login --- */
 .btn-login {
@@ -283,12 +307,21 @@ input:focus {
   text-transform: uppercase;
   color: var(--black);
   cursor: pointer;
-  transition: background 0.2s, transform 0.1s;
+  transition:
+    background 0.2s,
+    transform 0.1s;
 }
 
-.btn-login:hover { background: var(--gold-light); }
-.btn-login:active { transform: scale(0.99); }
-.btn-login.loading { pointer-events: none; opacity: 0.7; }
+.btn-login:hover {
+  background: var(--gold-light);
+}
+.btn-login:active {
+  transform: scale(0.99);
+}
+.btn-login.loading {
+  pointer-events: none;
+  opacity: 0.7;
+}
 
 /* --- Rodapé --- */
 .bottom-note {
@@ -299,10 +332,17 @@ input:focus {
   letter-spacing: 0.3px;
 }
 
-.bottom-note a:hover { color: var(--gold); }
+.bottom-note a:hover {
+  color: var(--gold);
+}
 
 /* --- Responsivo --- */
 @media (max-width: 768px) {
-  .left-panel { display: none; }
-  .right-panel { width: 100%; padding: 40px 28px; }
+  .left-panel {
+    display: none;
+  }
+  .right-panel {
+    width: 100%;
+    padding: 40px 28px;
+  }
 }
