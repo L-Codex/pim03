@@ -15,14 +15,14 @@ namespace api.Controllers
             _service = service;
         }
 
-        // GET: api/<ServicosController>
+        // GET: /api/servicos
         [HttpGet]
         public async Task<IEnumerable<Servico>> Get()
         {
             return await _service.GetAll();
         }
 
-        // GET api/<ServicosController>/5
+        // GET /api/servicos/3fa85f64-5717-4562-b3fc-2c963f66afa6
         [HttpGet("{id}")]
         public async Task<ActionResult<Servico>> Get(Guid id)
         {
@@ -34,7 +34,7 @@ namespace api.Controllers
             return Ok(serv);
         }
 
-        // POST api/<ServicosController>
+        // POST /api/servicos
         [HttpPost]
         public async Task<ActionResult> Post([FromBody] ServicoCreateDTO value)
         {
@@ -46,7 +46,7 @@ namespace api.Controllers
             return BadRequest("Erro ao criar o serviço.");
         }
 
-        // PUT api/<ServicosController>/5
+        // PUT /api/servicos/3fa85f64-5717-4562-b3fc-2c963f66afa6
         [HttpPut("{id}")]
         public async Task<ActionResult> Put(Guid id, [FromBody] ServicoCreateDTO value)
         {
@@ -58,6 +58,7 @@ namespace api.Controllers
             return BadRequest("Erro ao atualizar o serviço.");
         }
 
+        // PATCH /api/servicos/3fa85f64-5717-4562-b3fc-2c963f66afa6
         [HttpPatch("{id}")]
         public async Task<ActionResult> Patch(Guid id, [FromBody] ServicoUpdateDTO value)
         {
@@ -79,7 +80,7 @@ namespace api.Controllers
             return BadRequest("Erro ao atualizar o serviço.");
         }
 
-        // DELETE api/<ServicosController>/5
+        // DELETE /api/servicos/3fa85f64-5717-4562-b3fc-2c963f66afa6
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(Guid id)
         {
