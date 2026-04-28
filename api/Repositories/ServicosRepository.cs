@@ -14,10 +14,7 @@ namespace api.Repositories
 
             await using var connection = await _ds.OpenConnectionAsync();
 
-            await using var command = new NpgsqlCommand(
-                "SELECT id, nome, descricao, valor FROM tb_servico",
-                connection
-            );
+            await using var command = new NpgsqlCommand(Queries.GET_ALL_SERVICOS, connection);
 
             await using var reader = await command.ExecuteReaderAsync();
 
@@ -40,10 +37,7 @@ namespace api.Repositories
         {
             await using var connection = await _ds.OpenConnectionAsync();
 
-            await using var command = new NpgsqlCommand(
-                "SELECT id, nome, descricao, valor FROM tb_servico WHERE id = $1",
-                connection
-            );
+            await using var command = new NpgsqlCommand(Queries.GET_SERVICO_BY_ID, connection);
             command.Parameters.AddWithValue(id);
 
             await using var reader = await command.ExecuteReaderAsync();
@@ -67,10 +61,7 @@ namespace api.Repositories
         {
             await using var connection = await _ds.OpenConnectionAsync();
 
-            await using var command = new NpgsqlCommand(
-                "DELETE FROM tb_servico WHERE id = $1",
-                connection
-            );
+            await using var command = new NpgsqlCommand(Queries.DELETE_SERVICO_BY_ID, connection);
             command.Parameters.AddWithValue(id);
 
             int affectedRows;
@@ -96,10 +87,7 @@ namespace api.Repositories
         {
             await using var connection = await _ds.OpenConnectionAsync();
 
-            await using var command = new NpgsqlCommand(
-                "INSERT INTO tb_servico (id, nome, descricao, valor) VALUES ($1, $2, $3, $4) RETURNING id",
-                connection
-            );
+            await using var command = new NpgsqlCommand(Queries.INSERT_SERVICO, connection);
 
             command.Parameters.AddWithValue(dto.Id);
             command.Parameters.AddWithValue(dto.Nome);
@@ -115,34 +103,10 @@ namespace api.Repositories
         {
             await using var connection = await _ds.OpenConnectionAsync();
 
-            string query;
-            if (upsert)
-            {
-                query =
-                    @"INSERT INTO tb_servico (id, nome, descricao, valor)
-                    VALUES ($1, $2, $3, $4)
-                    ON CONFLICT (id) DO UPDATE
-                    SET
-                        nome = EXCLUDED.nome,
-                        descricao = EXCLUDED.descricao,
-                        valor = EXCLUDED.valor
-                    WHERE
-                        nome IS DISTINCT FROM EXCLUDED.nome
-                        OR descricao IS DISTINCT FROM EXCLUDED.descricao
-                        OR valor IS DISTINCT FROM EXCLUDED.valor";
-            }
-            else
-            {
-                query =
-                    @"UPDATE tb_servico SET nome=$2, descricao=$3, valor=$4
-                    WHERE id = $1
-                    AND (
-                        nome IS DISTINCT FROM $2
-                        OR descricao IS DISTINCT FROM $3
-                        OR valor IS DISTINCT FROM $4
-                    )";
-            }
-            await using var command = new NpgsqlCommand(query, connection);
+            await using var command = new NpgsqlCommand(
+                upsert ? Queries.UPDATE_SERVICO_UPSERT : Queries.UPDATE_SERVICO,
+                connection
+            );
             command.Parameters.AddWithValue(dto.Id);
             command.Parameters.AddWithValue(dto.Nome);
             command.Parameters.AddWithValue((object?)dto.Descricao ?? DBNull.Value);

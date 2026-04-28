@@ -1,4 +1,5 @@
 ﻿using api.Models;
+using api.Utilities;
 using Npgsql;
 
 namespace api.Repositories
@@ -13,10 +14,7 @@ namespace api.Repositories
 
             await using var connection = await _ds.OpenConnectionAsync();
 
-            await using var command = new NpgsqlCommand(
-                "SELECT id, nome, telefone, email, cpf, dt_nasc FROM tb_cliente",
-                connection
-            );
+            await using var command = new NpgsqlCommand(Queries.GET_ALL_CLIENTES, connection);
 
             await using var reader = await command.ExecuteReaderAsync();
 
