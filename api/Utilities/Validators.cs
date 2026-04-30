@@ -44,10 +44,5 @@
 
             return digito2 == int.Parse(cpf[10].ToString());
         }
-
-        public static bool IsValidUUID(string uuid)
-        {
-            return Guid.TryParse(uuid, out _);
-        }
     }
 }
