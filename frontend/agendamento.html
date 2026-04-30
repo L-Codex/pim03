@@ -9,21 +9,35 @@
     <title>Agendar Horário — Navalha & Estilo</title>
 
     <!-- Bootstrap + estilos próprios -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    />
     <link rel="stylesheet" href="css/global.css" />
     <link rel="stylesheet" href="css/agendamento.css" />
   </head>
 
   <body>
     <!-- Header -->
-    <header class="header">
-      <div class="container header-inner">
-        <div class="logo">
-          <span class="logo-name">Navalha<span>&</span>Estilo</span>
-          <span class="logo-sub">Barbearia</span>
+    <header
+      class="bg-black fixed-top vw-100 px-3 py-3 px-md-5 border-bottom has-gradient"
+      style="--bs-bg-opacity: 0.93; --bs-border-color: var(--border)"
+    >
+      <nav class="navbar navbar-expand-md">
+        <div class="container-fluid">
+          <div class="navbar-brand logo">
+            <span class="logo-name">Navalha<span>&</span>Estilo</span>
+            <span class="logo-sub">Barbearia</span>
+          </div>
+
+          <!-- Navegação -->
+          <div class="justify-content-end" id="navPrincipal">
+            <div class="navbar-nav align-items-center gap-4">
+              <a href="/">← Voltar ao site</a>
+            </div>
+          </div>
         </div>
-        <a href="index.html" class="header-back">← Voltar ao site</a>
-      </div>
+      </nav>
     </header>
 
     <main class="container agendamento-wrap">
@@ -76,7 +90,11 @@
             </div>
             <div class="field full">
               <label for="obs">Observações (opcional)</label>
-              <input type="text" id="obs" placeholder="Alguma preferência ou informação adicional?" />
+              <input
+                type="text"
+                id="obs"
+                placeholder="Alguma preferência ou informação adicional?"
+              />
             </div>
           </div>
           <div class="step-nav">
@@ -128,26 +146,42 @@
         <section class="step-panel" id="panel-3">
           <h2 class="step-panel-title">Escolha os serviços</h2>
           <div class="servicos-grid" id="servicos-grid">
-            <button class="servico-card" type="button" data-servico data-nome="Cabelo" data-preco="35">
+            <button
+              class="servico-card"
+              type="button"
+              data-servico
+              data-nome="Cabelo"
+              data-preco="35"
+            >
               <div class="servico-icon">✂</div>
               <div class="servico-nome">Cabelo</div>
               <div class="servico-preco">R$ 35,00</div>
             </button>
-            <button class="servico-card" type="button" data-servico data-nome="Sobrancelha" data-preco="15">
+            <button
+              class="servico-card"
+              type="button"
+              data-servico
+              data-nome="Sobrancelha"
+              data-preco="15"
+            >
               <div class="servico-icon">🪒</div>
               <div class="servico-nome">Sobrancelha</div>
               <div class="servico-preco">R$ 15,00</div>
             </button>
-            <button class="servico-card" type="button" data-servico data-nome="Barba" data-preco="25">
+            <button
+              class="servico-card"
+              type="button"
+              data-servico
+              data-nome="Barba"
+              data-preco="25"
+            >
               <div class="servico-icon">🧔</div>
               <div class="servico-nome">Barba</div>
               <div class="servico-preco">R$ 25,00</div>
             </button>
           </div>
 
-          <div class="servicos-total">
-            Total: <span id="total-servicos">R$ 0,00</span>
-          </div>
+          <div class="servicos-total">Total: <span id="total-servicos">R$ 0,00</span></div>
           <div class="error-msg" id="servico-err">Selecione ao menos um serviço</div>
 
           <div class="step-nav">
@@ -191,7 +225,9 @@
           </div>
           <div class="step-nav">
             <button class="btn-voltar" type="button" data-step="3">Voltar</button>
-            <button class="btn-primary" type="button" id="btn-confirmar">Confirmar Agendamento</button>
+            <button class="btn-primary" type="button" id="btn-confirmar">
+              Confirmar Agendamento
+            </button>
           </div>
         </section>
       </form>
