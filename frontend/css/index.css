@@ -28,37 +28,6 @@
 }
 
 /* Navegação */
-.navbar-nav a {
-  font-size: 13px; /* fs-7 */
-  color: var(--muted);
-  transition: color 0.2s background 0.2s;
-  letter-spacing: 0.3px;
-}
-
-.navbar-nav a:hover {
-  color: var(--text);
-}
-
-/* Botão gestão */
-/* Utilizamos .navbar-nav para garantir especificidade */
-.navbar-nav .nav-btn {
-  color: var(--gold);
-}
-
-@media (max-width: 768px) {
-  .navbar-nav a {
-    font-size: 16px;
-  }
-
-  .navbar-nav .nav-btn {
-    font-size: 17px;
-  }
-}
-
-.navbar-nav .nav-btn:hover {
-  color: var(--gold);
-  background: var(--gold-dim) !important;
-}
 
 /* Botão mobile */
 .menu-toggle {
@@ -71,31 +40,8 @@
 
 /* Hero */
 .hero {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   padding: 100px 0 60px;
-  position: relative;
-  overflow: hidden;
   background: linear-gradient(160deg, #0d0d0d 0%, var(--black) 100%);
-}
-
-.has-gradient::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background: linear-gradient(90deg, transparent, var(--gold), transparent);
-}
-
-.hero-content {
-  text-align: center;
-  position: relative;
-  z-index: 1;
-  max-width: 600px;
 }
 
 .hero-tag {
@@ -121,7 +67,6 @@
 }
 
 .hero-desc {
-  font-size: 16px;
   color: var(--muted);
   line-height: 1.7;
   margin-bottom: 40px;
