@@ -34,5 +34,31 @@ namespace api.Repositories
 
             return [.. clientes];
         }
+
+        public async Task<Maybe<ClienteDTO>> GetOne(Guid id)
+        {
+            await using var connection = await _ds.OpenConnectionAsync();
+
+            await using var command = new NpgsqlCommand(Queries.GET_CLIENTE_BY_ID, connection);
+            command.Parameters.AddWithValue(id);
+
+            await using var reader = await command.ExecuteReaderAsync();
+
+            if (await reader.ReadAsync())
+            {
+                return new Maybe<ClienteDTO>(
+                    new ClienteDTO(
+                        reader.GetGuid(0),
+                        reader.GetString(1),
+                        reader.GetString(2),
+                        reader.IsDBNull(3) ? null : reader.GetString(3),
+                        reader.IsDBNull(4) ? null : reader.GetString(4),
+                        reader.IsDBNull(5) ? null : reader.GetDateTime(5)
+                    )
+                );
+            }
+
+            return new Maybe<ClienteDTO>(ErrorCodes.NotFound);
+        }
     }
 }

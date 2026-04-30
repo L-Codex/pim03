@@ -6,14 +6,9 @@ namespace api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ClientesController : ControllerBase
+    public class ClientesController(ClientesService service) : ControllerBase
     {
-        private readonly ClientesService _service;
-
-        public ClientesController(ClientesService service)
-        {
-            _service = service;
-        }
+        private readonly ClientesService _service = service;
 
         // GET: /api/clientes
         [HttpGet]
@@ -24,7 +19,15 @@ namespace api.Controllers
 
         // GET api/clientes/3fa85f64-5717-4562-b3fc-2c963f66afa6
         [HttpGet("{id}")]
-        public async void Get(Guid id) { }
+        public async Task<ActionResult<Cliente>> Get(Guid id)
+        {
+            var serv = await _service.GetOne(id);
+            if (serv == null)
+            {
+                return NotFound();
+            }
+            return Ok(serv);
+        }
 
         // POST /api/clientes
         [HttpPost]

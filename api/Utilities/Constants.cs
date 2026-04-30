@@ -34,6 +34,9 @@ namespace api.Utilities
         #region Queries de Clientes
         public const string GET_ALL_CLIENTES =
             "SELECT id, nome, telefone, email, cpf, dt_nasc FROM tb_cliente";
+
+        public const string GET_CLIENTE_BY_ID =
+            "SELECT id, nome, telefone, email, cpf, dt_nasc FROM tb_cliente WHERE id = $1";
         #endregion
     }
 }
