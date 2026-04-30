@@ -1,16 +1,23 @@
 <!doctype html>
 <html lang="pt-BR">
   <head>
+    <!-- Meta -->
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Título -->
     <title>Agendar Horário — Navalha & Estilo</title>
+
+    <!-- Bootstrap + estilos próprios -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="css/global.css" />
     <link rel="stylesheet" href="css/agendamento.css" />
   </head>
+
   <body>
-    <!-- HEADER -->
+    <!-- Header -->
     <header class="header">
-      <div class="header-inner">
+      <div class="container header-inner">
         <div class="logo">
           <span class="logo-name">Navalha<span>&</span>Estilo</span>
           <span class="logo-sub">Barbearia</span>
@@ -19,13 +26,12 @@
       </div>
     </header>
 
-    <!-- CONTEÚDO -->
-    <main class="agendamento-wrap">
+    <main class="container agendamento-wrap">
       <span class="page-tag">Agendamento online</span>
       <h1 class="page-title">Agendar Horário</h1>
 
-      <!-- STEPS -->
-      <div class="steps">
+      <!-- Progresso -->
+      <nav class="steps" aria-label="Progresso do agendamento">
         <div class="step active" id="step-ind-1">
           <div class="step-num">1</div>
           <div class="step-label">Seus dados</div>
@@ -33,152 +39,176 @@
         <div class="step-line" id="line-1"></div>
         <div class="step" id="step-ind-2">
           <div class="step-num">2</div>
-          <div class="step-label">Serviço</div>
+          <div class="step-label">Dia e Horário</div>
         </div>
         <div class="step-line" id="line-2"></div>
         <div class="step" id="step-ind-3">
           <div class="step-num">3</div>
-          <div class="step-label">Horário</div>
+          <div class="step-label">Serviços</div>
         </div>
         <div class="step-line" id="line-3"></div>
         <div class="step" id="step-ind-4">
           <div class="step-num">4</div>
           <div class="step-label">Confirmação</div>
         </div>
-      </div>
+      </nav>
 
-      <!-- ETAPA 1: DADOS DO CLIENTE -->
-      <div class="step-panel active" id="panel-1">
-        <h2 class="step-panel-title">Seus dados</h2>
-        <div class="form-grid">
-          <div class="field">
-            <label for="nome">Nome completo</label>
-            <input type="text" id="nome" placeholder="Seu nome" />
-            <div class="error-msg" id="nome-err">Preencha seu nome</div>
+      <!-- Formulário -->
+      <form id="agendamento-form" novalidate>
+        <!-- Etapa 1 -->
+        <section class="step-panel active" id="panel-1">
+          <h2 class="step-panel-title">Seus dados</h2>
+          <div class="form-grid">
+            <div class="field">
+              <label for="nome">Nome completo</label>
+              <input type="text" id="nome" placeholder="Seu nome" />
+              <div class="error-msg" id="nome-err">Preencha seu nome</div>
+            </div>
+            <div class="field">
+              <label for="telefone">Telefone</label>
+              <input type="tel" id="telefone" placeholder="(11) 99999-9999" />
+              <div class="error-msg" id="tel-err">Informe um telefone válido</div>
+            </div>
+            <div class="field full">
+              <label for="email">E-mail (opcional)</label>
+              <input type="email" id="email" placeholder="seu@email.com" />
+              <div class="error-msg" id="email-err">E-mail inválido</div>
+            </div>
+            <div class="field full">
+              <label for="obs">Observações (opcional)</label>
+              <input type="text" id="obs" placeholder="Alguma preferência ou informação adicional?" />
+            </div>
           </div>
-          <div class="field">
-            <label for="telefone">Telefone</label>
-            <input type="tel" id="telefone" placeholder="(11) 99999-9999" />
-            <div class="error-msg" id="tel-err">Preencha seu telefone</div>
+          <div class="step-nav">
+            <span></span>
+            <button class="btn-primary" type="button" data-step="2">Próximo</button>
           </div>
-          <div class="field full">
-            <label for="email">E-mail</label>
-            <input type="email" id="email" placeholder="seu@email.com" />
-          </div>
-          <div class="field full">
-            <label for="obs">Observações (opcional)</label>
-            <input type="text" id="obs" placeholder="Alguma preferência ou informação adicional?" />
-          </div>
-        </div>
-        <div class="step-nav">
-          <button class="btn-primary" onclick="irParaStep(2)">Próximo</button>
-        </div>
-      </div>
+        </section>
 
-      <!-- ETAPA 2: SERVIÇO -->
-      <div class="step-panel" id="panel-2">
-        <h2 class="step-panel-title">Escolha o serviço</h2>
-        <div class="servicos-grid" id="servicos-grid">
-          <div class="servico-card" onclick="selecionarServico(this, 'Corte de Cabelo', 35)">
-            <div class="servico-icon">✂</div>
-            <div class="servico-nome">Corte de Cabelo</div>
-            <div class="servico-preco">R$ 35,00</div>
+        <!-- Etapa 2 -->
+        <section class="step-panel" id="panel-2">
+          <h2 class="step-panel-title">Escolha o dia e horário</h2>
+          <div class="form-grid">
+            <div class="field full">
+              <label for="data">Dia do atendimento</label>
+              <input type="date" id="data" max="2099-12-31" />
+              <div class="error-msg" id="data-err">Selecione uma data válida</div>
+            </div>
           </div>
-          <div class="servico-card" onclick="selecionarServico(this, 'Barba', 25)">
-            <div class="servico-icon">🪒</div>
-            <div class="servico-nome">Barba</div>
-            <div class="servico-preco">R$ 25,00</div>
-          </div>
-          <div class="servico-card" onclick="selecionarServico(this, 'Corte + Barba', 55)">
-            <div class="servico-icon">💆</div>
-            <div class="servico-nome">Corte + Barba</div>
-            <div class="servico-preco">R$ 55,00</div>
-          </div>
-          <div class="servico-card" onclick="selecionarServico(this, 'Hidratação', 40)">
-            <div class="servico-icon">💧</div>
-            <div class="servico-nome">Hidratação</div>
-            <div class="servico-preco">R$ 40,00</div>
-          </div>
-        </div>
-        <div class="step-nav">
-          <button class="btn-voltar" onclick="irParaStep(1)">Voltar</button>
-          <button class="btn-primary" onclick="irParaStep(3)">Próximo</button>
-        </div>
-      </div>
 
-      <!-- ETAPA 3: HORÁRIO -->
-      <div class="step-panel" id="panel-3">
-        <h2 class="step-panel-title">Escolha o horário</h2>
-        <div class="horarios-grid">
-          <button class="horario-btn" onclick="selecionarHorario(this, '08:00')">08:00</button>
-          <button class="horario-btn" onclick="selecionarHorario(this, '08:30')">08:30</button>
-          <button class="horario-btn indisponivel">09:00</button>
-          <button class="horario-btn" onclick="selecionarHorario(this, '09:30')">09:30</button>
-          <button class="horario-btn" onclick="selecionarHorario(this, '10:00')">10:00</button>
-          <button class="horario-btn indisponivel">10:30</button>
-          <button class="horario-btn indisponivel">11:00</button>
-          <button class="horario-btn" onclick="selecionarHorario(this, '11:30')">11:30</button>
-          <button class="horario-btn" onclick="selecionarHorario(this, '13:00')">13:00</button>
-          <button class="horario-btn" onclick="selecionarHorario(this, '13:30')">13:30</button>
-          <button class="horario-btn indisponivel">14:00</button>
-          <button class="horario-btn" onclick="selecionarHorario(this, '14:30')">14:30</button>
-          <button class="horario-btn" onclick="selecionarHorario(this, '15:00')">15:00</button>
-          <button class="horario-btn" onclick="selecionarHorario(this, '15:30')">15:30</button>
-          <button class="horario-btn indisponivel">16:00</button>
-          <button class="horario-btn" onclick="selecionarHorario(this, '16:30')">16:30</button>
-          <button class="horario-btn" onclick="selecionarHorario(this, '17:00')">17:00</button>
-          <button class="horario-btn" onclick="selecionarHorario(this, '17:30')">17:30</button>
-        </div>
-        <div class="step-nav">
-          <button class="btn-voltar" onclick="irParaStep(2)">Voltar</button>
-          <button class="btn-primary" onclick="irParaStep(4)">Revisar</button>
-        </div>
-      </div>
+          <div class="horarios-grid" id="horarios-grid">
+            <button class="horario-btn" type="button" data-horario="08:00">08:00</button>
+            <button class="horario-btn" type="button" data-horario="08:30">08:30</button>
+            <button class="horario-btn indisponivel" type="button">09:00</button>
+            <button class="horario-btn" type="button" data-horario="09:30">09:30</button>
+            <button class="horario-btn" type="button" data-horario="10:00">10:00</button>
+            <button class="horario-btn indisponivel" type="button">10:30</button>
+            <button class="horario-btn indisponivel" type="button">11:00</button>
+            <button class="horario-btn" type="button" data-horario="11:30">11:30</button>
+            <button class="horario-btn" type="button" data-horario="13:00">13:00</button>
+            <button class="horario-btn" type="button" data-horario="13:30">13:30</button>
+            <button class="horario-btn indisponivel" type="button">14:00</button>
+            <button class="horario-btn" type="button" data-horario="14:30">14:30</button>
+            <button class="horario-btn" type="button" data-horario="15:00">15:00</button>
+            <button class="horario-btn" type="button" data-horario="15:30">15:30</button>
+            <button class="horario-btn indisponivel" type="button">16:00</button>
+            <button class="horario-btn" type="button" data-horario="16:30">16:30</button>
+            <button class="horario-btn" type="button" data-horario="17:00">17:00</button>
+            <button class="horario-btn" type="button" data-horario="17:30">17:30</button>
+          </div>
+          <div class="error-msg" id="horario-err">Selecione um horário</div>
 
-      <!-- ETAPA 4: CONFIRMAÇÃO -->
-      <div class="step-panel" id="panel-4">
-        <h2 class="step-panel-title">Confirme seu agendamento</h2>
-        <div class="resumo-card">
-          <div class="resumo-linha">
-            <span class="resumo-label">Serviço</span>
-            <span class="resumo-valor" id="res-servico">—</span>
+          <div class="step-nav">
+            <button class="btn-voltar" type="button" data-step="1">Voltar</button>
+            <button class="btn-primary" type="button" data-step="3">Próximo</button>
           </div>
-          <div class="resumo-linha">
-            <span class="resumo-label">Horário</span>
-            <span class="resumo-valor" id="res-horario">—</span>
-          </div>
-          <div class="resumo-linha">
-            <span class="resumo-label">Nome</span>
-            <span class="resumo-valor" id="res-nome">—</span>
-          </div>
-          <div class="resumo-linha">
-            <span class="resumo-label">Telefone</span>
-            <span class="resumo-valor" id="res-telefone">—</span>
-          </div>
-          <div class="resumo-linha resumo-total">
-            <span class="resumo-label">Total</span>
-            <span class="resumo-valor" id="res-total">—</span>
-          </div>
-        </div>
-        <div class="step-nav">
-          <button class="btn-voltar" onclick="irParaStep(3)">Voltar</button>
-          <button class="btn-primary" onclick="confirmarAgendamento()">
-            Confirmar Agendamento
-          </button>
-        </div>
-      </div>
+        </section>
 
-      <!-- SUCESSO -->
-      <div class="sucesso" id="sucesso">
+        <!-- Etapa 3 -->
+        <section class="step-panel" id="panel-3">
+          <h2 class="step-panel-title">Escolha os serviços</h2>
+          <div class="servicos-grid" id="servicos-grid">
+            <button class="servico-card" type="button" data-servico data-nome="Cabelo" data-preco="35">
+              <div class="servico-icon">✂</div>
+              <div class="servico-nome">Cabelo</div>
+              <div class="servico-preco">R$ 35,00</div>
+            </button>
+            <button class="servico-card" type="button" data-servico data-nome="Sobrancelha" data-preco="15">
+              <div class="servico-icon">🪒</div>
+              <div class="servico-nome">Sobrancelha</div>
+              <div class="servico-preco">R$ 15,00</div>
+            </button>
+            <button class="servico-card" type="button" data-servico data-nome="Barba" data-preco="25">
+              <div class="servico-icon">🧔</div>
+              <div class="servico-nome">Barba</div>
+              <div class="servico-preco">R$ 25,00</div>
+            </button>
+          </div>
+
+          <div class="servicos-total">
+            Total: <span id="total-servicos">R$ 0,00</span>
+          </div>
+          <div class="error-msg" id="servico-err">Selecione ao menos um serviço</div>
+
+          <div class="step-nav">
+            <button class="btn-voltar" type="button" data-step="2">Voltar</button>
+            <button class="btn-primary" type="button" data-step="4">Revisar</button>
+          </div>
+        </section>
+
+        <!-- Etapa 4 -->
+        <section class="step-panel" id="panel-4">
+          <h2 class="step-panel-title">Confirme seu agendamento</h2>
+          <div class="resumo-card">
+            <div class="resumo-linha">
+              <span class="resumo-label">Serviços</span>
+              <span class="resumo-valor" id="res-servicos">—</span>
+            </div>
+            <div class="resumo-linha">
+              <span class="resumo-label">Dia</span>
+              <span class="resumo-valor" id="res-data">—</span>
+            </div>
+            <div class="resumo-linha">
+              <span class="resumo-label">Horário</span>
+              <span class="resumo-valor" id="res-horario">—</span>
+            </div>
+            <div class="resumo-linha">
+              <span class="resumo-label">Nome</span>
+              <span class="resumo-valor" id="res-nome">—</span>
+            </div>
+            <div class="resumo-linha">
+              <span class="resumo-label">Telefone</span>
+              <span class="resumo-valor" id="res-telefone">—</span>
+            </div>
+            <div class="resumo-linha">
+              <span class="resumo-label">E-mail</span>
+              <span class="resumo-valor" id="res-email">—</span>
+            </div>
+            <div class="resumo-linha resumo-total">
+              <span class="resumo-label">Total</span>
+              <span class="resumo-valor" id="res-total">—</span>
+            </div>
+          </div>
+          <div class="step-nav">
+            <button class="btn-voltar" type="button" data-step="3">Voltar</button>
+            <button class="btn-primary" type="button" id="btn-confirmar">Confirmar Agendamento</button>
+          </div>
+        </section>
+      </form>
+
+      <!-- Sucesso -->
+      <section class="sucesso" id="sucesso">
         <div class="sucesso-icon">✅</div>
         <h2 class="sucesso-titulo">Agendamento confirmado!</h2>
         <p class="sucesso-desc">
           Seu horário foi reservado com sucesso.<br />Até breve, <span id="suc-nome"></span>!
         </p>
         <a href="index.html" class="btn-primary">Voltar ao início</a>
-      </div>
+      </section>
     </main>
 
+    <!-- Scripts -->
     <script src="js/agendamento.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   </body>
 </html>

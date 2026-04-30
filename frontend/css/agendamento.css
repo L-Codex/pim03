@@ -1,14 +1,10 @@
-/* =============================================
-   Navalha & Estilo — agendamento.css
-   Estilos exclusivos da tela de Agendamento
-   ============================================= */
-
+/* Página de agendamento */
 body {
   min-height: 100vh;
   background: var(--black);
 }
 
-/* --- Header --- */
+/* Header */
 .header {
   position: fixed;
   top: 0;
@@ -20,15 +16,13 @@ body {
 }
 
 .header-inner {
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 0 32px;
   height: 64px;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
+/* Marca */
 .logo {
   display: flex;
   flex-direction: column;
@@ -63,14 +57,11 @@ body {
   color: var(--gold);
 }
 
-/* --- Container principal --- */
+/* Conteúdo */
 .agendamento-wrap {
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 100px 32px 60px;
+  padding: 100px 0 60px;
 }
 
-/* --- Título da página --- */
 .page-tag {
   font-size: 10px;
   letter-spacing: 4px;
@@ -88,7 +79,7 @@ body {
   margin-bottom: 48px;
 }
 
-/* --- Steps --- */
+/* Steps */
 .steps {
   display: flex;
   align-items: center;
@@ -156,7 +147,7 @@ body {
   background: var(--success);
 }
 
-/* --- Painel de etapa --- */
+/* Painel de etapa */
 .step-panel {
   display: none;
   animation: fadeUp 0.4s ease forwards;
@@ -175,7 +166,7 @@ body {
   margin-bottom: 24px;
 }
 
-/* --- Grid de serviços --- */
+/* Serviços */
 .servicos-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -193,6 +184,7 @@ body {
     border-color 0.2s,
     background 0.2s;
   text-align: center;
+  width: 100%;
 }
 
 .servico-card:hover {
@@ -222,7 +214,15 @@ body {
   font-weight: 600;
 }
 
-/* --- Grid de horários --- */
+/* Total */
+.servicos-total {
+  font-size: 14px;
+  color: var(--text);
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+/* Horários */
 .horarios-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
@@ -259,7 +259,7 @@ body {
   pointer-events: none;
 }
 
-/* --- Formulário de dados --- */
+/* Formulário */
 .form-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -311,6 +311,7 @@ select:focus {
   background: var(--gold-dim);
 }
 
+/* Erros */
 .input-error {
   border-color: var(--danger) !important;
 }
@@ -322,7 +323,7 @@ select:focus {
   display: none;
 }
 
-/* --- Resumo --- */
+/* Resumo */
 .resumo-card {
   background: var(--card);
   border: 1px solid var(--border);
@@ -361,7 +362,7 @@ select:focus {
   font-weight: 700;
 }
 
-/* --- Sucesso --- */
+/* Sucesso */
 .sucesso {
   text-align: center;
   padding: 60px 32px;
@@ -391,7 +392,7 @@ select:focus {
   line-height: 1.6;
 }
 
-/* --- Navegação entre steps --- */
+/* Navegação */
 .step-nav {
   display: flex;
   justify-content: space-between;
@@ -417,10 +418,10 @@ select:focus {
   color: var(--gold);
 }
 
-/* --- Responsivo --- */
+/* Responsivo */
 @media (max-width: 768px) {
   .agendamento-wrap {
-    padding: 90px 20px 40px;
+    padding: 90px 0 40px;
   }
   .form-grid {
     grid-template-columns: 1fr;

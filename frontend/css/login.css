@@ -1,3 +1,7 @@
+/* ===============================
+   LOGIN — Tela de acesso
+   =============================== */
+
 body {
   min-height: 100vh;
   display: flex;
@@ -7,7 +11,7 @@ body {
   position: relative;
 }
 
-/* --- Fundo decorativo --- */
+/* Fundo decorativo */
 .bg-texture {
   position: fixed;
   inset: 0;
@@ -41,7 +45,7 @@ body {
   pointer-events: none;
 }
 
-/* --- Container --- */
+/* Container */
 .login-container {
   display: flex;
   width: 900px;
@@ -57,7 +61,7 @@ body {
   transform: translateY(20px);
 }
 
-/* --- Painel esquerdo --- */
+/* Painel esquerdo */
 .left-panel {
   flex: 1;
   background: linear-gradient(160deg, #141414 0%, #0d0d0d 100%);
@@ -91,6 +95,7 @@ body {
   user-select: none;
 }
 
+/* Branding */
 .brand {
   position: relative;
 }
@@ -147,6 +152,7 @@ body {
   color: var(--gold-light);
 }
 
+/* Lista de features */
 .features {
   display: flex;
   flex-direction: column;
@@ -169,7 +175,7 @@ body {
   flex-shrink: 0;
 }
 
-/* --- Painel direito --- */
+/* Painel direito */
 .right-panel {
   width: 400px;
   background: var(--card);
@@ -193,7 +199,7 @@ body {
   margin-bottom: 40px;
 }
 
-/* --- Alerta --- */
+/* Alerta */
 .alert {
   background: rgba(224, 82, 82, 0.1);
   border: 1px solid rgba(224, 82, 82, 0.3);
@@ -205,7 +211,7 @@ body {
   display: none;
 }
 
-/* --- Seletor de perfil --- */
+/* Seletor de perfil */
 .role-wrapper {
   margin-bottom: 24px;
 }
@@ -244,7 +250,7 @@ body {
   background: var(--gold-dim);
 }
 
-/* --- Campos --- */
+/* Campos */
 .field {
   margin-bottom: 20px;
 }
@@ -282,6 +288,7 @@ input:focus {
   background: var(--gold-dim);
 }
 
+/* Erros */
 .input-error {
   border-color: var(--danger) !important;
 }
@@ -293,7 +300,7 @@ input:focus {
   display: none;
 }
 
-/* --- Botão login --- */
+/* Botão login */
 .btn-login {
   width: 100%;
   padding: 14px;
@@ -323,7 +330,7 @@ input:focus {
   opacity: 0.7;
 }
 
-/* --- Rodapé --- */
+/* Rodapé */
 .bottom-note {
   margin-top: 32px;
   font-size: 11px;
@@ -336,7 +343,7 @@ input:focus {
   color: var(--gold);
 }
 
-/* --- Responsivo --- */
+/* Responsivo */
 @media (max-width: 768px) {
   .left-panel {
     display: none;

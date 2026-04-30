@@ -1,4 +1,8 @@
-/* --- Variáveis --- */
+/* ===============================
+   GLOBAL — Variáveis e reset
+   =============================== */
+
+/* Paleta e fontes */
 :root {
   --black: #0a0a0a;
   --dark: #111111;
@@ -15,7 +19,7 @@
   --font-sans: 'Segoe UI', Arial, sans-serif;
 }
 
-/* --- Reset --- */
+/* Reset básico */
 *,
 *::before,
 *::after {
@@ -24,18 +28,43 @@
   padding: 0;
 }
 
+/* Corpo */
 body {
   font-family: var(--font-sans);
   background: var(--black);
   color: var(--text);
 }
 
+/* Links */
 a {
   text-decoration: none;
   color: inherit;
 }
 
-/* --- Botão primário --- */
+/* Inputs e botões */
+button,
+input,
+select,
+textarea {
+  font-family: var(--font-sans);
+}
+
+/* Foco visível para navegação por teclado */
+:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+}
+
+/* Ajustes do Bootstrap */
+.navbar {
+  padding: 0;
+}
+
+.navbar-toggler {
+  border: 1px solid var(--border);
+}
+
+/* Botão principal */
 .btn-primary {
   display: inline-block;
   padding: 14px 36px;
@@ -56,11 +85,12 @@ a {
 .btn-primary:hover {
   background: var(--gold-light);
 }
+
 .btn-primary:active {
   transform: scale(0.99);
 }
 
-/* --- Animação --- */
+/* Animação */
 @keyframes fadeUp {
   to {
     opacity: 1;
