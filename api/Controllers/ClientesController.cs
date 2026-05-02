@@ -1,5 +1,6 @@
 using api.Models;
 using api.Services;
+using api.Utilities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace api.Controllers
@@ -12,21 +13,27 @@ namespace api.Controllers
 
         // GET: /api/clientes
         [HttpGet]
-        public async Task<IEnumerable<Cliente>> Get()
+        [ProducesResponseType(typeof(IEnumerable<Cliente>), StatusCodes.Status200OK)]
+        public async Task<ActionResult<ApiResponse<Cliente[]>>> Get()
         {
-            return await _service.GetAll();
+            var clientes = await _service.GetAll();
+            return Ok(ApiResponse.Ok(clientes));
         }
 
-        // GET api/clientes/3fa85f64-5717-4562-b3fc-2c963f66afa6
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Cliente>> Get(Guid id)
+        // GET: /api/clientes/{id}
+        [HttpGet("{id:guid}")]
+        [ProducesResponseType(typeof(ApiResponse<Cliente>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse<Cliente>), StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<ApiResponse<Cliente>>> Get(Guid id)
         {
-            var serv = await _service.GetOne(id);
-            if (serv == null)
-            {
-                return NotFound();
-            }
-            return Ok(serv);
+            var cliente = await _service.GetOne(id);
+
+            if (cliente is null)
+                return NotFound(
+                    ApiResponse.Fail<Cliente>(new ApiError("NOT_FOUND", "Cliente não encontrado."))
+                );
+
+            return Ok(ApiResponse.Ok(cliente));
         }
 
         // POST /api/clientes

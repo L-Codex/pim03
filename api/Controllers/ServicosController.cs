@@ -1,85 +1,125 @@
 ﻿using api.Models;
 using api.Services;
+using api.Utilities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ServicosController : ControllerBase
+    public class ServicosController(ServicosService service) : ControllerBase
     {
-        private readonly ServicosService _service;
-
-        public ServicosController(ServicosService service)
-        {
-            _service = service;
-        }
+        private readonly ServicosService _service = service;
 
         // GET: /api/servicos
         [HttpGet]
-        public async Task<IEnumerable<Servico>> Get()
+        [ProducesResponseType(typeof(ApiResponse<Servico[]>), StatusCodes.Status200OK)]
+        public async Task<ActionResult<ApiResponse<Servico[]>>> Get()
         {
-            return await _service.GetAll();
+            var servicos = await _service.GetAll();
+            return Ok(ApiResponse.Ok(servicos));
         }
 
-        // GET /api/servicos/3fa85f64-5717-4562-b3fc-2c963f66afa6
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Servico>> Get(Guid id)
+        // GET: /api/servicos/{id}
+        [HttpGet("{id:guid}")]
+        [ProducesResponseType(typeof(ApiResponse<Servico>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse<Servico>), StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<ApiResponse<Servico>>> Get(Guid id)
         {
-            var serv = await _service.GetOne(id);
-            if (serv == null)
+            var servico = await _service.GetOne(id);
+
+            if (servico == null)
             {
-                return NotFound();
+                return NotFound(
+                    ApiResponse.Fail<Servico>(new ApiError("NOT_FOUND", "Serviço não encontrado."))
+                );
             }
-            return Ok(serv);
+
+            return Ok(ApiResponse.Ok(servico));
         }
 
-        // POST /api/servicos
+        // POST: /api/servicos
         [HttpPost]
-        public async Task<ActionResult> Post([FromBody] ServicoCreateDTO value)
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult> Post([FromBody] ServicoCreateDTO dto)
         {
-            var created = await _service.CreateOne(value);
-            if (created)
+            var created = await _service.CreateOne(dto);
+
+            if (!created)
             {
-                return NoContent();
+                return BadRequest(
+                    ApiResponse.Fail<object>(
+                        new ApiError("CREATE_FAILED", "Erro ao criar o serviço.")
+                    )
+                );
             }
-            return BadRequest("Erro ao criar o serviço.");
+
+            return NoContent();
         }
 
-        // PUT /api/servicos/3fa85f64-5717-4562-b3fc-2c963f66afa6
-        [HttpPut("{id}")]
-        public async Task<ActionResult> Put(Guid id, [FromBody] ServicoCreateDTO value)
+        // PUT: /api/servicos/{id}
+        [HttpPut("{id:guid}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult> Put(Guid id, [FromBody] ServicoCreateDTO dto)
         {
-            var updated = await _service.ReplaceOne(id, value);
-            if (updated)
+            var updated = await _service.ReplaceOne(id, dto);
+
+            if (!updated)
             {
-                return NoContent();
+                return BadRequest(
+                    ApiResponse.Fail<object>(
+                        new ApiError("REPLACE_FAILED", "Erro ao atualizar o serviço.")
+                    )
+                );
             }
-            return BadRequest("Erro ao atualizar o serviço.");
+
+            return NoContent();
         }
 
-        // PATCH /api/servicos/3fa85f64-5717-4562-b3fc-2c963f66afa6
-        [HttpPatch("{id}")]
-        public async Task<ActionResult> Patch(Guid id, [FromBody] ServicoUpdateDTO value)
+        // PATCH: /api/servicos/{id}
+        [HttpPatch("{id:guid}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult> Patch(Guid id, [FromBody] ServicoUpdateDTO dto)
         {
-            var updated = await _service.UpdateOne(id, value);
+            var updated = await _service.UpdateOne(id, dto);
+
             if (updated.HasValue)
             {
                 return NoContent();
             }
+
             if (updated.HasError)
             {
                 return updated.Error switch
                 {
-                    Utilities.ErrorCodes.NotFound => NotFound(),
-                    _ => throw new Exception("Erro desconhecido."),
+                    ErrorCodes.NotFound => NotFound(
+                        ApiResponse.Fail<object>(
+                            new ApiError("NOT_FOUND", "Serviço não encontrado.")
+                        )
+                    ),
+                    _ => StatusCode(
+                        500,
+                        ApiResponse.Fail<object>(
+                            new ApiError("UNKNOWN_ERROR", "Erro desconhecido.")
+                        )
+                    ),
                 };
             }
-            return BadRequest("Erro ao atualizar o serviço.");
+
+            return BadRequest(
+                ApiResponse.Fail<object>(
+                    new ApiError("UPDATE_FAILED", "Erro ao atualizar o serviço.")
+                )
+            );
         }
 
-        // DELETE /api/servicos/3fa85f64-5717-4562-b3fc-2c963f66afa6
-        [HttpDelete("{id}")]
+        // DELETE: /api/servicos/{id}
+        [HttpDelete("{id:guid}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status404NotFound)]
         public async Task<ActionResult> Delete(Guid id)
         {
             var result = await _service.DeleteOne(id);
@@ -88,15 +128,26 @@ namespace api.Controllers
             {
                 return result.Error switch
                 {
-                    Utilities.ErrorCodes.NotFound => NotFound(),
-                    Utilities.ErrorCodes.CantModify => Conflict(
-                        "Não é possível modificar este recurso."
+                    ErrorCodes.NotFound => NotFound(
+                        ApiResponse.Fail<object>(
+                            new ApiError("NOT_FOUND", "Serviço não encontrado.")
+                        )
                     ),
-                    _ => StatusCode(500, "Erro desconhecido."),
+                    ErrorCodes.CantModify => Conflict(
+                        ApiResponse.Fail<object>(
+                            new ApiError("CANT_MODIFY", "Não é possível modificar este recurso.")
+                        )
+                    ),
+                    _ => StatusCode(
+                        500,
+                        ApiResponse.Fail<object>(
+                            new ApiError("UNKNOWN_ERROR", "Erro desconhecido.")
+                        )
+                    ),
                 };
             }
 
-            return Ok();
+            return NoContent();
         }
     }
 }
