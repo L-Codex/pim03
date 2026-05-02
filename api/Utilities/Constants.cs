@@ -37,6 +37,8 @@ namespace api.Utilities
 
         public const string GET_CLIENTE_BY_ID =
             "SELECT id, nome, telefone, email, cpf, dt_nasc FROM tb_cliente WHERE id = $1";
+        public const string INSERT_CLIENTE =
+            "INSERT INTO tb_cliente (id, nome, telefone, email, cpf, dt_nasc) VALUES ($1, $2, $3, $4, $5, $6)";
         #endregion
     }
 }

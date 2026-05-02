@@ -60,5 +60,23 @@ namespace api.Repositories
 
             return new Maybe<ClienteDTO>(ErrorCodes.NotFound);
         }
+
+        public async Task<bool> CreateOne(ClienteDTO dto)
+        {
+            await using var connection = await _ds.OpenConnectionAsync();
+
+            await using var command = new NpgsqlCommand(Queries.INSERT_CLIENTE, connection);
+
+            command.Parameters.AddWithValue(dto.Id);
+            command.Parameters.AddWithValue(dto.Nome);
+            command.Parameters.AddWithValue((object?)dto.Telefone ?? DBNull.Value);
+            command.Parameters.AddWithValue((object?)dto.Email ?? DBNull.Value);
+            command.Parameters.AddWithValue((object?)dto.CPF ?? DBNull.Value);
+            command.Parameters.AddWithValue((object?)dto.DtNascimento ?? DBNull.Value);
+
+            await command.ExecuteNonQueryAsync();
+
+            return true;
+        }
     }
 }

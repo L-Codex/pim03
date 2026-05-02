@@ -44,5 +44,38 @@ namespace api.Services
                 c.DtNascimento.HasValue ? DateOnly.FromDateTime(c.DtNascimento.Value) : null
             );
         }
+
+        public async Task<bool> CreateOne(ClienteCreateDTO dto)
+        {
+            var newCliente = new Cliente(
+                null,
+                dto.Nome,
+                dto.Telefone,
+                dto.CPF,
+                dto.Email,
+                dto.DtNascimento
+            );
+
+            var created = await _repo.CreateOne(
+                new ClienteDTO(
+                    newCliente.Id,
+                    newCliente.Nome,
+                    newCliente.Telefone,
+                    newCliente.CPF,
+                    newCliente.Email,
+                    newCliente.DtNascimento.HasValue
+                        ? newCliente.DtNascimento.Value.ToDateTime(new TimeOnly(0, 0))
+                        : null
+                )
+            );
+
+            if (created)
+            {
+                return true;
+            }
+
+            // TODO: Lidar com erros
+            throw new Exception("Erro ao criar serviço.");
+        }
     }
 }

@@ -36,9 +36,24 @@ namespace api.Controllers
             return Ok(ApiResponse.Ok(cliente));
         }
 
-        // POST /api/clientes
         [HttpPost]
-        public async void Post([FromBody] string value) { }
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult> Post([FromBody] ClienteCreateDTO dto)
+        {
+            var created = await _service.CreateOne(dto);
+
+            if (!created)
+            {
+                return BadRequest(
+                    ApiResponse.Fail<object>(
+                        new ApiError("CREATE_FAILED", "Erro ao criar o cliente.")
+                    )
+                );
+            }
+
+            return NoContent();
+        }
 
         // PUT /api/clientes/3fa85f64-5717-4562-b3fc-2c963f66afa6
         [HttpPut("{id}")]
