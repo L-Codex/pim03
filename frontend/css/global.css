@@ -55,6 +55,31 @@ textarea {
   outline-offset: 2px;
 }
 
+/* Logo */
+.logo {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
+
+.logo-name {
+  font-family: var(--font-serif);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.logo-name span {
+  color: var(--gold);
+}
+
+.logo-sub {
+  font-size: 9px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
 /* Ajustes do Bootstrap */
 .navbar {
   padding: 0;

@@ -2,15 +2,6 @@
    LOGIN — Tela de acesso
    =============================== */
 
-body {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  position: relative;
-}
-
 /* Fundo decorativo */
 .bg-texture {
   position: fixed;
@@ -47,14 +38,11 @@ body {
 
 /* Container */
 .login-container {
-  display: flex;
   width: 900px;
   max-width: 95vw;
   min-height: 560px;
   border: 1px solid var(--border);
   border-radius: 2px;
-  overflow: hidden;
-  position: relative;
   z-index: 1;
   animation: fadeUp 0.6s ease forwards;
   opacity: 0;
@@ -65,23 +53,8 @@ body {
 .left-panel {
   flex: 1;
   background: linear-gradient(160deg, #141414 0%, #0d0d0d 100%);
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
   padding: 48px 44px;
   border-right: 1px solid var(--border);
-  position: relative;
-  overflow: hidden;
-}
-
-.left-panel::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background: linear-gradient(90deg, transparent, var(--gold), transparent);
 }
 
 .scissors-bg {
@@ -154,14 +127,10 @@ body {
 
 /* Lista de features */
 .features {
-  display: flex;
-  flex-direction: column;
   gap: 12px;
 }
 
 .feature {
-  display: flex;
-  align-items: center;
   gap: 10px;
   font-size: 13px;
   color: var(--muted);
@@ -179,9 +148,6 @@ body {
 .right-panel {
   width: 400px;
   background: var(--card);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
   padding: 52px 44px;
 }
 
@@ -222,11 +188,6 @@ body {
   text-transform: uppercase;
   color: var(--muted);
   margin-bottom: 8px;
-}
-
-.role-selector {
-  display: flex;
-  gap: 8px;
 }
 
 .role-btn {
@@ -345,9 +306,6 @@ input:focus {
 
 /* Responsivo */
 @media (max-width: 768px) {
-  .left-panel {
-    display: none;
-  }
   .right-panel {
     width: 100%;
     padding: 40px 28px;
