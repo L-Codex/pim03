@@ -4,9 +4,10 @@
 * text=auto
 
 ###############################################################################
-# Set behavior for some generated files to always be treated as binary.
+# Set behavior for some generated files to always be treated as generated
+# binary.
 ###############################################################################
-*.excalidraw binary
+*.excalidraw merge=binary linguist-generated
 
 ###############################################################################
 # Set default behavior for command prompt diff.
