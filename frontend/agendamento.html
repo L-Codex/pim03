@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="css/agendamento.css" />
   </head>
 
-  <body>
+  <body class="min-vh-100">
     <!-- Header -->
     <header
       class="bg-black fixed-top vw-100 px-3 py-3 px-md-5 border-bottom has-gradient"
@@ -97,7 +97,7 @@
               />
             </div>
           </div>
-          <div class="step-nav">
+          <div class="step-nav d-flex justify-content-between align-items-center mt-2">
             <span></span>
             <button class="btn-primary" type="button" data-step="2">Próximo</button>
           </div>
@@ -136,7 +136,7 @@
           </div>
           <div class="error-msg" id="horario-err">Selecione um horário</div>
 
-          <div class="step-nav">
+          <div class="step-nav d-flex justify-content-between align-items-center mt-2">
             <button class="btn-voltar" type="button" data-step="1">Voltar</button>
             <button class="btn-primary" type="button" data-step="3">Próximo</button>
           </div>
@@ -184,7 +184,7 @@
           <div class="servicos-total">Total: <span id="total-servicos">R$ 0,00</span></div>
           <div class="error-msg" id="servico-err">Selecione ao menos um serviço</div>
 
-          <div class="step-nav">
+          <div class="step-nav d-flex justify-content-between align-items-center mt-2">
             <button class="btn-voltar" type="button" data-step="2">Voltar</button>
             <button class="btn-primary" type="button" data-step="4">Revisar</button>
           </div>
@@ -223,7 +223,7 @@
               <span class="resumo-valor" id="res-total">—</span>
             </div>
           </div>
-          <div class="step-nav">
+          <div class="step-nav d-flex justify-content-between align-items-center mt-2">
             <button class="btn-voltar" type="button" data-step="3">Voltar</button>
             <button class="btn-primary" type="button" id="btn-confirmar">
               Confirmar Agendamento

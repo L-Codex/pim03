@@ -55,13 +55,27 @@ textarea {
   outline-offset: 2px;
 }
 
-/* Ajustes do Bootstrap */
-.navbar {
-  padding: 0;
+/* Logo */
+.logo {
+  line-height: 1.1;
 }
 
-.navbar-toggler {
-  border: 1px solid var(--border);
+.logo-name {
+  font-family: var(--font-serif);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.logo-name span {
+  color: var(--gold);
+}
+
+.logo-sub {
+  font-size: 9px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--muted);
 }
 
 /* Botão principal */
@@ -130,10 +144,6 @@ textarea {
 @media (max-width: 768px) {
   .navbar-nav a {
     font-size: 16px;
-  }
-
-  .navbar-nav .nav-btn {
-    font-size: 17px;
   }
 }
 
