@@ -57,8 +57,6 @@ textarea {
 
 /* Logo */
 .logo {
-  display: flex;
-  flex-direction: column;
   line-height: 1.1;
 }
 
@@ -78,15 +76,6 @@ textarea {
   letter-spacing: 3px;
   text-transform: uppercase;
   color: var(--muted);
-}
-
-/* Ajustes do Bootstrap */
-.navbar {
-  padding: 0;
-}
-
-.navbar-toggler {
-  border: 1px solid var(--border);
 }
 
 /* Botão principal */
@@ -155,10 +144,6 @@ textarea {
 @media (max-width: 768px) {
   .navbar-nav a {
     font-size: 16px;
-  }
-
-  .navbar-nav .nav-btn {
-    font-size: 17px;
   }
 }
 

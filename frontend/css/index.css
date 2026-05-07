@@ -2,13 +2,13 @@
    INDEX — Página inicial
    =============================== */
 
-/* Botão mobile */
-.menu-toggle {
-  background: none;
-  border: none;
-  color: var(--text);
-  font-size: 22px;
-  cursor: pointer;
+.tagline {
+  font-size: 10px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--gold);
+  display: block;
+  margin-bottom: 12px;
 }
 
 /* Hero */
@@ -17,12 +17,8 @@
   background: linear-gradient(160deg, #0d0d0d 0%, var(--black) 100%);
 }
 
-.hero-tag {
+.hero .tagline {
   font-size: 11px;
-  letter-spacing: 4px;
-  text-transform: uppercase;
-  color: var(--gold);
-  display: block;
   margin-bottom: 20px;
 }
 
@@ -47,6 +43,7 @@
 
 .hero-deco {
   position: absolute;
+  display: block;
   font-size: 400px;
   opacity: 0.025;
   right: -60px;
@@ -60,32 +57,21 @@
 .section {
   padding: 80px 0;
 }
-.section-dark {
-  background: var(--dark);
-}
 
-.section-tag {
-  font-size: 10px;
-  letter-spacing: 4px;
-  text-transform: uppercase;
-  color: var(--gold);
-  display: block;
-  margin-bottom: 12px;
+/* Alterna o fundo das seções ímpares */
+.section:nth-child(odd) {
+  background: var(--dark);
 }
 
 .section-title {
   font-family: var(--font-serif);
-  font-size: 36px;
-  font-weight: 700;
   color: var(--text);
-  margin-bottom: 48px;
 }
 
 .section-text {
-  font-size: 15px;
   color: var(--muted);
   line-height: 1.8;
-  max-width: 640px;
+  max-width: 90%;
   margin-bottom: 48px;
 }
 
@@ -136,16 +122,9 @@
 }
 
 /* Stats */
-.stats {
-  display: flex;
-  gap: 48px;
-  flex-wrap: wrap;
-}
-
 .stat-num {
   font-family: var(--font-serif);
   font-size: 40px;
-  font-weight: 700;
   color: var(--gold);
   line-height: 1;
   margin-bottom: 6px;
@@ -193,12 +172,14 @@
 
 /* Responsivo */
 @media (max-width: 768px) {
-  .hero {
-    padding: 100px 0 60px;
+  .hero-deco {
+    display: none;
   }
+
   .section {
     padding: 60px 0;
   }
+
   .stats {
     gap: 32px;
   }
