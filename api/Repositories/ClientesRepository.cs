@@ -1,4 +1,4 @@
-﻿using api.Models;
+﻿using api.DTOs;
 using api.Utilities;
 using Npgsql;
 

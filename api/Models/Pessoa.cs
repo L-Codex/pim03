@@ -3,15 +3,6 @@ using api.Utilities;
 
 namespace api.Models
 {
-    public interface IPessoaDTO
-    {
-        public Guid Id { get; init; }
-        public string Nome { get; set; }
-        public string Telefone { get; set; }
-        public string? CPF { get; set; }
-        public string? Email { get; set; }
-    }
-
     public abstract class Pessoa
     {
         [Required]
