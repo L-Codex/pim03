@@ -1,66 +1,9 @@
 /* Página de agendamento */
-body {
-  min-height: 100vh;
-  background: var(--black);
-}
-
-/* Header */
-.header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  z-index: 100;
-  background: rgba(10, 10, 10, 0.95);
-  border-bottom: 1px solid var(--border);
-}
 
 @media (max-width: 768px) {
   .navbar-nav a {
     font-size: 13px !important;
   }
-}
-
-.header-inner {
-  height: 64px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-/* Marca */
-.logo {
-  display: flex;
-  flex-direction: column;
-  line-height: 1.1;
-}
-
-.logo-name {
-  font-family: var(--font-serif);
-  font-size: 18px;
-  font-weight: 700;
-  color: var(--text);
-}
-
-.logo-name span {
-  color: var(--gold);
-}
-
-.logo-sub {
-  font-size: 9px;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  color: var(--muted);
-}
-
-.header-back {
-  font-size: 13px;
-  color: var(--muted);
-  transition: color 0.2s;
-}
-
-.header-back:hover {
-  color: var(--gold);
 }
 
 /* Conteúdo */
@@ -399,13 +342,6 @@ select:focus {
 }
 
 /* Navegação */
-.step-nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 8px;
-}
-
 .btn-voltar {
   padding: 12px 28px;
   background: transparent;
