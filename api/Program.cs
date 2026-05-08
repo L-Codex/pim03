@@ -1,4 +1,5 @@
 using Npgsql;
+using static api.Utilities.Functions;
 
 namespace api
 {
@@ -8,11 +9,7 @@ namespace api
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            var dbConnString =
-                builder.Configuration.GetConnectionString("DefaultConnection")
-                ?? throw new InvalidOperationException(
-                    "Connection string 'DefaultConnection' not found."
-                );
+            var dbConnString = GetConnectionString(builder);
 
             builder.Services.AddSingleton(sp =>
             {

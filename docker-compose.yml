@@ -1,0 +1,21 @@
+services:
+  backend:
+    build:
+      context: ./api
+      dockerfile: ./Dockerfile
+    env_file:
+      - ./.env
+    ports:
+      - "80:8080"
+    restart: unless-stopped
+  postgres:
+    image: postgres:latest
+    env_file:
+      - ./.env
+    restart: unless-stopped
+    volumes:
+      - postgres_data:/var/lib/postgresql/18/docker
+      - ./resources/database/schema.sql:/docker-entrypoint-initdb.d/01-init-schema.sql
+      - ./resources/database/test_seed.sql:/docker-entrypoint-initdb.d/02-seed-data.sql
+volumes:
+  postgres_data:
