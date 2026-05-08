@@ -59,6 +59,16 @@ Contém os arquivos de origem usados para geras as imagens. Esses arquivos são 
 
 ---
 
+## `nginx/`
+
+Contém arquivos de configuração para o servidor Nginx, usado para servir a aplicação frontend.
+
+\*_Conteúdo:_
+
+- `default.conf` — Configuração padrão do Nginx para servir a aplicação frontend e redirecionar as requisições para a API.
+
+---
+
 ## `scripts/`
 
 Scripts utilitários usados para apoiar os fluxos de trabalho de desenvolvimento.
