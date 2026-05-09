@@ -78,5 +78,18 @@ namespace api.Repositories
 
             return true;
         }
+
+        public async Task<bool> CheckCPF(string cpf)
+        {
+            await using var connection = await _ds.OpenConnectionAsync();
+
+            await using var command = new NpgsqlCommand(Queries.QUERY_CPF, connection);
+
+            command.Parameters.AddWithValue(cpf);
+
+            var result = (long?)await command.ExecuteScalarAsync();
+
+            return result.HasValue && result.Value == 1;
+        }
     }
 }

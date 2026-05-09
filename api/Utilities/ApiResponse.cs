@@ -10,5 +10,7 @@ namespace api.Utilities
             new(Success: false, Data: default, Error: error);
     }
 
+    public sealed record EmptyResponse();
+
     public sealed record ApiResponse<T>(bool Success, T? Data, ApiError? Error);
 }

@@ -4,5 +4,6 @@ namespace api.Utilities
     {
         NotFound,
         CantModify,
+        AlreadyExists,
     }
 }

@@ -1,6 +1,7 @@
 using api.DTOs;
 using api.Models;
 using api.Repositories;
+using api.Utilities;
 
 namespace api.Services
 {
@@ -46,7 +47,7 @@ namespace api.Services
             );
         }
 
-        public async Task<bool> CreateOne(ClienteCreateDTO dto)
+        public async Task<Maybe<bool>> CreateOne(ClienteCreateDTO dto)
         {
             var newCliente = new Cliente(
                 null,
@@ -56,6 +57,12 @@ namespace api.Services
                 dto.Email,
                 dto.DtNascimento
             );
+            var cpfExists = await _repo.CheckCPF(string.IsNullOrEmpty(dto.CPF) ? "" : dto.CPF);
+
+            if (cpfExists)
+            {
+                return new Maybe<bool>(ErrorCodes.AlreadyExists);
+            }
 
             var created = await _repo.CreateOne(
                 new ClienteDTO(
@@ -72,11 +79,11 @@ namespace api.Services
 
             if (created)
             {
-                return true;
+                return new Maybe<bool>(true);
             }
 
             // TODO: Lidar com erros
-            throw new Exception("Erro ao criar serviço.");
+            throw new Exception("Erro ao criar cliente.");
         }
     }
 }

@@ -1,3 +1,4 @@
+using api.DTOs;
 using api.Models;
 using api.Services;
 using api.Utilities;
@@ -37,22 +38,24 @@ namespace api.Controllers
         }
 
         [HttpPost]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult> Post([FromBody] ClienteCreateDTO dto)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse<EmptyResponse>), StatusCodes.Status409Conflict)]
+        public async Task<ActionResult<ApiResponse<EmptyResponse>>> Post(
+            [FromBody] ClienteCreateDTO dto
+        )
         {
             var created = await _service.CreateOne(dto);
 
-            if (!created)
+            if (created.HasError && created.Error is ErrorCodes.AlreadyExists)
             {
-                return BadRequest(
-                    ApiResponse.Fail<object>(
-                        new ApiError("CREATE_FAILED", "Erro ao criar o cliente.")
+                return Conflict(
+                    ApiResponse.Fail<EmptyResponse>(
+                        new ApiError("ALREADY_EXISTS", "Já existe um cliente com este CPF.")
                     )
                 );
             }
 
-            return NoContent();
+            return Ok(ApiResponse.Ok(new EmptyResponse()));
         }
 
         // PUT /api/clientes/3fa85f64-5717-4562-b3fc-2c963f66afa6
