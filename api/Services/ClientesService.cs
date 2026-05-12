@@ -49,6 +49,16 @@ namespace api.Services
 
         public async Task<Maybe<bool>> CreateOne(ClienteCreateDTO dto)
         {
+            if (!string.IsNullOrEmpty(dto.CPF))
+            {
+                var cpfExists = await _repo.CheckCPF(dto.CPF);
+
+                if (cpfExists)
+                {
+                    return new Maybe<bool>(ErrorCodes.AlreadyExists);
+                }
+            }
+
             var newCliente = new Cliente(
                 null,
                 dto.Nome,
@@ -57,12 +67,6 @@ namespace api.Services
                 dto.Email,
                 dto.DtNascimento
             );
-            var cpfExists = await _repo.CheckCPF(string.IsNullOrEmpty(dto.CPF) ? "" : dto.CPF);
-
-            if (cpfExists)
-            {
-                return new Maybe<bool>(ErrorCodes.AlreadyExists);
-            }
 
             var created = await _repo.CreateOne(
                 new ClienteDTO(
