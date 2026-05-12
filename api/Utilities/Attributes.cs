@@ -125,6 +125,8 @@ namespace api.Utilities
     {
         public bool AllowPast { get; set; } = true;
         public bool AllowFuture { get; set; } = true;
+        public string? NotBefore { get; set; } = null;
+        public string? NotAfter { get; set; } = null;
 
         protected override ValidationResult? IsValid(
             object? value,
@@ -135,6 +137,7 @@ namespace api.Utilities
             {
                 return ValidationResult.Success;
             }
+
             if (value is DateTime date)
             {
                 var today = DateTime.Now;
@@ -150,6 +153,44 @@ namespace api.Utilities
                         $"{validationContext.DisplayName} não pode ser uma data futura."
                     );
                 }
+
+                if (NotBefore != null)
+                {
+                    var nbfProperty = validationContext.ObjectType.GetProperty(NotBefore);
+                    if (nbfProperty == null)
+                    {
+                        return new ValidationResult($"Atributo desconhecido: ${NotBefore}!");
+                    }
+
+                    var beforeDate = (DateTime?)
+                        nbfProperty.GetValue(validationContext.ObjectInstance);
+
+                    if (beforeDate.HasValue && date < beforeDate)
+                    {
+                        return new ValidationResult(
+                            $"{validationContext.DisplayName} não pode ser antes de {NotBefore}."
+                        );
+                    }
+                }
+
+                if (NotAfter != null)
+                {
+                    var nafProperty = validationContext.ObjectType.GetProperty(NotAfter);
+                    if (nafProperty == null)
+                    {
+                        return new ValidationResult($"Atributo desconhecido: {NotAfter}!");
+                    }
+                    var afterDate = (DateTime?)
+                        nafProperty.GetValue(validationContext.ObjectInstance);
+
+                    if (afterDate.HasValue && date > afterDate)
+                    {
+                        return new ValidationResult(
+                            $"{validationContext.DisplayName} não pode ser depois de {NotAfter}."
+                        );
+                    }
+                }
+
                 return ValidationResult.Success;
             }
 

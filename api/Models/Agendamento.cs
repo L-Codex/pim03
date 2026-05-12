@@ -20,27 +20,8 @@ namespace api.Models
         [DateTime]
         public DateTime DataAgendamento { get; set; }
 
-        public DateTime? DataConclusao
-        {
-            get;
-            set
-            {
-                if (value == null)
-                {
-                    field = value;
-                    return;
-                }
-
-                if (value < DataAgendamento)
-                {
-                    throw new ArgumentException(
-                        "DataConclusao não pode ser anterior à data de agendamento."
-                    );
-                }
-
-                field = value;
-            }
-        }
+        [DateTime(AllowFuture = false, NotBefore = "DataAgendamento")]
+        public DateTime? DataConclusao { get; set; }
 
         [Required]
         public Servico[] Servicos { get; set; }
