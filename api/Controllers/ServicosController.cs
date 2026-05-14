@@ -15,7 +15,9 @@ namespace api.Controllers
         // GET: /api/servicos
         [HttpGet]
         [ProducesResponseType(typeof(ApiResponse<Servico[]>), StatusCodes.Status200OK)]
-        public async Task<ActionResult<ApiResponse<Servico[]>>> Get()
+        public async Task<ActionResult<ApiResponse<Servico[]>>> Get(
+            [FromHeader(Name = "Nonce")] string _
+        )
         {
             var servicos = await _service.GetAll();
             return Ok(ApiResponse.Ok(servicos));
