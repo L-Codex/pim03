@@ -119,26 +119,7 @@
             </div>
           </div>
 
-          <div class="horarios-grid row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-6 g-2 mb-4" id="horarios-grid">
-            <div class="col"><button class="horario-btn btn btn-outline-secondary w-100" type="button" data-horario="08:00">08:00</button></div>
-            <div class="col"><button class="horario-btn btn btn-outline-secondary w-100" type="button" data-horario="08:30">08:30</button></div>
-            <div class="col"><button class="horario-btn indisponivel btn btn-outline-secondary w-100" type="button" disabled>09:00</button></div>
-            <div class="col"><button class="horario-btn btn btn-outline-secondary w-100" type="button" data-horario="09:30">09:30</button></div>
-            <div class="col"><button class="horario-btn btn btn-outline-secondary w-100" type="button" data-horario="10:00">10:00</button></div>
-            <div class="col"><button class="horario-btn indisponivel btn btn-outline-secondary w-100" type="button" disabled>10:30</button></div>
-            <div class="col"><button class="horario-btn indisponivel btn btn-outline-secondary w-100" type="button" disabled>11:00</button></div>
-            <div class="col"><button class="horario-btn btn btn-outline-secondary w-100" type="button" data-horario="11:30">11:30</button></div>
-            <div class="col"><button class="horario-btn btn btn-outline-secondary w-100" type="button" data-horario="13:00">13:00</button></div>
-            <div class="col"><button class="horario-btn btn btn-outline-secondary w-100" type="button" data-horario="13:30">13:30</button></div>
-            <div class="col"><button class="horario-btn indisponivel btn btn-outline-secondary w-100" type="button" disabled>14:00</button></div>
-            <div class="col"><button class="horario-btn btn btn-outline-secondary w-100" type="button" data-horario="14:30">14:30</button></div>
-            <div class="col"><button class="horario-btn btn btn-outline-secondary w-100" type="button" data-horario="15:00">15:00</button></div>
-            <div class="col"><button class="horario-btn btn btn-outline-secondary w-100" type="button" data-horario="15:30">15:30</button></div>
-            <div class="col"><button class="horario-btn indisponivel btn btn-outline-secondary w-100" type="button" disabled>16:00</button></div>
-            <div class="col"><button class="horario-btn btn btn-outline-secondary w-100" type="button" data-horario="16:30">16:30</button></div>
-            <div class="col"><button class="horario-btn btn btn-outline-secondary w-100" type="button" data-horario="17:00">17:00</button></div>
-            <div class="col"><button class="horario-btn btn btn-outline-secondary w-100" type="button" data-horario="17:30">17:30</button></div>
-          </div>
+          <div class="horarios-grid row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-6 g-2 mb-4" id="horarios-grid"></div>
           <div class="error-msg" id="horario-err">Selecione um horário</div>
 
           <div class="step-nav d-flex justify-content-between align-items-center mt-2">
@@ -150,47 +131,7 @@
         <!-- Etapa 3: seleção de serviços -->
         <section class="step-panel" id="panel-3">
           <h2 class="step-panel-title h4 mb-4">Escolha os serviços</h2>
-          <div class="servicos-grid row row-cols-1 row-cols-md-3 g-3 mb-4" id="servicos-grid">
-            <div class="col">
-              <button
-                class="servico-card btn btn-outline-secondary w-100 h-100 text-start p-3"
-                type="button"
-                data-servico
-                data-nome="Cabelo"
-                data-preco="35"
-              >
-                <div class="servico-icon fs-3 mb-2">✂</div>
-                <div class="servico-nome fw-semibold">Cabelo</div>
-                <div class="servico-preco">R$ 35,00</div>
-              </button>
-            </div>
-            <div class="col">
-              <button
-                class="servico-card btn btn-outline-secondary w-100 h-100 text-start p-3"
-                type="button"
-                data-servico
-                data-nome="Sobrancelha"
-                data-preco="15"
-              >
-                <div class="servico-icon fs-3 mb-2">🪒</div>
-                <div class="servico-nome fw-semibold">Sobrancelha</div>
-                <div class="servico-preco">R$ 15,00</div>
-              </button>
-            </div>
-            <div class="col">
-              <button
-                class="servico-card btn btn-outline-secondary w-100 h-100 text-start p-3"
-                type="button"
-                data-servico
-                data-nome="Barba"
-                data-preco="25"
-              >
-                <div class="servico-icon fs-3 mb-2">🧔</div>
-                <div class="servico-nome fw-semibold">Barba</div>
-                <div class="servico-preco">R$ 25,00</div>
-              </button>
-            </div>
-          </div>
+          <div class="servicos-grid row row-cols-1 row-cols-md-3 g-3 mb-4" id="servicos-grid"></div>
 
           <div class="servicos-total fw-semibold mb-3">Total: <span id="total-servicos">R$ 0,00</span></div>
           <div class="error-msg" id="servico-err">Selecione ao menos um serviço</div>
@@ -205,36 +146,7 @@
         <section class="step-panel" id="panel-4">
           <h2 class="step-panel-title h4 mb-4">Confirme seu agendamento</h2>
           <div class="resumo-card card border-secondary bg-transparent mb-4">
-            <div class="card-body p-0">
-              <div class="resumo-linha d-flex justify-content-between align-items-center px-4 py-3 border-bottom border-secondary">
-              <span class="resumo-label">Serviços</span>
-              <span class="resumo-valor" id="res-servicos">—</span>
-            </div>
-            <div class="resumo-linha d-flex justify-content-between align-items-center px-4 py-3 border-bottom border-secondary">
-              <span class="resumo-label">Dia</span>
-              <span class="resumo-valor" id="res-data">—</span>
-            </div>
-            <div class="resumo-linha d-flex justify-content-between align-items-center px-4 py-3 border-bottom border-secondary">
-              <span class="resumo-label">Horário</span>
-              <span class="resumo-valor" id="res-horario">—</span>
-            </div>
-            <div class="resumo-linha d-flex justify-content-between align-items-center px-4 py-3 border-bottom border-secondary">
-              <span class="resumo-label">Nome</span>
-              <span class="resumo-valor" id="res-nome">—</span>
-            </div>
-            <div class="resumo-linha d-flex justify-content-between align-items-center px-4 py-3 border-bottom border-secondary">
-              <span class="resumo-label">Telefone</span>
-              <span class="resumo-valor" id="res-telefone">—</span>
-            </div>
-            <div class="resumo-linha d-flex justify-content-between align-items-center px-4 py-3 border-bottom border-secondary">
-              <span class="resumo-label">E-mail</span>
-              <span class="resumo-valor" id="res-email">—</span>
-            </div>
-            <div class="resumo-linha resumo-total d-flex justify-content-between align-items-center px-4 py-3">
-              <span class="resumo-label">Total</span>
-              <span class="resumo-valor" id="res-total">—</span>
-            </div>
-          </div>
+            <div class="card-body p-0" id="resumo-corpo"></div>
           </div>
           <div class="step-nav d-flex justify-content-between align-items-center mt-2">
             <button class="btn btn-outline-secondary btn-voltar text-uppercase" type="button" data-step="3">Voltar</button>

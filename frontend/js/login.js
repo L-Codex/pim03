@@ -12,6 +12,40 @@ const dom = {
   roleButtons: [],
 };
 
+// Dados que alimentam o painel lateral e os perfis.
+const FEATURES = [
+  'Agendamentos online',
+  'Controle de atendimentos',
+  'Gestão de funcionários',
+  'Relatórios financeiros',
+];
+
+const ROLES = [
+  { id: 'gerente', label: 'Gerente' },
+  { id: 'barbeiro', label: 'Barbeiro' },
+];
+
+function renderFeatures() {
+  const container = document.getElementById('features-list');
+  if (!container) return;
+  container.innerHTML = FEATURES.map(f => `
+    <div class="feature d-flex align-items-center">
+      <div class="feature-dot"></div>
+      ${f}
+    </div>
+  `).join('');
+}
+
+function renderRoles() {
+  const container = document.getElementById('role-selector');
+  if (!container) return;
+  container.innerHTML = ROLES.map((r, i) => `
+    <button class="role-btn btn btn-outline-secondary flex-fill ${i===0? 'active':''}" type="button" data-role="${r.id}">
+      ${r.label}
+    </button>
+  `).join('');
+}
+
 // Alterna o perfil selecionado visualmente.
 // O JS só controla a classe `active`; o estilo fica no CSS.
 function setRole(el) {
@@ -84,6 +118,10 @@ function atualizarTabPainel() {
 
 // Inicialização da tela.
 document.addEventListener('DOMContentLoaded', () => {
+  // Renderização data-driven antes de vincular eventos.
+  renderFeatures();
+  renderRoles();
+
   dom.form = document.getElementById('login-form');
   dom.login = document.getElementById('login');
   dom.senha = document.getElementById('senha');
