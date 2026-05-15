@@ -77,9 +77,8 @@
   user-select: none;
 }
 
-/* Texto auxiliar de marca, perfil e rodapé */
+/* Texto auxiliar de marca e rodapé */
 .brand-tag,
-.role-label,
 .form-label,
 .bottom-note {
   color: var(--muted);
@@ -110,8 +109,7 @@
 
 /* Destaques dourados no branding */
 .brand-logo .logo-name span,
-.tagline em,
-.role-btn.active {
+.tagline em {
   color: var(--gold);
 }
 
@@ -168,24 +166,12 @@
   margin-bottom: 1.25rem;
 }
 
-/* Botões do seletor de perfil e campos seguem o tema escuro */
-.role-btn,
+/* Campos do formulário seguem o tema escuro */
 .form-control,
 .btn-outline-secondary {
   border-color: var(--border);
   background: rgba(255, 255, 255, 0.02);
   color: var(--muted);
-}
-
-/* Botões de perfil */
-.role-btn {
-  letter-spacing: 0.0313rem;
-}
-
-/* Estado ativo do perfil selecionado */
-.role-btn.active {
-  border-color: var(--gold);
-  background: var(--gold-dim);
 }
 
 /* Campos do formulário */

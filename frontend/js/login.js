@@ -20,11 +20,6 @@ const FEATURES = [
   'Relatórios financeiros',
 ];
 
-const ROLES = [
-  { id: 'gerente', label: 'Gerente' },
-  { id: 'barbeiro', label: 'Barbeiro' },
-];
-
 function renderFeatures() {
   const container = document.getElementById('features-list');
   if (!container) return;
@@ -36,22 +31,6 @@ function renderFeatures() {
   `).join('');
 }
 
-function renderRoles() {
-  const container = document.getElementById('role-selector');
-  if (!container) return;
-  container.innerHTML = ROLES.map((r, i) => `
-    <button class="role-btn btn btn-outline-secondary flex-fill ${i===0? 'active':''}" type="button" data-role="${r.id}">
-      ${r.label}
-    </button>
-  `).join('');
-}
-
-// Alterna o perfil selecionado visualmente.
-// O JS só controla a classe `active`; o estilo fica no CSS.
-function setRole(el) {
-  dom.roleButtons.forEach(btn => btn.classList.remove('active'));
-  el.classList.add('active');
-}
 
 // Limpa o estado visual de erro de um campo.
 function limparErro(input, error) {
@@ -120,7 +99,6 @@ function atualizarTabPainel() {
 document.addEventListener('DOMContentLoaded', () => {
   // Renderização data-driven antes de vincular eventos.
   renderFeatures();
-  renderRoles();
 
   dom.form = document.getElementById('login-form');
   dom.login = document.getElementById('login');
@@ -131,12 +109,7 @@ document.addEventListener('DOMContentLoaded', () => {
   dom.btn = document.getElementById('btn');
   dom.loginInput = document.getElementById('login');
   dom.leftPanel = document.querySelector('.left-panel');
-  dom.roleButtons = Array.from(document.querySelectorAll('.role-btn'));
-
-  // Clique nos perfis.
-  dom.roleButtons.forEach(btn => {
-    btn.addEventListener('click', () => setRole(btn));
-  });
+  dom.roleButtons = [];
 
   // Submit do formulário.
   dom.form?.addEventListener('submit', event => {
