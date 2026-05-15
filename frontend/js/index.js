@@ -33,3 +33,34 @@ document.addEventListener('DOMContentLoaded', () => {
 
   atualizarTabMenu();
 });
+
+// Dados dos serviços exibidos na home — alterar aqui para atualizar a vitrine.
+const INDEX_SERVICOS = [
+  { titulo: 'Corte de Cabelo', descricao: 'Cortes modernos e clássicos executados com precisão.', preco: 35, icone: '✂' },
+  { titulo: 'Barba', descricao: 'Modelagem e acabamento com navalha para um visual impecável.', preco: 25, icone: '🪒' },
+  { titulo: 'Corte + Barba', descricao: 'O combo completo para quem quer sair renovado.', preco: 55, icone: '💆' },
+];
+
+// Renderiza a seção de serviços na home mantendo classes Bootstrap para responsividade.
+function renderizarServicosIndex() {
+  const container = document.getElementById('servicos-grid');
+  if (!container) return;
+
+  container.innerHTML = INDEX_SERVICOS.map(s => `
+    <article class="col">
+      <div class="card h-100 bg-transparent border-secondary">
+        <div class="card-body p-4">
+          <div class="card-icon fs-2 mb-3">${s.icone}</div>
+          <h3 class="card-title h5">${s.titulo}</h3>
+          <p class="card-desc mb-3">${s.descricao}</p>
+          <p class="card-price mb-0">A partir de R$ ${s.preco},00</p>
+        </div>
+      </div>
+    </article>
+  `).join('');
+}
+
+// Chama a renderização assim que o DOM principal estiver pronto.
+document.addEventListener('DOMContentLoaded', () => {
+  renderizarServicosIndex();
+});

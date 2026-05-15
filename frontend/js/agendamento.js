@@ -8,6 +8,45 @@ const estado = {
 // Janela máxima permitida para agendamento: hoje até 14 dias à frente.
 const DIAS_MAXIMOS_AGENDAMENTO = 14;
 
+// Dados que alimentam a interface sem repetir markup no HTML.
+const SERVICOS = [
+  { nome: 'Cabelo', preco: 35, icone: '✂' },
+  { nome: 'Sobrancelha', preco: 15, icone: '🪒' },
+  { nome: 'Barba', preco: 25, icone: '🧔' },
+];
+
+const HORARIOS = [
+  { hora: '08:00', disponivel: true },
+  { hora: '08:30', disponivel: true },
+  { hora: '09:00', disponivel: false },
+  { hora: '09:30', disponivel: true },
+  { hora: '10:00', disponivel: true },
+  { hora: '10:30', disponivel: false },
+  { hora: '11:00', disponivel: false },
+  { hora: '11:30', disponivel: true },
+  { hora: '13:00', disponivel: true },
+  { hora: '13:30', disponivel: true },
+  { hora: '14:00', disponivel: false },
+  { hora: '14:30', disponivel: true },
+  { hora: '15:00', disponivel: true },
+  { hora: '15:30', disponivel: true },
+  { hora: '16:00', disponivel: false },
+  { hora: '16:30', disponivel: true },
+  { hora: '17:00', disponivel: true },
+  { hora: '17:30', disponivel: true },
+];
+
+// Campos exibidos no resumo final.
+const RESUMO = [
+  { chave: 'servicos', label: 'Serviços', valor: () => (estado.servicos.length ? estado.servicos.map(s => s.nome).join(', ') : '—') },
+  { chave: 'data', label: 'Dia', valor: () => formatarDataBR(dom.data?.value) },
+  { chave: 'horario', label: 'Horário', valor: () => estado.horario || '—' },
+  { chave: 'nome', label: 'Nome', valor: () => dom.nome?.value.trim() || '—' },
+  { chave: 'telefone', label: 'Telefone', valor: () => dom.tel?.value.trim() || '—' },
+  { chave: 'email', label: 'E-mail', valor: () => dom.email?.value.trim() || '—' },
+  { chave: 'total', label: 'Total', valor: () => formatarMoeda(estado.servicos.reduce((acc, servico) => acc + servico.preco, 0)) },
+];
+
 // Cache dos elementos usados com mais frequência na tela.
 const dom = {
   form: null,
@@ -28,6 +67,8 @@ const dom = {
   telErr: null,
   emailErr: null,
   totalServicos: null,
+  servicosGrid: null,
+  horariosGrid: null,
   resServicos: null,
   resData: null,
   resHorario: null,
@@ -35,16 +76,14 @@ const dom = {
   resTelefone: null,
   resEmail: null,
   resTotal: null,
+  resumoCorpo: null,
+  resumoValores: {},
   sucNome: null,
   panel1: null,
   panels: [],
   stepIndicators: [],
   stepLines: [],
 };
-
-// Seletores utilitários para reduzir repetição de querySelector.
-const servicoCards = () => Array.from(document.querySelectorAll('[data-servico]'));
-const horarioBtns = () => Array.from(document.querySelectorAll('.horario-btn:not(.indisponivel)'));
 
 // Formata valores no padrão de moeda brasileira.
 function formatarMoeda(valor) {
@@ -89,6 +128,49 @@ function dataValida(valor) {
   );
 }
 
+// Gera os cards de serviço diretamente a partir dos dados acima.
+function renderizarServicos() {
+  if (!dom.servicosGrid) return;
+
+  dom.servicosGrid.innerHTML = SERVICOS.map(
+    servico => `
+      <div class="col">
+        <button
+          class="servico-card btn btn-outline-secondary w-100 h-100 text-start p-3"
+          type="button"
+          data-servico
+          data-nome="${servico.nome}"
+          data-preco="${servico.preco}"
+        >
+          <div class="servico-icon fs-3 mb-2">${servico.icone}</div>
+          <div class="servico-nome fw-semibold">${servico.nome}</div>
+          <div class="servico-preco">R$ ${servico.preco},00</div>
+        </button>
+      </div>
+    `
+  ).join('');
+}
+
+// Gera os horários disponíveis/indisponíveis a partir de uma lista única.
+function renderizarHorarios() {
+  if (!dom.horariosGrid) return;
+
+  dom.horariosGrid.innerHTML = HORARIOS.map(
+    horario => `
+      <div class="col">
+        <button
+          class="horario-btn btn btn-outline-secondary w-100${horario.disponivel ? '' : ' indisponivel'}"
+          type="button"
+          data-horario="${horario.hora}"
+          ${horario.disponivel ? '' : 'disabled'}
+        >
+          ${horario.hora}
+        </button>
+      </div>
+    `
+  ).join('');
+}
+
 // Recalcula o total de serviços sempre que a seleção muda.
 function atualizarTotal() {
   const total = estado.servicos.reduce((acc, servico) => acc + servico.preco, 0);
@@ -98,19 +180,49 @@ function atualizarTotal() {
 
 // Monta o resumo final com os dados já preenchidos nas etapas anteriores.
 function atualizarResumo() {
-  const nome = dom.nome.value.trim();
-  const telefone = dom.tel.value.trim();
-  const email = dom.email.value.trim();
-  const data = dom.data.value;
-
-  setTexto(dom.resServicos, estado.servicos.length ? estado.servicos.map(s => s.nome).join(', ') : '—');
-  setTexto(dom.resData, formatarDataBR(data));
-  setTexto(dom.resHorario, estado.horario || '—');
-  setTexto(dom.resNome, nome || '—');
-  setTexto(dom.resTelefone, telefone || '—');
-  setTexto(dom.resEmail, email || '—');
+  RESUMO.forEach(item => {
+    setTexto(dom.resumoValores[item.chave], item.valor());
+  });
 
   atualizarTotal();
+}
+
+// Atualiza o estado visual dos cards de serviço.
+function sincronizarServicos() {
+  if (!dom.servicosGrid) return;
+
+  dom.servicosGrid.querySelectorAll('[data-servico]').forEach(card => {
+    const nome = card.dataset.nome;
+    const selecionado = estado.servicos.some(servico => servico.nome === nome);
+    card.classList.toggle('selected', selecionado);
+  });
+}
+
+// Atualiza o estado visual do horário selecionado.
+function sincronizarHorario() {
+  if (!dom.horariosGrid) return;
+
+  dom.horariosGrid.querySelectorAll('.horario-btn').forEach(btn => {
+    btn.classList.toggle('selected', btn.dataset.horario === estado.horario);
+  });
+}
+
+// Renderiza o resumo final a partir dos dados definidos acima.
+function renderizarResumo() {
+  if (!dom.resumoCorpo) return;
+
+  dom.resumoCorpo.innerHTML = RESUMO.map(
+    item => `
+      <div class="resumo-linha d-flex justify-content-between align-items-center px-4 py-3 border-bottom border-secondary">
+        <span class="resumo-label">${item.label}</span>
+        <span class="resumo-valor" data-resumo="${item.chave}">—</span>
+      </div>
+    `
+  ).join('');
+
+  dom.resumoValores = Object.fromEntries(
+    Array.from(dom.resumoCorpo.querySelectorAll('[data-resumo]')).map(el => [el.dataset.resumo, el])
+  );
 }
 
 // Helpers para aplicar e remover estado de erro dos campos.
@@ -181,6 +293,8 @@ document.addEventListener('DOMContentLoaded', () => {
   dom.telErr = document.getElementById('tel-err');
   dom.emailErr = document.getElementById('email-err');
   dom.totalServicos = document.getElementById('total-servicos');
+  dom.servicosGrid = document.getElementById('servicos-grid');
+  dom.horariosGrid = document.getElementById('horarios-grid');
   dom.resServicos = document.getElementById('res-servicos');
   dom.resData = document.getElementById('res-data');
   dom.resHorario = document.getElementById('res-horario');
@@ -189,6 +303,7 @@ document.addEventListener('DOMContentLoaded', () => {
   dom.resEmail = document.getElementById('res-email');
   dom.resTotal = document.getElementById('res-total');
   dom.sucNome = document.getElementById('suc-nome');
+  dom.resumoCorpo = document.getElementById('resumo-corpo');
   dom.panel1 = document.getElementById('panel-1');
   dom.panels = Array.from(document.querySelectorAll('.step-panel'));
   dom.stepIndicators = Array.from(document.querySelectorAll('.step'));
@@ -197,6 +312,11 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('line-2'),
     document.getElementById('line-3'),
   ];
+
+  // Renderiza os blocos repetitivos a partir dos arrays de dados.
+  renderizarHorarios();
+  renderizarServicos();
+  renderizarResumo();
 
   const hoje = new Date();
   hoje.setHours(0, 0, 0, 0);
@@ -241,14 +361,17 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Cada card de serviço funciona como um toggle de seleção.
-  servicoCards().forEach(card => {
-    card.addEventListener('click', () => toggleServico(card));
+  // Usa delegação de eventos porque os cards são renderizados dinamicamente.
+  dom.servicosGrid?.addEventListener('click', event => {
+    const card = event.target.closest('[data-servico]');
+    if (!card || !dom.servicosGrid.contains(card)) return;
+    toggleServico(card);
   });
 
-  // Horários disponíveis são seleção única.
-  horarioBtns().forEach(btn => {
-    btn.addEventListener('click', () => selecionarHorario(btn));
+  dom.horariosGrid?.addEventListener('click', event => {
+    const btn = event.target.closest('.horario-btn');
+    if (!btn || btn.disabled || btn.classList.contains('indisponivel')) return;
+    selecionarHorario(btn);
   });
 
   // Botões com data-step controlam a navegação entre etapas.
@@ -280,11 +403,11 @@ function toggleServico(card) {
 
   if (jaSelecionado) {
     estado.servicos = estado.servicos.filter(s => s.nome !== nome);
-    card.classList.remove('selected');
   } else {
     estado.servicos.push({ nome, preco });
-    card.classList.add('selected');
   }
+
+  sincronizarServicos();
 
   atualizarTotal();
   setVisibilidade(dom.servicoErr, false);
@@ -292,9 +415,8 @@ function toggleServico(card) {
 
 // Marca apenas um horário por vez.
 function selecionarHorario(btn) {
-  horarioBtns().forEach(b => b.classList.remove('selected'));
-  btn.classList.add('selected');
   estado.horario = btn.dataset.horario;
+  sincronizarHorario();
   setVisibilidade(dom.horarioErr, false);
 }
 

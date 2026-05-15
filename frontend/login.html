@@ -41,25 +41,8 @@
           <div class="divider"></div>
           <p class="tagline">Gerencie sua barbearia<br />com <em>precisão e estilo</em>.</p>
         </a>
-        <!-- Lista curta de capacidades do sistema -->
-        <div class="features d-flex flex-column">
-          <div class="feature d-flex align-items-center">
-            <div class="feature-dot"></div>
-            Agendamentos online
-          </div>
-          <div class="feature d-flex align-items-center">
-            <div class="feature-dot"></div>
-            Controle de atendimentos
-          </div>
-          <div class="feature d-flex align-items-center">
-            <div class="feature-dot"></div>
-            Gestão de funcionários
-          </div>
-          <div class="feature d-flex align-items-center">
-            <div class="feature-dot"></div>
-            Relatórios financeiros
-          </div>
-        </div>
+        <!-- Lista curta de capacidades do sistema (preenchida por JS) -->
+        <div id="features-list" class="features d-flex flex-column"></div>
       </section>
 
       <!-- Painel principal com login e validação -->
@@ -78,14 +61,7 @@
         <!-- Escolha do perfil de acesso -->
         <div class="role-wrapper mb-4">
           <div class="role-label text-uppercase small mb-2">Perfil de acesso</div>
-          <div class="role-selector d-flex gap-2" id="role-selector">
-            <button class="role-btn btn btn-outline-secondary flex-fill active" type="button" data-role="gerente">
-              Gerente
-            </button>
-            <button class="role-btn btn btn-outline-secondary flex-fill" type="button" data-role="barbeiro">
-              Barbeiro
-            </button>
-          </div>
+          <div class="role-selector d-flex gap-2" id="role-selector"></div>
         </div>
 
         <!-- Formulário de autenticação -->

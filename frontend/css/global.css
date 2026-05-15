@@ -164,6 +164,41 @@ textarea {
   color: var(--gold);
 }
 
+/* Corrige posicionamento e empilhamento do header/collapse no mobile */
+header.fixed-top {
+  z-index: 1050; /* garante que o header fique acima do conteúdo */
+}
+
+/* Garante que o botão toggler fique clicável acima do collapse */
+.navbar-toggler {
+  z-index: 1060;
+}
+
+@media (max-width: 768px) {
+  /* Em mobile o header deixa de ser fixed para que o menu expandido empurre o conteúdo
+     (evita overlay que tampa CTAs como 'Agendar Horário'). */
+  header.fixed-top {
+    position: static;
+  }
+
+  .navbar-collapse {
+    position: static;
+    background: transparent;
+    border-top: none;
+    padding: 0.5rem 0 0 0;
+  }
+
+  .navbar-nav {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .navbar-nav a {
+    padding: 0.5rem 0;
+    display: block;
+  }
+}
+
 @media (max-width: 768px) {
   .navbar-nav a {
     font-size: 16px;
