@@ -5,89 +5,128 @@ const estado = {
   horario: null,
 };
 
-// Seletores utilitários
+// Janela máxima permitida para agendamento: hoje até 14 dias à frente.
+const DIAS_MAXIMOS_AGENDAMENTO = 14;
+
+// Cache dos elementos usados com mais frequência na tela.
+const dom = {
+  form: null,
+  tel: null,
+  data: null,
+  nome: null,
+  email: null,
+  obs: null,
+  confirmar: null,
+  sucesso: null,
+  steps: null,
+  stepTitle: null,
+  stepTag: null,
+  servicoErr: null,
+  horarioErr: null,
+  dataErr: null,
+  nomeErr: null,
+  telErr: null,
+  emailErr: null,
+  totalServicos: null,
+  resServicos: null,
+  resData: null,
+  resHorario: null,
+  resNome: null,
+  resTelefone: null,
+  resEmail: null,
+  resTotal: null,
+  sucNome: null,
+  panel1: null,
+  panels: [],
+  stepIndicators: [],
+  stepLines: [],
+};
+
+// Seletores utilitários para reduzir repetição de querySelector.
 const servicoCards = () => Array.from(document.querySelectorAll('[data-servico]'));
 const horarioBtns = () => Array.from(document.querySelectorAll('.horario-btn:not(.indisponivel)'));
 
-// Formata moeda BRL simples
+// Formata valores no padrão de moeda brasileira.
 function formatarMoeda(valor) {
   return `R$ ${valor.toFixed(2).replace('.', ',')}`;
 }
 
-// Formata data para BR (DD/MM/AAAA)
+// Converte a data do input ISO para o formato BR.
 function formatarDataBR(valor) {
   if (!valor) return '—';
   const [ano, mes, dia] = valor.split('-');
   return `${dia}/${mes}/${ano}`;
 }
 
-// Valida data (existente + não passada + limite máximo)
+// Helpers pequenos para escrever texto e controlar visibilidade de erros.
+function setTexto(el, valor) {
+  if (el) el.textContent = valor;
+}
+
+function setVisibilidade(el, visivel) {
+  if (el) el.style.display = visivel ? 'block' : 'none';
+}
+
+// Valida data dentro da janela permitida e garante que a data exista de fato.
 function dataValida(valor) {
   if (!valor) return false;
 
   const [ano, mes, dia] = valor.split('-').map(Number);
 
-  // Limite máximo
-  if (ano > 2099) return false;
-
   const data = new Date(ano, mes - 1, dia);
   const hoje = new Date();
   hoje.setHours(0, 0, 0, 0);
+
+  const dataMaxima = new Date(hoje);
+  dataMaxima.setDate(dataMaxima.getDate() + DIAS_MAXIMOS_AGENDAMENTO);
 
   return (
     data.getFullYear() === ano &&
     data.getMonth() === mes - 1 &&
     data.getDate() === dia &&
-    data >= hoje
+    data >= hoje &&
+    data <= dataMaxima
   );
 }
 
-// Atualiza total de serviços
+// Recalcula o total de serviços sempre que a seleção muda.
 function atualizarTotal() {
   const total = estado.servicos.reduce((acc, servico) => acc + servico.preco, 0);
-  const totalEl = document.getElementById('total-servicos');
-  if (totalEl) totalEl.textContent = formatarMoeda(total);
-
-  const totalResumo = document.getElementById('res-total');
-  if (totalResumo) totalResumo.textContent = formatarMoeda(total);
+  setTexto(dom.totalServicos, formatarMoeda(total));
+  setTexto(dom.resTotal, formatarMoeda(total));
 }
 
-// Preenche resumo final
+// Monta o resumo final com os dados já preenchidos nas etapas anteriores.
 function atualizarResumo() {
-  const nome = document.getElementById('nome').value.trim();
-  const telefone = document.getElementById('telefone').value.trim();
-  const email = document.getElementById('email').value.trim();
-  const data = document.getElementById('data').value;
+  const nome = dom.nome.value.trim();
+  const telefone = dom.tel.value.trim();
+  const email = dom.email.value.trim();
+  const data = dom.data.value;
 
-  document.getElementById('res-servicos').textContent =
-    estado.servicos.length ? estado.servicos.map(s => s.nome).join(', ') : '—';
-  document.getElementById('res-data').textContent = formatarDataBR(data);
-  document.getElementById('res-horario').textContent = estado.horario || '—';
-  document.getElementById('res-nome').textContent = nome || '—';
-  document.getElementById('res-telefone').textContent = telefone || '—';
-  document.getElementById('res-email').textContent = email || '—';
+  setTexto(dom.resServicos, estado.servicos.length ? estado.servicos.map(s => s.nome).join(', ') : '—');
+  setTexto(dom.resData, formatarDataBR(data));
+  setTexto(dom.resHorario, estado.horario || '—');
+  setTexto(dom.resNome, nome || '—');
+  setTexto(dom.resTelefone, telefone || '—');
+  setTexto(dom.resEmail, email || '—');
 
   atualizarTotal();
 }
 
-// Helpers de erro
-function limparErro(inputId, errorId) {
-  const input = document.getElementById(inputId);
-  const error = document.getElementById(errorId);
-  if (!input || !error) return;
-  input.classList.remove('input-error');
-  error.style.display = 'none';
+// Helpers para aplicar e remover estado de erro dos campos.
+function limparErroDom(inputEl, errorEl) {
+  if (!inputEl || !errorEl) return;
+  inputEl.classList.remove('input-error');
+  errorEl.style.display = 'none';
 }
 
-function mostrarErro(inputId, errorId) {
-  const input = document.getElementById(inputId);
-  const error = document.getElementById(errorId);
-  if (!input || !error) return;
-  input.classList.add('input-error');
-  error.style.display = 'block';
+function mostrarErroDom(inputEl, errorEl) {
+  if (!inputEl || !errorEl) return;
+  inputEl.classList.add('input-error');
+  errorEl.style.display = 'block';
 }
 
-// === Controle de TAB (apenas etapa ativa) ===
+// Garante que a navegação por TAB fique restrita ao painel ativo.
 function focaveisNoPainel(panel) {
   return Array.from(
     panel.querySelectorAll('a, button, input, select, textarea, [tabindex]')
@@ -122,49 +161,97 @@ function focarPrimeiro(panel) {
   if (primeiro) primeiro.focus();
 }
 
-// Inicialização
+// Inicialização geral da tela.
 document.addEventListener('DOMContentLoaded', () => {
-  const tel = document.getElementById('telefone');
-  const data = document.getElementById('data');
-  const hoje = new Date().toISOString().split('T')[0];
+  dom.form = document.getElementById('agendamento-form');
+  dom.tel = document.getElementById('telefone');
+  dom.data = document.getElementById('data');
+  dom.nome = document.getElementById('nome');
+  dom.email = document.getElementById('email');
+  dom.obs = document.getElementById('obs');
+  dom.confirmar = document.getElementById('btn-confirmar');
+  dom.sucesso = document.getElementById('sucesso');
+  dom.steps = document.querySelector('.steps');
+  dom.stepTitle = document.querySelector('.page-title');
+  dom.stepTag = document.querySelector('.page-tag');
+  dom.servicoErr = document.getElementById('servico-err');
+  dom.horarioErr = document.getElementById('horario-err');
+  dom.dataErr = document.getElementById('data-err');
+  dom.nomeErr = document.getElementById('nome-err');
+  dom.telErr = document.getElementById('tel-err');
+  dom.emailErr = document.getElementById('email-err');
+  dom.totalServicos = document.getElementById('total-servicos');
+  dom.resServicos = document.getElementById('res-servicos');
+  dom.resData = document.getElementById('res-data');
+  dom.resHorario = document.getElementById('res-horario');
+  dom.resNome = document.getElementById('res-nome');
+  dom.resTelefone = document.getElementById('res-telefone');
+  dom.resEmail = document.getElementById('res-email');
+  dom.resTotal = document.getElementById('res-total');
+  dom.sucNome = document.getElementById('suc-nome');
+  dom.panel1 = document.getElementById('panel-1');
+  dom.panels = Array.from(document.querySelectorAll('.step-panel'));
+  dom.stepIndicators = Array.from(document.querySelectorAll('.step'));
+  dom.stepLines = [
+    document.getElementById('line-1'),
+    document.getElementById('line-2'),
+    document.getElementById('line-3'),
+  ];
 
-  // Data mínima: hoje
-  if (data) data.min = hoje;
+  const hoje = new Date();
+  hoje.setHours(0, 0, 0, 0);
 
-  // Máscara de telefone
-  if (tel) {
-    tel.addEventListener('input', () => {
-      let v = tel.value.replace(/\D/g, '').slice(0, 11);
+  const dataMaxima = new Date(hoje);
+  dataMaxima.setDate(dataMaxima.getDate() + DIAS_MAXIMOS_AGENDAMENTO);
+
+  const hojeStr = hoje.toISOString().split('T')[0];
+  const dataMaximaStr = dataMaxima.toISOString().split('T')[0];
+
+  // Configura a janela permitida no próprio input para reforçar a validação.
+  if (dom.data) {
+    dom.data.min = hojeStr;
+    dom.data.max = dataMaximaStr;
+  }
+
+  // Máscara simples de telefone para melhorar a digitação.
+  if (dom.tel) {
+    dom.tel.addEventListener('input', () => {
+      let v = dom.tel.value.replace(/\D/g, '').slice(0, 11);
       if (v.length <= 10) {
         v = v.replace(/^(\d{2})(\d{4})(\d{0,4})/, '($1) $2-$3');
       } else {
         v = v.replace(/^(\d{2})(\d{5})(\d{0,4})/, '($1) $2-$3');
       }
-      tel.value = v;
+      dom.tel.value = v;
     });
   }
 
-  // Remove erro ao digitar
-  ['nome', 'telefone', 'email', 'obs', 'data'].forEach(id => {
-    const el = document.getElementById(id);
-    if (!el) return;
-    el.addEventListener('keydown', () => {
-      const errId = `${id === 'telefone' ? 'tel' : id}-err`;
-      limparErro(id, errId);
+  // Remove mensagens de erro assim que o usuário volta a editar o campo.
+  [
+    ['nome', dom.nome, dom.nomeErr],
+    ['telefone', dom.tel, dom.telErr],
+    ['email', dom.email, dom.emailErr],
+    ['obs', dom.obs, null],
+    ['data', dom.data, dom.dataErr],
+  ].forEach(([id, inputEl, errorEl]) => {
+    if (!inputEl) return;
+    inputEl.addEventListener('keydown', () => {
+      if (errorEl) limparErroDom(inputEl, errorEl);
+      if (id === 'telefone') inputEl.classList.remove('input-error');
     });
   });
 
-  // Clique em serviços
+  // Cada card de serviço funciona como um toggle de seleção.
   servicoCards().forEach(card => {
     card.addEventListener('click', () => toggleServico(card));
   });
 
-  // Clique em horário
+  // Horários disponíveis são seleção única.
   horarioBtns().forEach(btn => {
     btn.addEventListener('click', () => selecionarHorario(btn));
   });
 
-  // Navegação de steps
+  // Botões com data-step controlam a navegação entre etapas.
   document.querySelectorAll('[data-step]').forEach(btn => {
     btn.addEventListener('click', () => {
       const step = Number(btn.dataset.step);
@@ -172,20 +259,19 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Confirmação final
-  const confirmar = document.getElementById('btn-confirmar');
-  if (confirmar) {
-    confirmar.addEventListener('click', confirmarAgendamento);
+  // Botão final de confirmação do agendamento.
+  if (dom.confirmar) {
+    dom.confirmar.addEventListener('click', confirmarAgendamento);
   }
 
-  // Inicial: só etapa 1 com TAB
-  document.querySelectorAll('.step-panel').forEach(panel => {
+  // Só a primeira etapa começa navegável por teclado.
+  dom.panels.forEach(panel => {
     panel.id === 'panel-1' ? habilitarTab(panel) : desabilitarTab(panel);
   });
-  focarPrimeiro(document.getElementById('panel-1'));
+  focarPrimeiro(dom.panel1);
 });
 
-// Seleciona/retira serviço (multi-select)
+// Seleciona ou remove um serviço da lista atual.
 function toggleServico(card) {
   const nome = card.dataset.nome;
   const preco = Number(card.dataset.preco);
@@ -201,77 +287,77 @@ function toggleServico(card) {
   }
 
   atualizarTotal();
-  document.getElementById('servico-err').style.display = 'none';
+  setVisibilidade(dom.servicoErr, false);
 }
 
-// Seleciona horário único
+// Marca apenas um horário por vez.
 function selecionarHorario(btn) {
   horarioBtns().forEach(b => b.classList.remove('selected'));
   btn.classList.add('selected');
   estado.horario = btn.dataset.horario;
-  document.getElementById('horario-err').style.display = 'none';
+  setVisibilidade(dom.horarioErr, false);
 }
 
-// Validação etapa 1
+// Etapa 1: nome, telefone e e-mail.
 function validarStep1() {
-  const nome = document.getElementById('nome').value.trim();
-  const telefone = document.getElementById('telefone').value.trim();
-  const email = document.getElementById('email').value.trim();
-  const emailInput = document.getElementById('email');
+  const nome = dom.nome.value.trim();
+  const telefone = dom.tel.value.trim();
+  const email = dom.email.value.trim();
+  const emailInput = dom.email;
 
   let valido = true;
 
-  limparErro('nome', 'nome-err');
-  limparErro('telefone', 'tel-err');
-  limparErro('email', 'email-err');
+  limparErroDom(dom.nome, dom.nomeErr);
+  limparErroDom(dom.tel, dom.telErr);
+  limparErroDom(dom.email, dom.emailErr);
 
   if (!nome) {
-    mostrarErro('nome', 'nome-err');
+    mostrarErroDom(dom.nome, dom.nomeErr);
     valido = false;
   }
 
   if (!telefone || telefone.length < 14) {
-    mostrarErro('telefone', 'tel-err');
+    mostrarErroDom(dom.tel, dom.telErr);
     valido = false;
   }
 
   if (email && !emailInput.checkValidity()) {
-    mostrarErro('email', 'email-err');
+    mostrarErroDom(dom.email, dom.emailErr);
     valido = false;
   }
 
   return valido;
 }
 
-// Validação etapa 2
+// Etapa 2: data e horário.
 function validarStep2() {
-  const dataValor = document.getElementById('data').value;
+  const dataValor = dom.data.value;
   let valido = true;
 
   if (!dataValida(dataValor)) {
-    mostrarErro('data', 'data-err');
+    mostrarErroDom(dom.data, dom.dataErr);
     valido = false;
   } else {
-    limparErro('data', 'data-err');
+    limparErroDom(dom.data, dom.dataErr);
   }
 
   if (!estado.horario) {
-    document.getElementById('horario-err').style.display = 'block';
+    setVisibilidade(dom.horarioErr, true);
     valido = false;
   } else {
-    document.getElementById('horario-err').style.display = 'none';
+    setVisibilidade(dom.horarioErr, false);
   }
 
   return valido;
 }
 
-// Validação etapa 3
+// Etapa 3: pelo menos um serviço precisa estar selecionado.
 function validarStep3() {
   if (!estado.servicos.length) {
-    document.getElementById('servico-err').style.display = 'block';
+    setVisibilidade(dom.servicoErr, true);
     return false;
   }
-  document.getElementById('servico-err').style.display = 'none';
+  setVisibilidade(dom.servicoErr, false);
   return true;
 }
 
@@ -283,27 +369,26 @@ function irParaStep(step) {
 
   if (step === 4) atualizarResumo();
 
-  document.querySelectorAll('.step-panel').forEach(p => p.classList.remove('active'));
+  dom.panels.forEach(p => p.classList.remove('active'));
   const painelAtivo = document.getElementById(`panel-${step}`);
   painelAtivo.classList.add('active');
 
   // Atualiza TAB: só o painel ativo
-  document.querySelectorAll('.step-panel').forEach(panel => {
+  dom.panels.forEach(panel => {
     panel.id === `panel-${step}` ? habilitarTab(panel) : desabilitarTab(panel);
   });
 
   // Indicadores
-  for (let i = 1; i <= 4; i++) {
-    const stepEl = document.getElementById(`step-ind-${i}`);
+  dom.stepIndicators.forEach((stepEl, index) => {
+    const currentStep = index + 1;
     stepEl.classList.remove('active', 'done');
-    if (i < step) stepEl.classList.add('done');
-    if (i === step) stepEl.classList.add('active');
-  }
+    if (currentStep < step) stepEl.classList.add('done');
+    if (currentStep === step) stepEl.classList.add('active');
+  });
 
-  for (let i = 1; i <= 3; i++) {
-    const line = document.getElementById(`line-${i}`);
-    if (line) line.classList.toggle('done', i < step);
-  }
+  dom.stepLines.forEach((line, index) => {
+    if (line) line.classList.toggle('done', index + 1 < step);
+  });
 
   focarPrimeiro(painelAtivo);
   window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -311,17 +396,17 @@ function irParaStep(step) {
 
 // Confirmação final (mock)
 function confirmarAgendamento() {
-  const nome = document.getElementById('nome').value.trim();
+  const nome = dom.nome.value.trim();
 
   // TODO: substituir pelo fetch para POST /agendamento quando o back-end estiver pronto
 
-  document.querySelectorAll('.step-panel').forEach(p => p.classList.remove('active'));
-  document.querySelector('.steps').style.display = 'none';
-  document.querySelector('.page-title').style.display = 'none';
-  document.querySelector('.page-tag').style.display = 'none';
+  dom.panels.forEach(p => p.classList.remove('active'));
+  setVisibilidade(dom.steps, false);
+  setVisibilidade(dom.stepTitle, false);
+  setVisibilidade(dom.stepTag, false);
 
-  document.getElementById('suc-nome').textContent = nome;
-  document.getElementById('sucesso').classList.add('active');
+  setTexto(dom.sucNome, nome);
+  dom.sucesso.classList.add('active');
 
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }

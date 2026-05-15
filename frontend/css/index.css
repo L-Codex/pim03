@@ -1,177 +1,100 @@
-/* ===============================
-   INDEX — Página inicial
-   =============================== */
+/* INDEX — Ajustes visuais específicos da home */
 
+/* Rótulo pequeno usado em seções de destaque */
 .tagline {
-  font-size: 10px;
-  letter-spacing: 4px;
-  text-transform: uppercase;
+  font-size: 0.7rem;
+  letter-spacing: 0.25rem;
   color: var(--gold);
-  display: block;
-  margin-bottom: 12px;
 }
 
-/* Hero */
+/* Fundo do hero da home */
 .hero {
-  padding: 100px 0 60px;
   background: linear-gradient(160deg, #0d0d0d 0%, var(--black) 100%);
 }
 
-.hero .tagline {
-  font-size: 11px;
-  margin-bottom: 20px;
-}
-
+/* Título principal do hero */
 .hero-title {
   font-family: var(--font-serif);
-  font-size: clamp(42px, 8vw, 80px);
-  font-weight: 900;
-  line-height: 1;
   color: var(--text);
-  margin-bottom: 24px;
 }
 
+/* Destaque dourado dentro do título */
 .hero-title span {
   color: var(--gold);
 }
 
+/* Texto auxiliar do hero */
 .hero-desc {
   color: var(--muted);
-  line-height: 1.7;
-  margin-bottom: 40px;
+  max-width: 40rem;
+  margin-inline: auto;
 }
 
+/* Decoração grande no canto do hero */
 .hero-deco {
   position: absolute;
-  display: block;
-  font-size: 400px;
+  font-size: 22rem;
   opacity: 0.025;
-  right: -60px;
-  bottom: -60px;
+  right: -3.75rem;
+  bottom: -3.75rem;
   pointer-events: none;
   user-select: none;
   line-height: 1;
 }
 
-/* Seções */
-.section {
-  padding: 80px 0;
-}
-
-/* Alterna o fundo das seções ímpares */
+/* Alternância de fundo entre as seções da home */
 .section:nth-child(odd) {
   background: var(--dark);
 }
 
-.section-title {
-  font-family: var(--font-serif);
-  color: var(--text);
-}
-
-.section-text {
-  color: var(--muted);
-  line-height: 1.8;
-  max-width: 90%;
-  margin-bottom: 48px;
-}
-
-/* Cards */
-.cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 24px;
-}
-
-.card {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 2px;
-  padding: 32px 28px;
-  transition: border-color 0.2s;
-}
-
-.card:hover {
-  border-color: var(--gold);
-}
-
-.card-icon {
-  font-size: 28px;
-  margin-bottom: 16px;
-}
-
-.card-title {
-  font-family: var(--font-serif);
-  font-size: 18px;
-  font-weight: 700;
-  color: var(--text);
-  margin-bottom: 10px;
-}
-
-.card-desc {
-  font-size: 13px;
-  color: var(--muted);
-  line-height: 1.6;
-  margin-bottom: 16px;
-}
-
-.card-price {
-  font-size: 13px;
-  color: var(--gold);
-  font-weight: 600;
-  letter-spacing: 0.5px;
-}
-
-/* Stats */
+/* Títulos e números com a tipografia da marca */
+.section-title,
+.card-title,
 .stat-num {
   font-family: var(--font-serif);
-  font-size: 40px;
-  color: var(--gold);
-  line-height: 1;
-  margin-bottom: 6px;
-}
-
-.stat-label {
-  font-size: 12px;
-  color: var(--muted);
-  letter-spacing: 1px;
-  text-transform: uppercase;
-}
-
-/* Contato */
-.contato-label {
-  font-size: 11px;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  color: var(--muted);
-  margin-bottom: 4px;
-}
-
-.contato-val {
-  font-size: 15px;
   color: var(--text);
 }
 
-/* Footer */
-.footer-inner {
-  font-size: 12px;
+/* Card dos serviços na home */
+.card {
+  background: var(--card) !important;
+  border-color: var(--border) !important;
+  transition: border-color 0.2s ease;
+}
+
+/* Hover leve para reforçar interação */
+.card:hover {
+  border-color: var(--gold) !important;
+}
+
+/* Textos secundários da home */
+.card-desc,
+.section-text,
+.footer-inner,
+.contato-label,
+.stat-label {
   color: var(--muted);
 }
 
+/* Preços e números em destaque */
+.card-price,
+.stat-num {
+  color: var(--gold);
+}
+
+/* Rodapé da home */
+.footer-inner {
+  font-size: 0.8rem;
+}
+
+/* Link do rodapé com destaque no hover */
 .footer-inner a:hover {
   color: var(--gold);
 }
 
-/* Responsivo */
+/* Oculta a decoração grande em telas menores */
 @media (max-width: 768px) {
   .hero-deco {
     display: none;
-  }
-
-  .section {
-    padding: 60px 0;
-  }
-
-  .stats {
-    gap: 32px;
   }
 }

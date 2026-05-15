@@ -1,8 +1,8 @@
 /* ===============================
-   GLOBAL — Variáveis e reset
-   =============================== */
+  GLOBAL — Base visual do frontend
+  =============================== */
 
-/* Paleta e fontes */
+/* Variáveis compartilhadas entre as páginas */
 :root {
   --black: #0a0a0a;
   --dark: #111111;
@@ -17,9 +17,15 @@
   --success: #4caf7d;
   --font-serif: Georgia, 'Times New Roman', serif;
   --font-sans: 'Segoe UI', Arial, sans-serif;
+
+  /* Tokens Bootstrap alinhados ao tema */
+  --bs-warning: var(--gold);
+  --bs-warning-rgb: 201, 168, 76;
+  --bs-secondary: var(--muted);
+  --bs-secondary-rgb: 122, 117, 112;
 }
 
-/* Reset básico */
+/* Reset básico para evitar diferenças entre navegadores */
 *,
 *::before,
 *::after {
@@ -28,20 +34,20 @@
   padding: 0;
 }
 
-/* Corpo */
+/* Base tipográfica e fundo padrão do site */
 body {
   font-family: var(--font-sans);
   background: var(--black);
   color: var(--text);
 }
 
-/* Links */
+/* Links seguem a identidade do projeto */
 a {
   text-decoration: none;
   color: inherit;
 }
 
-/* Inputs e botões */
+/* Garante a mesma fonte em controles nativos */
 button,
 input,
 select,
@@ -49,15 +55,32 @@ textarea {
   font-family: var(--font-sans);
 }
 
-/* Foco visível para navegação por teclado */
+/* Foco visível para acessibilidade por teclado */
 :focus-visible {
   outline: 2px solid var(--gold);
   outline-offset: 2px;
 }
 
-/* Logo */
+/* Identidade visual da marca */
 .logo {
   line-height: 1.1;
+}
+
+.logo-btn {
+  padding: 0;
+}
+
+.logo-btn:hover {
+  color: inherit;
+}
+
+.logo:hover {
+  color: inherit;
+}
+
+.logo:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 4px;
 }
 
 .logo-name {
@@ -78,7 +101,7 @@ textarea {
   color: var(--muted);
 }
 
-/* Botão principal */
+/* Botão principal usado nas chamadas de ação */
 .btn-primary {
   display: inline-block;
   padding: 14px 36px;
@@ -104,7 +127,7 @@ textarea {
   transform: scale(0.99);
 }
 
-/* Animação */
+/* Animação base reutilizada em páginas com entrada suave */
 @keyframes fadeUp {
   to {
     opacity: 1;
@@ -135,8 +158,8 @@ textarea {
   color: var(--text);
 }
 
-/* Botão gestão */
-/* Utilizamos .navbar-nav para garantir especificidade */
+/* Links da navegação principal */
+/* A regra usa .navbar-nav para vencer o Bootstrap quando necessário */
 .navbar-nav .nav-btn {
   color: var(--gold);
 }
@@ -150,4 +173,54 @@ textarea {
 .navbar-nav .nav-btn:hover {
   color: var(--gold);
   background: var(--gold-dim) !important;
+}
+
+/* Padronização visual de componentes Bootstrap */
+.btn {
+  border-radius: 2px;
+  border-width: 1px;
+}
+
+.btn-warning {
+  --bs-btn-color: var(--black);
+  --bs-btn-bg: var(--gold);
+  --bs-btn-border-color: var(--gold);
+  --bs-btn-hover-color: var(--black);
+  --bs-btn-hover-bg: var(--gold-light);
+  --bs-btn-hover-border-color: var(--gold-light);
+  --bs-btn-active-color: var(--black);
+  --bs-btn-active-bg: var(--gold-light);
+  --bs-btn-active-border-color: var(--gold-light);
+  --bs-btn-focus-shadow-rgb: 201, 168, 76;
+  min-height: 46px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+}
+
+.btn-outline-secondary {
+  --bs-btn-color: var(--muted);
+  --bs-btn-border-color: var(--border);
+  --bs-btn-hover-color: var(--gold);
+  --bs-btn-hover-bg: var(--gold-dim);
+  --bs-btn-hover-border-color: var(--gold);
+  --bs-btn-active-color: var(--gold);
+  --bs-btn-active-bg: var(--gold-dim);
+  --bs-btn-active-border-color: var(--gold);
+  min-height: 44px;
+  font-size: 0.8125rem;
+  letter-spacing: 0.08em;
+}
+
+.form-label {
+  font-size: 0.6875rem;
+  letter-spacing: 0.1rem;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.form-control {
+  min-height: 46px;
+  border-radius: 2px;
+  border-width: 1px;
 }

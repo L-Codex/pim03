@@ -1,8 +1,6 @@
-/* ===============================
-   LOGIN — Tela de acesso
-   =============================== */
+/* LOGIN — Ajustes visuais específicos da tela de acesso */
 
-/* Fundo decorativo */
+/* Fundo decorativo da página */
 .bg-texture {
   position: fixed;
   inset: 0;
@@ -16,298 +14,231 @@
   pointer-events: none;
 }
 
-.bg-glow {
+/* Efeitos de brilho no fundo */
+.bg-glow,
+.bg-glow2 {
   position: fixed;
-  width: 600px;
-  height: 600px;
-  background: radial-gradient(circle, rgba(201, 168, 76, 0.06) 0%, transparent 70%);
-  top: -100px;
-  right: -100px;
   pointer-events: none;
+}
+
+.bg-glow {
+  width: 37.5rem;
+  height: 37.5rem;
+  background: radial-gradient(circle, rgba(201, 168, 76, 0.06) 0%, transparent 70%);
+  top: -6.25rem;
+  right: -6.25rem;
 }
 
 .bg-glow2 {
-  position: fixed;
-  width: 400px;
-  height: 400px;
+  width: 25rem;
+  height: 25rem;
   background: radial-gradient(circle, rgba(201, 168, 76, 0.04) 0%, transparent 70%);
-  bottom: -50px;
-  left: -50px;
-  pointer-events: none;
+  bottom: -3.125rem;
+  left: -3.125rem;
 }
 
-/* Container */
+/* Container principal do login */
 .login-container {
-  width: 900px;
+  width: 56.25rem;
   max-width: 95vw;
-  min-height: 560px;
+  min-height: 35rem;
   border: 1px solid var(--border);
-  border-radius: 2px;
+  border-radius: 0.125rem;
   z-index: 1;
   animation: fadeUp 0.6s ease forwards;
   opacity: 0;
-  transform: translateY(20px);
+  transform: translateY(1.25rem);
 }
 
-/* Painel esquerdo */
+/* Painel institucional à esquerda */
 .left-panel {
   flex: 1;
   background: linear-gradient(160deg, #141414 0%, #0d0d0d 100%);
-  padding: 48px 44px;
+  padding: 3rem 2.75rem;
   border-right: 1px solid var(--border);
 }
 
+/* Painel de formulário à direita */
+.right-panel {
+  width: 25rem;
+  background: var(--card);
+  padding: 3.25rem 2.75rem;
+}
+
+/* Ícone decorativo grande */
 .scissors-bg {
   position: absolute;
-  bottom: -20px;
-  right: -20px;
-  font-size: 180px;
+  bottom: -1.25rem;
+  right: -1.25rem;
+  font-size: 11.25rem;
   opacity: 0.04;
   line-height: 1;
   pointer-events: none;
   user-select: none;
 }
 
-/* Branding */
-.brand {
-  position: relative;
+/* Texto auxiliar de marca, perfil e rodapé */
+.brand-tag,
+.role-label,
+.form-label,
+.bottom-note {
+  color: var(--muted);
+  letter-spacing: 0.12rem;
 }
 
 .brand-tag {
-  font-size: 10px;
-  letter-spacing: 4px;
-  text-transform: uppercase;
+  font-size: 0.7rem;
   color: var(--gold);
-  margin-bottom: 16px;
-  display: block;
+  letter-spacing: 0.24rem;
 }
 
-.brand-name {
+/* Hierarquia visual da marca e do título */
+.brand-logo .logo-name,
+.login-title,
+.tagline {
   font-family: var(--font-serif);
-  font-size: 42px;
+  color: var(--text);
+}
+
+/* Nome da marca no painel lateral */
+.brand-logo .logo-name {
+  font-size: 2.625rem;
   font-weight: 900;
   line-height: 1;
-  color: var(--text);
-  letter-spacing: -1px;
+  letter-spacing: -0.05rem;
 }
 
-.brand-name span {
+/* Destaques dourados no branding */
+.brand-logo .logo-name span,
+.tagline em,
+.role-btn.active {
   color: var(--gold);
 }
 
-.brand-sub {
-  font-size: 12px;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  color: var(--muted);
-  margin-top: 8px;
+/* Subtexto da marca, descrição e links auxiliares */
+.brand-logo-sub,
+.login-sub,
+.feature,
+.bottom-note,
+.link-secondary {
+  color: var(--muted) !important;
 }
 
+/* Subtítulo da marca */
+.brand-logo-sub {
+  font-size: 0.75rem;
+  letter-spacing: 0.1875rem;
+  margin-top: 0.5rem;
+}
+
+/* Linha decorativa separando o branding */
 .divider {
-  width: 40px;
+  width: 2.5rem;
   height: 1px;
   background: var(--gold);
-  margin: 32px 0;
+  margin: 2rem 0;
   opacity: 0.5;
 }
 
+/* Frase de apresentação no painel lateral */
 .tagline {
-  font-family: var(--font-serif);
-  font-size: 22px;
-  font-weight: 400;
+  font-size: 1.375rem;
   line-height: 1.5;
-  color: var(--text);
   opacity: 0.85;
 }
 
-.tagline em {
-  font-style: italic;
-  color: var(--gold-light);
-}
-
-/* Lista de features */
-.features {
-  gap: 12px;
-}
-
+/* Linha de features no painel lateral */
 .feature {
-  gap: 10px;
-  font-size: 13px;
-  color: var(--muted);
+  gap: 0.625rem;
+  font-size: 0.8125rem;
 }
 
+/* Ponto dourado da lista de features */
 .feature-dot {
-  width: 4px;
-  height: 4px;
+  width: 0.25rem;
+  height: 0.25rem;
   border-radius: 50%;
   background: var(--gold);
   flex-shrink: 0;
 }
 
-/* Painel direito */
-.right-panel {
-  width: 400px;
-  background: var(--card);
-  padding: 52px 44px;
-}
-
-.login-title {
-  font-family: var(--font-serif);
-  font-size: 28px;
-  font-weight: 700;
-  margin-bottom: 6px;
-  color: var(--text);
-}
-
-.login-sub {
-  font-size: 13px;
-  color: var(--muted);
-  margin-bottom: 40px;
-}
-
-/* Alerta */
+/* Alerta de falha no login */
 .alert {
-  background: rgba(224, 82, 82, 0.1);
-  border: 1px solid rgba(224, 82, 82, 0.3);
-  border-radius: 2px;
-  padding: 10px 14px;
-  font-size: 13px;
-  color: var(--danger);
-  margin-bottom: 20px;
   display: none;
+  margin-bottom: 1.25rem;
 }
 
-/* Seletor de perfil */
-.role-wrapper {
-  margin-bottom: 24px;
-}
-
-.role-label {
-  font-size: 11px;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
+/* Botões do seletor de perfil e campos seguem o tema escuro */
+.role-btn,
+.form-control,
+.btn-outline-secondary {
+  border-color: var(--border);
+  background: rgba(255, 255, 255, 0.02);
   color: var(--muted);
-  margin-bottom: 8px;
 }
 
+/* Botões de perfil */
 .role-btn {
-  flex: 1;
-  padding: 10px;
-  background: transparent;
-  border: 1px solid var(--border);
-  border-radius: 2px;
-  font-family: var(--font-sans);
-  font-size: 12px;
-  color: var(--muted);
-  cursor: pointer;
-  transition: all 0.2s;
-  text-align: center;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.0313rem;
 }
 
+/* Estado ativo do perfil selecionado */
 .role-btn.active {
   border-color: var(--gold);
-  color: var(--gold);
   background: var(--gold-dim);
 }
 
-/* Campos */
-.field {
-  margin-bottom: 20px;
-}
-
-label {
-  display: block;
-  font-size: 11px;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  color: var(--muted);
-  margin-bottom: 8px;
-}
-
-input {
-  width: 100%;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid var(--border);
-  border-radius: 2px;
-  padding: 13px 16px;
-  font-family: var(--font-sans);
-  font-size: 14px;
+/* Campos do formulário */
+.form-control {
   color: var(--text);
-  outline: none;
-  transition:
-    border-color 0.2s,
-    background 0.2s;
 }
 
-input::placeholder {
-  color: #3a3a3a;
+/* Placeholder dos campos */
+.form-control::placeholder {
+  color: #6f6a65;
 }
 
-input:focus {
+/* Foco dos campos */
+.form-control:focus {
   border-color: var(--gold);
-  background: var(--gold-dim);
+  box-shadow: 0 0 0 0.2rem rgba(201, 168, 76, 0.2);
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--text);
 }
 
-/* Erros */
+/* Estado de erro nos campos */
 .input-error {
   border-color: var(--danger) !important;
 }
 
+/* Mensagens de validação */
 .error-msg {
-  font-size: 12px;
+  font-size: 0.75rem;
   color: var(--danger);
-  margin-top: 6px;
+  margin-top: 0.375rem;
   display: none;
 }
 
-/* Botão login */
-.btn-login {
-  width: 100%;
-  padding: 14px;
-  background: var(--gold);
-  border: none;
-  border-radius: 2px;
-  font-family: var(--font-sans);
-  font-size: 13px;
-  font-weight: 500;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: var(--black);
-  cursor: pointer;
-  transition:
-    background 0.2s,
-    transform 0.1s;
-}
-
-.btn-login:hover {
-  background: var(--gold-light);
-}
-.btn-login:active {
-  transform: scale(0.99);
-}
+/* Estado de carregamento do botão */
 .btn-login.loading {
   pointer-events: none;
   opacity: 0.7;
 }
 
-/* Rodapé */
+/* Rodapé do painel de login */
 .bottom-note {
-  margin-top: 32px;
-  font-size: 11px;
-  color: var(--muted);
-  text-align: center;
-  letter-spacing: 0.3px;
+  font-size: 0.7rem;
 }
 
+/* Hover do link de retorno */
 .bottom-note a:hover {
-  color: var(--gold);
+  color: var(--gold) !important;
 }
 
-/* Responsivo */
+/* Ajustes responsivos do painel direito */
 @media (max-width: 768px) {
   .right-panel {
     width: 100%;
-    padding: 40px 28px;
+    padding: 2.5rem 1.75rem;
   }
 }
