@@ -15,8 +15,8 @@
   --muted: #7a7570;
   --danger: #e05252;
   --success: #4caf7d;
-  --font-serif: Georgia, 'Times New Roman', serif;
-  --font-sans: 'Segoe UI', Arial, sans-serif;
+  --font-serif: 'Playfair Display', serif;
+  --font-sans: 'Inter', sans-serif;
 
   /* Tokens Bootstrap alinhados ao tema */
   --bs-warning: var(--gold);
@@ -39,6 +39,15 @@ body {
   font-family: var(--font-sans);
   background: var(--black);
   color: var(--text);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* Títulos com fonte serif elegante */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  letter-spacing: -0.02em;
 }
 
 /* Links seguem a identidade do projeto */
