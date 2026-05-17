@@ -41,6 +41,9 @@
 .step-num {
   width: 2rem;
   height: 2rem;
+  min-width: 2rem;
+  min-height: 2rem;
+  flex: 0 0 2rem;
   border-radius: 50%;
   border: 1px solid var(--border);
   display: flex;
@@ -205,6 +208,15 @@
   .agendamento-wrap {
     padding-top: 5.5rem;
     padding-bottom: 2.5rem;
+  }
+
+  .step {
+    flex: 0 0 auto;
+    gap: 0;
+  }
+
+  .step-line {
+    margin: 0 0.35rem;
   }
 
   .step-label {
