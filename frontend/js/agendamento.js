@@ -5,8 +5,8 @@ const estado = {
   horario: null,
 };
 
-// Janela máxima permitida para agendamento: hoje até 14 dias à frente.
-const DIAS_MAXIMOS_AGENDAMENTO = 14;
+// A partir deste dia (contando de hoje), a UI bloqueia horários por indisponibilidade.
+const DIAS_LIMITE_SEM_HORARIOS = 10;
 
 // Dados que alimentam a interface sem repetir markup no HTML.
 const SERVICOS = [
@@ -106,26 +106,63 @@ function setVisibilidade(el, visivel) {
   if (el) el.style.display = visivel ? 'block' : 'none';
 }
 
-// Valida data dentro da janela permitida e garante que a data exista de fato.
-function dataValida(valor) {
-  if (!valor) return false;
+function normalizarData(valor) {
+  if (!valor) return null;
 
   const [ano, mes, dia] = valor.split('-').map(Number);
-
   const data = new Date(ano, mes - 1, dia);
+
+  const dataRealValida =
+    data.getFullYear() === ano &&
+    data.getMonth() === mes - 1 &&
+    data.getDate() === dia;
+
+  if (!dataRealValida) return null;
+
+  data.setHours(0, 0, 0, 0);
+  return data;
+}
+
+function dataAnteriorAHoje(valor) {
+  const data = normalizarData(valor);
+  if (!data) return false;
+
+  const hoje = new Date();
+  hoje.setHours(0, 0, 0, 0);
+
+  return data < hoje;
+}
+
+function dataSemHorarios(valor) {
+  const data = normalizarData(valor);
+  if (!data) return false;
+
+  const hoje = new Date();
+  hoje.setHours(0, 0, 0, 0);
+
+  const dataSemHorario = new Date(hoje);
+  dataSemHorario.setDate(dataSemHorario.getDate() + DIAS_LIMITE_SEM_HORARIOS);
+
+  return data > dataSemHorario;
+}
+
+function bloquearHorariosPorData(valor) {
+  if (!valor) return false;
+  return dataAnteriorAHoje(valor) || dataSemHorarios(valor);
+}
+
+// Valida se a data é real, não está no passado e não excede 10 dias.
+function dataValida(valor) {
+  const data = normalizarData(valor);
+  if (!data) return false;
+
   const hoje = new Date();
   hoje.setHours(0, 0, 0, 0);
 
   const dataMaxima = new Date(hoje);
-  dataMaxima.setDate(dataMaxima.getDate() + DIAS_MAXIMOS_AGENDAMENTO);
+  dataMaxima.setDate(dataMaxima.getDate() + DIAS_LIMITE_SEM_HORARIOS);
 
-  return (
-    data.getFullYear() === ano &&
-    data.getMonth() === mes - 1 &&
-    data.getDate() === dia &&
-    data >= hoje &&
-    data <= dataMaxima
-  );
+  return data >= hoje && data <= dataMaxima;
 }
 
 // Gera os cards de serviço diretamente a partir dos dados acima.
@@ -155,14 +192,16 @@ function renderizarServicos() {
 function renderizarHorarios() {
   if (!dom.horariosGrid) return;
 
+  const bloquearTodos = bloquearHorariosPorData(dom.data?.value);
+
   dom.horariosGrid.innerHTML = HORARIOS.map(
     horario => `
       <div class="col">
         <button
-          class="horario-btn btn btn-outline-secondary w-100${horario.disponivel ? '' : ' indisponivel'}"
+          class="horario-btn btn btn-outline-secondary w-100${horario.disponivel && !bloquearTodos ? '' : ' indisponivel'}"
           type="button"
           data-horario="${horario.hora}"
-          ${horario.disponivel ? '' : 'disabled'}
+          ${horario.disponivel && !bloquearTodos ? '' : 'disabled'}
         >
           ${horario.hora}
         </button>
@@ -205,6 +244,32 @@ function sincronizarHorario() {
   dom.horariosGrid.querySelectorAll('.horario-btn').forEach(btn => {
     btn.classList.toggle('selected', btn.dataset.horario === estado.horario);
   });
+}
+
+function atualizarFeedbackDataEHorarios() {
+  const dataValor = dom.data?.value;
+  if (!dataValor) return;
+
+  if (dataAnteriorAHoje(dataValor) || !normalizarData(dataValor)) {
+    setTexto(dom.dataErr, 'Data inválida.');
+    setVisibilidade(dom.dataErr, true);
+    setVisibilidade(dom.horarioErr, false);
+  } else if (dataSemHorarios(dataValor)) {
+    limparErroDom(dom.data, dom.dataErr);
+    setTexto(dom.horarioErr, 'Não há horários disponíveis para essa data.');
+    setVisibilidade(dom.horarioErr, true);
+  } else {
+    limparErroDom(dom.data, dom.dataErr);
+    setTexto(dom.horarioErr, 'Selecione um horário');
+    setVisibilidade(dom.horarioErr, false);
+  }
+
+  if (bloquearHorariosPorData(dataValor)) {
+    estado.horario = null;
+    sincronizarHorario();
+  }
+
+  renderizarHorarios();
 }
 
 // Renderiza o resumo final a partir dos dados definidos acima.
@@ -321,16 +386,19 @@ document.addEventListener('DOMContentLoaded', () => {
   const hoje = new Date();
   hoje.setHours(0, 0, 0, 0);
 
-  const dataMaxima = new Date(hoje);
-  dataMaxima.setDate(dataMaxima.getDate() + DIAS_MAXIMOS_AGENDAMENTO);
-
   const hojeStr = hoje.toISOString().split('T')[0];
+  const dataMaxima = new Date(hoje);
+  dataMaxima.setDate(dataMaxima.getDate() + DIAS_LIMITE_SEM_HORARIOS);
   const dataMaximaStr = dataMaxima.toISOString().split('T')[0];
 
   // Configura a janela permitida no próprio input para reforçar a validação.
   if (dom.data) {
     dom.data.min = hojeStr;
     dom.data.max = dataMaximaStr;
+
+    dom.data.addEventListener('change', () => {
+      atualizarFeedbackDataEHorarios();
+    });
   }
 
   // Máscara simples de telefone para melhorar a digitação.
@@ -456,12 +524,31 @@ function validarStep2() {
   const dataValor = dom.data.value;
   let valido = true;
 
-  if (!dataValida(dataValor)) {
+  if (dataAnteriorAHoje(dataValor) || !normalizarData(dataValor)) {
+    setTexto(dom.dataErr, 'Data inválida.');
+
     mostrarErroDom(dom.data, dom.dataErr);
+    estado.horario = null;
+    sincronizarHorario();
+    renderizarHorarios();
     valido = false;
-  } else {
-    limparErroDom(dom.data, dom.dataErr);
+    return valido;
   }
+
+  if (dataSemHorarios(dataValor) || !dataValida(dataValor)) {
+    limparErroDom(dom.data, dom.dataErr);
+    setTexto(dom.horarioErr, 'Não há horários disponíveis para essa data.');
+    setVisibilidade(dom.horarioErr, true);
+    estado.horario = null;
+    sincronizarHorario();
+    renderizarHorarios();
+    valido = false;
+    return valido;
+  }
+
+  limparErroDom(dom.data, dom.dataErr);
+
+  setTexto(dom.horarioErr, 'Selecione um horário');
 
   if (!estado.horario) {
     setVisibilidade(dom.horarioErr, true);
